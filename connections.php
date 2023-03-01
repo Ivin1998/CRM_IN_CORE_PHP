@@ -1,5 +1,5 @@
 <?php
 
-$con=mysqli_connect("localhost","root","","first_project");
+$con=mysqli_connect("localhost","root","CsAdmin12#$","contacts");
 
 ?>

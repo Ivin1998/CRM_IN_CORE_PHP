@@ -1,25 +1,9 @@
-.form-popup {
-    display: none;
-    position: absolute;
-    left:50%;
-    top:50%;
-    height: 100%;
-    width:340px;
-    bottom: 0;
-    margin-left:-272px;
-    right: 15px;
-    border: 3px solid #f1f1f1;
-    margin-left: -272px;
-    margin-top: -205px;
-    height:500px;
-   overflow: auto;
-  }
+
   form{
     
     width: auto;
     margin-top: auto;
     margin-bottom: auto;
-    background: #00b8f6;
     position: relative;
     display: flex;
     row-gap: 5px;

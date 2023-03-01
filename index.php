@@ -1,86 +1,132 @@
 <?php
 include 'connections.php';
+include 'update.php';
 ?>
 <html>
+
 <body>
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-   <center><button type="submit" onclick="openform()">Add contact</button></center>
-   <link rel="stylesheet" href="styles.css">
-   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <title>Users_list</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-<div class="form-popup" id="myForm">
-<form name="contact" onsubmit="return validateform()" method="post" action="form.php">
-    <md style="color:red;display:flex;gap:5px;"><span style="color:black">First Name:</span>*</md><input type="text"
-        name="Fname" /><br><br>
-    <md style="color:red;display:flex;gap:5px;" /><span style="color:black">Last Name:</span>*</md> <input
-        type="text" name="Lname" /><br><br>
-    <md style="color:red;display:flex;gap:5px;"> <span style="color:black">Mobile Number:</span>*</md> <input
-        type="text" name="Mnumber" /><br><br>
-    Office Number: <input type="text" name="Onumber" /><br><br>
-    Email Id: <input type="text" name="Email" /><br><br>
-    Instagram Id: <input type="text" name="Instagram" /><br><br>
-    Twitter Id: <input type="text" name="Twitter" /><br><br>
-    Linkedin Id: <input type="text" name="Linkedin" /><br><br>
-    Facebook Id: <input type="text" name="Facebook" /><br><br>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    <button type="button" onclick="closeform()" class="btn btn-danger">Cancel</button>
-</form>
+    <center><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add
+            contact</button></center>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    
 
-</div>
-<?php
-        $sql= "select*from contact_information ORDER BY User_Id Desc";
-        $result=mysqli_query($con,$sql);
-?>
-<div>
-    
-<table border="2"class="table-bordered ">
-  <tr>
-    <th>Sl.no.</th>
-    <th>User Id</th>
-    <th>First Name</th>
-    <th>Last Name</th>  
-    <th>Mobile Number</th>
-    <th>Office Number</th>
-    <th style="text-align:center">Email Id</th>
-    <th>Instagram Id</th>
-    <th>Twitter Handle</th>
-    <th>LinkedIn profile</th>
-    <th>Facebook Id</th>
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
 
-  </tr>
-  <tr>
-  <?php 
-  $no=1;
-    while($rows=mysqli_fetch_assoc($result))
-    {
-    ?>     
-            <td><?php echo $no++; ?></td> <!-- Autoincrementing the sl.no. -->
-            <td><?php echo $rows ['user_id'];?></td> <!-- primary key -->
-            <td><?php echo $rows['first_name'];?></td>
-            <td><?php echo $rows['last_name'];?></td>
-            <td><?php echo $rows['mobile_number'];?></td>
-            <td><?php echo $rows['office_number'];?></td>
-            <td><?php echo $rows['email_id'];?></td>
-            <td><?php echo $rows['instagram_id'];?></td>
-            <td><?php echo $rows['twitter_id'];?></td>
-            <td><?php echo $rows['linkedin_id'];?></td>
-            <td><?php echo $rows['facebook_id'];?></td>
-            <td><a href="delete.php?ser_id=<?php echo $row["user_id"];?>">Delete</a></td>
-        </tr>
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add contact</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="myForm">
+                        <form name="contact" onsubmit="return validateform()" method="post" action="add_data.php">
+                            <md style="color:red;display:flex;gap:5px;"><span style="color:black">First Name:</span>*
+                            </md><input type="text" name="Fname" /><br><br>
+                            <md style="color:red;display:flex;gap:5px;" /><span style="color:black">Last Name:</span>*
+                            </md> <input type="text" name="Lname" /><br><br>
+                            <md style="color:red;display:flex;gap:5px;"> <span style="color:black">Mobile
+                                    Number:</span>*</md> <input type="text" name="Mnumber" /><br><br>
+                            Office Number: <input type="text" name="Onumber" /><br><br>
+                            Email Id: <input type="text" name="Email" /><br><br>
+                            Instagram Id: <input type="text" name="Instagram" /><br><br>
+                            Twitter Id: <input type="text" name="Twitter" /><br><br>
+                            Linkedin Id: <input type="text" name="Linkedin" /><br><br>
+                            Facebook Id: <input type="text" name="Facebook" /><br><br>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
     <?php
-    }
+    $sql = "select*from contact_information ORDER BY User_Id Desc";
+    $result = mysqli_query($con, $sql);
     ?>
+    <div>
 
-</table>
-</div>
+        <table border="2" class="table-bordered ">
+            <tr>
+                <th>Sl.no.</th>
+                <th>User Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Mobile Number</th>
+                <th>Office Number</th>
+                <th style="text-align:center">Email Id</th>
+                <th>Instagram Id</th>
+                <th>Twitter Handle</th>
+                <th>LinkedIn profile</th>
+                <th>Facebook Id</th>
+
+            </tr>
+            <tr>
+                <?php
+                $no = 1;
+                while ($rows = mysqli_fetch_assoc($result)) {
+                    ?>
+                    <td>
+                        <?php echo $no++; ?>
+                    </td> <!-- incrementing the sl.no. -->
+                    <td>
+                        <?php echo $rows['user_id']; ?>
+                    </td> <!-- primary key -->
+                    <td>
+                        <?php echo $rows['first_name']; ?>
+                    </td>
+                    <td>
+                        <?php echo $rows['last_name']; ?>
+                    </td>
+                    <td>
+                        <?php echo $rows['mobile_number']; ?>
+                    </td>
+                    <td>
+                        <?php echo $rows['office_number']; ?>
+                    </td>
+                    <td>
+                        <?php echo $rows['email_id']; ?>
+                    </td>
+                    <td>
+                        <?php echo $rows['instagram_id']; ?>
+                    </td>
+                    <td>
+                        <?php echo $rows['twitter_id']; ?>
+                    </td>
+                    <td>
+                        <?php echo $rows['linkedin_id']; ?>
+                    </td>
+                    <td>
+                        <?php echo $rows['facebook_id']; ?>
+                    </td>
+                    <td><a class="btn btn-info btn-lg" href="update.php?user_id=<?php echo $rows['user_id']; ?>">Edit</a>
+                    </td>
+                    <td><a class="btn btn-danger btn-lg" href="delete.php?user_id=<?php echo $rows['user_id']; ?>"
+                            onclick="return checkDelete()">Delete</a></td>
+
+                </tr>
+                <?php
+                }
+                ?>
+        </table>
+    </div>
 
     <script type="text/javascript">
 
         function validateform() {
+
             var x = document.forms["contact"]["Fname"].value;
             const num = /^[0-9]/;
             const noalpha = /^[A-Za-z]+$/;
@@ -108,7 +154,7 @@ include 'connections.php';
 
                 return false;
             }
-           let a = document.forms["contact"]["Onumber"].value;
+            let a = document.forms["contact"]["Onumber"].value;
             if (a) {
                 if (!num.test(a)) {
                     swal({
@@ -164,17 +210,11 @@ include 'connections.php';
                     return false;
                 }
             }
-
+        }
+        function checkDelete() {
+            return confirm("Are you sure want to delete?");
 
         }
-    function openform() {
-      document.getElementById("myForm").style.display = "block ";
-    } 
-    function closeform() {
-        document.getElementById("myForm").style.display = "none";
-    }  
-    
     </script>
-    
-    </body>
+</body>
 </html>

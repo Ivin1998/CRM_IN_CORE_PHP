@@ -4,6 +4,7 @@ include 'connections.php';
 
 if (isset($_POST['update'])) {
 
+    $mod_date=$_POST['mod_date'];
     $user_id = $_GET['user_id'];
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
@@ -17,7 +18,7 @@ if (isset($_POST['update'])) {
 
     $sql = "UPDATE contact_information SET first_name='$first_name',last_name='$last_name',
     mobile_number='$mobile_number',office_number='$office_number',email_id='$email_id',instagram_id=' $instagram_id',
-    twitter_id='$twitter_id',linkedin_id='$linkedin_id',facebook_id='$facebook_id' where user_id='$user_id'";
+    twitter_id='$twitter_id',linkedin_id='$linkedin_id',facebook_id='$facebook_id',mod_date='$mod_date' where user_id='$user_id'";
 
     $result = $con->query($sql);
 
@@ -25,7 +26,7 @@ if (isset($_POST['update'])) {
     if ($result == TRUE) {
         echo "Record updated Successfully";
     } else {
-        echo "Error:" . $sql . "<br>" . $con->error;
+        echo "Error:" . $sql . "<br>" . '$con->error';
     }
 }
 if (isset($_GET['user_id'])) {
@@ -59,6 +60,7 @@ if (isset($_GET['user_id'])) {
             Twitter Handle:<input type="text" name="twitter_id" value="<?php echo $twitter_id; ?>">
             LinkedIn profile:<input type="text" name="linkedin_id" value="<?php echo $linkedin_id; ?>">
             Facebook_Id:<input type="text" name="facebook_id" value="<?php echo $facebook_id; ?>">
+            <input type="hidden" name="mod_date" value="<?php echo date('Y-m-d H:i:s')?>">
             <input type="submit" value="update" name="update" />
 
         </form>

@@ -40,6 +40,8 @@ include 'update.php';
                             Twitter Id: <input type="text" name="Twitter" /><br><br>
                             Linkedin Id: <input type="text" name="Linkedin" /><br><br>
                             Facebook Id: <input type="text" name="Facebook" /><br><br>
+                            <input type="hidden" name="created_date" value="<?php echo date('Y-m-d H:i:s')?>">
+                            
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
 
@@ -49,11 +51,10 @@ include 'update.php';
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
-
         </div>
     </div>
     <?php
-    $sql = "select*from contact_information ORDER BY User_Id Desc";
+    $sql = "select*from contact_information where id_deleted=false ORDER BY User_Id Desc";
     $result = mysqli_query($con, $sql);
     ?>
     <div>
@@ -71,7 +72,8 @@ include 'update.php';
                 <th>Twitter Handle</th>
                 <th>LinkedIn profile</th>
                 <th>Facebook Id</th>
-
+                <th>created_date</th>
+                <th>Modified_date</th>
             </tr>
             <tr>
                 <?php
@@ -110,6 +112,12 @@ include 'update.php';
                     </td>
                     <td>
                         <?php echo $rows['facebook_id']; ?>
+                    </td>
+                    <td>
+                        <?php echo $rows['created_date']; ?>
+                    </td>
+                    <td>
+                        <?php echo $rows['mod_date']; ?>
                     </td>
                     <td><a class="btn btn-info btn-lg" href="update.php?user_id=<?php echo $rows['user_id']; ?>">Edit</a>
                     </td>

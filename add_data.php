@@ -1,6 +1,7 @@
 <?php
 include 'connections.php';
 
+
 $created_date=$_POST['created_date'];
 $fi_name = $_POST['Fname'];
 $la_name = $_POST['Lname'];
@@ -21,6 +22,6 @@ if ($success) {
     echo "User Details added successfully";
 
 } else {
-    echo ("Error description: " . '$con -> error');
+    echo "Error:" . $sql . "<br>" . $con->error;
 }
 ?>

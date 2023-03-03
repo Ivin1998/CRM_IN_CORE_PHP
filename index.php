@@ -2,7 +2,7 @@
 include 'connections.php';
 include 'update.php';
 ?>
-<html>
+
 
 <body>
     <title>Users_list</title>
@@ -10,9 +10,19 @@ include 'update.php';
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.5/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.5/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.5/js/buttons.print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <center><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add
             contact</button></center>
     <link rel="stylesheet" href="styles.css">
+    <link type="text/css" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.css"> <!-- datatable css -->
+
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
@@ -40,8 +50,12 @@ include 'update.php';
                             Twitter Id: <input type="text" name="Twitter" /><br><br>
                             Linkedin Id: <input type="text" name="Linkedin" /><br><br>
                             Facebook Id: <input type="text" name="Facebook" /><br><br>
-                            <input type="hidden" name="created_date" value="<?php echo date('Y-m-d H:i:s')?>">
-                            
+                            <?php
+                            $created_date = date('M,d Y');
+                            $mod_date = date('M,d Y');
+                            ?>
+                            <input type="hidden" name="created_date" value="<?php echo date('Y-m-d H:i:s') ?>">
+                            <input type="hidden" name="mod_date" value="<?php echo date('Y-m-d H:i:s') ?>">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
 
@@ -59,75 +73,82 @@ include 'update.php';
     ?>
     <div>
 
-        <table border="2" class="table-bordered ">
-            <tr>
-                <th>Sl.no.</th>
-                <th>User Id</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Mobile Number</th>
-                <th>Office Number</th>
-                <th style="text-align:center">Email Id</th>
-                <th>Instagram Id</th>
-                <th>Twitter Handle</th>
-                <th>LinkedIn profile</th>
-                <th>Facebook Id</th>
-                <th>created_date</th>
-                <th>Modified_date</th>
-            </tr>
-            <tr>
-                <?php
-                $no = 1;
-                while ($rows = mysqli_fetch_assoc($result)) {
-                    ?>
-                    <td>
-                        <?php echo $no++; ?>
-                    </td> <!-- incrementing the sl.no. -->
-                    <td>
-                        <?php echo $rows['user_id']; ?>
-                    </td> <!-- primary key -->
-                    <td>
-                        <?php echo $rows['first_name']; ?>
-                    </td>
-                    <td>
-                        <?php echo $rows['last_name']; ?>
-                    </td>
-                    <td>
-                        <?php echo $rows['mobile_number']; ?>
-                    </td>
-                    <td>
-                        <?php echo $rows['office_number']; ?>
-                    </td>
-                    <td>
-                        <?php echo $rows['email_id']; ?>
-                    </td>
-                    <td>
-                        <?php echo $rows['instagram_id']; ?>
-                    </td>
-                    <td>
-                        <?php echo $rows['twitter_id']; ?>
-                    </td>
-                    <td>
-                        <?php echo $rows['linkedin_id']; ?>
-                    </td>
-                    <td>
-                        <?php echo $rows['facebook_id']; ?>
-                    </td>
-                    <td>
-                        <?php echo $rows['created_date']; ?>
-                    </td>
-                    <td>
-                        <?php echo $rows['mod_date']; ?>
-                    </td>
-                    <td><a class="btn btn-info btn-lg" href="update.php?user_id=<?php echo $rows['user_id']; ?>">Edit</a>
-                    </td>
-                    <td><a class="btn btn-danger btn-lg" href="delete.php?user_id=<?php echo $rows['user_id']; ?>"
-                            onclick="return checkDelete()">Delete</a></td>
-
+        <table border="2" class="table-bordered" class="mouseover" style="width:100%" id="mytable">
+            <thead>
+                <tr>
+                    <th>Sl.no.</th>
+                    <th>User Id</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Mobile Number</th>
+                    <th>Office Number</th>
+                    <th style="text-align:center">Email Id</th>
+                    <th>Instagram Id</th>
+                    <th>Twitter Handle</th>
+                    <th>LinkedIn profile</th>
+                    <th>Facebook Id</th>
+                    <th>created_date</th>
+                    <th>Modified_date</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
-                <?php
-                }
-                ?>
+            </thead>
+            <tbody>
+                <tr>
+                    <?php
+                    $no = 1;
+                    while ($rows = mysqli_fetch_assoc($result)) {
+                        ?>
+                        <td>
+                            <?php echo $no++; ?>
+                        </td> <!-- incrementing the sl.no. -->
+                        <td>
+                            <?php echo $rows['user_id']; ?>
+                        </td> <!-- primary key -->
+                        <td>
+                            <?php echo $rows['first_name']; ?>
+                        </td>
+                        <td>
+                            <?php echo $rows['last_name']; ?>
+                        </td>
+                        <td>
+                            <?php echo $rows['mobile_number']; ?>
+                        </td>
+                        <td>
+                            <?php echo $rows['office_number']; ?>
+                        </td>
+                        <td>
+                            <?php echo $rows['email_id']; ?>
+                        </td>
+                        <td>
+                            <?php echo $rows['instagram_id']; ?>
+                        </td>
+                        <td>
+                            <?php echo $rows['twitter_id']; ?>
+                        </td>
+                        <td>
+                            <?php echo $rows['linkedin_id']; ?>
+                        </td>
+                        <td>
+                            <?php echo $rows['facebook_id']; ?>
+                        </td>
+                        <td>
+                            <?php echo $created_date; ?>
+                        </td>
+                        <td>
+                            <?php echo $mod_date; ?>
+                        </td>
+                        <td><a class="btn btn-info btn-lg"
+                                href="update.php?user_id=<?php echo $rows['user_id']; ?>">Edit</a>
+                        </td>
+                        <td><a class="btn btn-danger btn-lg" href="delete.php?user_id=<?php echo $rows['user_id']; ?>"
+                                onclick="return checkDelete()">Delete</a></td>
+
+                    </tr>
+                    <?php
+                    }
+                    ?>
+            </tbody>
         </table>
     </div>
 
@@ -223,6 +244,20 @@ include 'update.php';
             return confirm("Are you sure want to delete?");
 
         }
+
+        $(document).ready(function () {
+            $('#mytable').DataTable({
+                dom: 'Blfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                    
+                ]
+            });
+        });
     </script>
+
+
+
 </body>
+
 </html>

@@ -26,7 +26,7 @@ if (isset($_POST['update'])) {
     if ($result == TRUE) {
         echo "Record updated Successfully";
     } else {
-        echo "Error:" . $sql . "<br>" . '$con->error';
+        echo "Error:" . $sql . "<br>" . $con->error;
     }
 }
 if (isset($_GET['user_id'])) {

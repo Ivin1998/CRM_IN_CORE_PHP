@@ -25,7 +25,7 @@ include 'update.php';
     <link type="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.css"> <!-- datatable css -->
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-   
+
 
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -39,24 +39,24 @@ include 'update.php';
                 <div class="modal-body">
                     <div id="myForm">
                         <form name="contact" method="post" id="mycontact" enctype="multipart/form-data">
-                        <label>Select CSV File:</label>
-                        <input type="file" name="file"><br>
-                        <input type="submit" name="submit" value="Import">
+                            <label>Select CSV File:</label>
+                            <input type="file" name="file"><br>
+                            <input type="submit" name="submit" value="Import">
 
-                        <md style="color:red;display:flex;gap:5px;"><span style="color:black">First Name:</span>*
-                            </md><input type="text" name="Fname" /><br><br>
+                            <md style="color:red;display:flex;gap:5px;"><span style="color:black">First Name:</span>*
+                            </md><input type="text" name="firstName" /><br><br>
                             <md style="color:red;display:flex;gap:5px;" /><span style="color:black">Last Name:</span>*
-                            </md> <input type="text" name="Lname" /><br><br>
+                            </md> <input type="text" name="lastName" /><br><br>
                             <md style="color:red;display:flex;gap:5px;"> <span style="color:black">Mobile
-                                    Number:</span>*</md> <input type="text" name="Mnumber" /><br><br>
-                            Office Number: <input type="text" name="Onumber" /><br><br>
+                                    Number:</span>*</md> <input type="text" name="mobileNumber" /><br><br>
+                            Office Number: <input type="text" name="officeNumber" /><br><br>
                             Email Address: <input type="text" name="Email" /><br><br>
                             Instagram Profile: <input type="text" name="Instagram" /><br><br>
                             Twitter Handle: <input type="text" name="Twitter" /><br><br>
                             Linkedin Id: <input type="text" name="Linkedin" /><br><br>
                             Facebook Id: <input type="text" name="Facebook" /><br><br>
-                            <input type="hidden" name="created_date" value= "<?php echo date('Y-m-d H:i:s')?>"/>
-                            <input type="hidden" name="mod_date" value='<?php echo  date('Y-m-d H:i:s')?>'/>
+                            <input type="hidden" name="created_date" value="<?php echo date('Y-m-d H:i:s') ?>" />
+                            <input type="hidden" name="mod_date" value='<?php echo date('Y-m-d H:i:s') ?>' />
                             <button type="button" onclick="savecontact()" class="btn btn-primary">Add</button>
                         </form>
                     </div>
@@ -73,9 +73,9 @@ include 'update.php';
     ?>
     <div>
 
-        <table id="mytable" border="2" class="table-bordered" style="width:100%" >
+        <table id="mytable" border="2" class="table-bordered" style="width:100%">
             <thead>
-                <tr> 
+                <tr>
                     <th>Sl.no.</th>
                     <th>User Id</th>
                     <th>First Name</th>
@@ -132,25 +132,25 @@ include 'update.php';
                         <td>
                             <?php echo $rows['facebook_id']; ?>
                         </td>
-                        <td>    <!-- For changing the date format and printing the created date -->
-                        
+                        <td> <!-- For changing the date format and printing the created date -->
+
                             <?php $timestamp = strtotime($rows['created_date']);
-                               
-                                $date = date('M-d-Y H:i:s', $timestamp); 
-                                echo $date;
-                               ?> 
+
+                            $date = date('M-d-Y H:i:s', $timestamp);
+                            echo $date;
+                            ?>
                         </td>
                         <td>
-                        <!-- For printing modifie date only if data is modified -->
-                            <?php 
+                            <!-- For printing modifie date only if data is modified -->
+                            <?php
                             $timestamp = date('Y-m-d H:i:s');
-                            if(!empty($rows['mod_date'])){
-                              $timestamp= strtotime($rows['mod_date']) ;
-                             
-                              $date=date('M-d-Y H:i:s', $timestamp);
-                              echo $date; 
+                            if (!empty($rows['mod_date'])) {
+                                $timestamp = strtotime($rows['mod_date']);
+
+                                $date = date('M-d-Y H:i:s', $timestamp);
+                                echo $date;
                             }
-                            ?>  
+                            ?>
                         </td>
                         <td><a class="btn btn-info btn-lg"
                                 href="update.php?user_id=<?php echo $rows['user_id']; ?>">Edit</a>
@@ -171,8 +171,8 @@ include 'update.php';
         function checkDelete() {
             return confirm("Are you sure want to delete?");
         }
-        function savecontact(){
-            var x = document.forms["contact"]["Fname"].value;
+        function savecontact() {
+            var x = document.forms["contact"]["firstName"].value;
             const num = /^[0-9]/;
             const noalpha = /^[A-Za-z]+$/;
             if (x == "" || !noalpha.test(x)) {
@@ -182,7 +182,7 @@ include 'update.php';
                 });
                 return false;
             }
-            let y = document.forms["contact"]["Lname"].value;
+            let y = document.forms["contact"]["lastName"].value;
             if (y == "" || !noalpha.test(y)) {
                 swal({
                     text: "Please enter a valid last name!",
@@ -190,7 +190,7 @@ include 'update.php';
                 });
                 return false;
             }
-            let z = document.forms["contact"]["Mnumber"].value;
+            let z = document.forms["contact"]["mobileNumber"].value;
             if (z == "" || !num.test(z)) {
                 swal({
                     text: "Please enter a valid contact number!",
@@ -199,7 +199,7 @@ include 'update.php';
 
                 return false;
             }
-            let a = document.forms["contact"]["Onumber"].value;
+            let a = document.forms["contact"]["officeNumber"].value;
             if (a) {
                 if (!num.test(a)) {
                     swal({
@@ -260,31 +260,28 @@ include 'update.php';
                 url: 'add_data.php',
                 /* dataType : 'json', */
                 data: $('#mycontact').serialize(),
-                success: function(data)
-                {   
+                success: function (data) {
                     swal({
-                    text: "User details saved successfully!",
-                    icon: "success",    
-                });
+                        text: "User details saved successfully!",
+                        icon: "success",
+                    });
                     location.reload();
 
-               },
-});
+                },
+            });
         }
-        
+
         $(document).ready(function () {
             $('#mytable').DataTable({
                 dom: 'Blfrtip',
                 buttons: [
                     'copy', 'csv', 'excel', 'pdf', 'print'
-                    
+
                 ]
             });
         });
 
     </script>
-
-
 
 </body>
 

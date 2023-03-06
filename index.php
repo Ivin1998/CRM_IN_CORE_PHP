@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Calcutta');
 include 'connections.php';
 include 'update.php';
 ?>
@@ -19,12 +20,12 @@ include 'update.php';
     <script src="https://cdn.datatables.net/buttons/2.3.5/js/buttons.print.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <center><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add
-            contact</button></center>
+            Contact</button></center>
     <link rel="stylesheet" href="styles.css">
-    <link type="text/css" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.css"> <!-- datatable css -->
+    <link type="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.css"> <!-- datatable css -->
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+   
 
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -33,32 +34,31 @@ include 'update.php';
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Add contact</h4>
+                    <h4 class="modal-title">Add Contact</h4>
                 </div>
                 <div class="modal-body">
                     <div id="myForm">
-                        <form name="contact" onsubmit="return validateform()" method="post" action="add_data.php">
-                            <md style="color:red;display:flex;gap:5px;"><span style="color:black">First Name:</span>*
+                        <form name="contact" method="post" id="mycontact" enctype="multipart/form-data">
+                        <label>Select CSV File:</label>
+                        <input type="file" name="file"><br>
+                        <input type="submit" name="submit" value="Import">
+
+                        <md style="color:red;display:flex;gap:5px;"><span style="color:black">First Name:</span>*
                             </md><input type="text" name="Fname" /><br><br>
                             <md style="color:red;display:flex;gap:5px;" /><span style="color:black">Last Name:</span>*
                             </md> <input type="text" name="Lname" /><br><br>
                             <md style="color:red;display:flex;gap:5px;"> <span style="color:black">Mobile
                                     Number:</span>*</md> <input type="text" name="Mnumber" /><br><br>
                             Office Number: <input type="text" name="Onumber" /><br><br>
-                            Email Id: <input type="text" name="Email" /><br><br>
-                            Instagram Id: <input type="text" name="Instagram" /><br><br>
-                            Twitter Id: <input type="text" name="Twitter" /><br><br>
+                            Email Address: <input type="text" name="Email" /><br><br>
+                            Instagram Profile: <input type="text" name="Instagram" /><br><br>
+                            Twitter Handle: <input type="text" name="Twitter" /><br><br>
                             Linkedin Id: <input type="text" name="Linkedin" /><br><br>
                             Facebook Id: <input type="text" name="Facebook" /><br><br>
-                            <?php
-                            $created_date = date('M,d Y');
-                            $mod_date = date('M,d Y');
-                            ?>
-                            <input type="hidden" name="created_date" value="<?php echo date('Y-m-d H:i:s') ?>">
-                            <input type="hidden" name="mod_date" value="<?php echo date('Y-m-d H:i:s') ?>">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <input type="hidden" name="created_date" value= "<?php echo date('Y-m-d H:i:s')?>"/>
+                            <input type="hidden" name="mod_date" value='<?php echo  date('Y-m-d H:i:s')?>'/>
+                            <button type="button" onclick="savecontact()" class="btn btn-primary">Add</button>
                         </form>
-
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -73,22 +73,22 @@ include 'update.php';
     ?>
     <div>
 
-        <table border="2" class="table-bordered" class="mouseover" style="width:100%" id="mytable">
+        <table id="mytable" border="2" class="table-bordered" style="width:100%" >
             <thead>
-                <tr>
+                <tr> 
                     <th>Sl.no.</th>
                     <th>User Id</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Mobile Number</th>
                     <th>Office Number</th>
-                    <th style="text-align:center">Email Id</th>
-                    <th>Instagram Id</th>
+                    <th style="text-align:center">Email Address</th>
+                    <th>Instagram Profile</th>
                     <th>Twitter Handle</th>
                     <th>LinkedIn profile</th>
                     <th>Facebook Id</th>
-                    <th>created_date</th>
-                    <th>Modified_date</th>
+                    <th>Created Date</th>
+                    <th>Modified Date</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -132,11 +132,25 @@ include 'update.php';
                         <td>
                             <?php echo $rows['facebook_id']; ?>
                         </td>
-                        <td>
-                            <?php echo $created_date; ?>
+                        <td>    <!-- For changing the date format and printing the created date -->
+                        
+                            <?php $timestamp = strtotime($rows['created_date']);
+                               
+                                $date = date('M-d-Y H:i:s', $timestamp); 
+                                echo $date;
+                               ?> 
                         </td>
                         <td>
-                            <?php echo $mod_date; ?>
+                        <!-- For printing modifie date only if data is modified -->
+                            <?php 
+                            $timestamp = date('Y-m-d H:i:s');
+                            if(!empty($rows['mod_date'])){
+                              $timestamp= strtotime($rows['mod_date']) ;
+                             
+                              $date=date('M-d-Y H:i:s', $timestamp);
+                              echo $date; 
+                            }
+                            ?>  
                         </td>
                         <td><a class="btn btn-info btn-lg"
                                 href="update.php?user_id=<?php echo $rows['user_id']; ?>">Edit</a>
@@ -154,8 +168,10 @@ include 'update.php';
 
     <script type="text/javascript">
 
-        function validateform() {
-
+        function checkDelete() {
+            return confirm("Are you sure want to delete?");
+        }
+        function savecontact(){
             var x = document.forms["contact"]["Fname"].value;
             const num = /^[0-9]/;
             const noalpha = /^[A-Za-z]+$/;
@@ -239,12 +255,23 @@ include 'update.php';
                     return false;
                 }
             }
-        }
-        function checkDelete() {
-            return confirm("Are you sure want to delete?");
+            $.ajax({
+                type: "POST",
+                url: 'add_data.php',
+                /* dataType : 'json', */
+                data: $('#mycontact').serialize(),
+                success: function(data)
+                {   
+                    swal({
+                    text: "User details saved successfully!",
+                    icon: "success",    
+                });
+                    location.reload();
 
+               },
+});
         }
-
+        
         $(document).ready(function () {
             $('#mytable').DataTable({
                 dom: 'Blfrtip',
@@ -254,6 +281,7 @@ include 'update.php';
                 ]
             });
         });
+
     </script>
 
 

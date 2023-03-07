@@ -16,3 +16,10 @@
     border-radius: 5px;
 
 }
+.dataTables_filter input {
+  margin-left: 10px;
+}
+.dataTables_filter label {
+  margin-left: 600px;
+  align-items: center;
+}

@@ -8,15 +8,15 @@ if (isset($_POST['update'])) {
 
     $mod_date=$_POST['mod_date'];
     $user_id = $_GET['user_id'];
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
-    $mobile_number = $_POST['mobile_number'];
-    $office_number = $_POST['office_number'];
-    $email_id = $_POST['email_id'];
-    $instagram_id = $_POST['instagram_id'];
-    $twitter_id = $_POST['twitter_id'];
-    $linkedin_id = $_POST['linkedin_id'];
-    $facebook_id = $_POST['facebook_id'];
+    $first_name = $_POST['firstName'];
+    $last_name = $_POST['lastName'];
+    $mobile_number = $_POST['mobileNumber'];
+    $office_number = $_POST['officeNumber'];
+    $email_id = $_POST['Email'];
+    $instagram_id = $_POST['Instagram'];
+    $twitter_id = $_POST['Twitter'];
+    $linkedin_id = $_POST['Linkedin)'];
+    $facebook_id = $_POST['Facebook)'];
 
     $sql = "UPDATE contact_information SET first_name='$first_name',last_name='$last_name',
     mobile_number='$mobile_number',office_number='$office_number',email_id='$email_id',instagram_id=' $instagram_id',

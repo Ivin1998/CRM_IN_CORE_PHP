@@ -19,8 +19,13 @@ include 'update.php';
     <script src="https://cdn.datatables.net/buttons/2.3.5/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.5/js/buttons.print.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <center><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add
-            Contact</button></center>
+    <br>
+    <center>
+        <div style="float: right;"><button type="button" class="btn btn-info btn-lg" data-toggle="modal"
+                data-target="#myModal">Add
+                Contact</button>
+    </center>
+    </div>
     <link rel="stylesheet" href="styles.css">
     <link type="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.css"> <!-- datatable css -->
 
@@ -55,9 +60,10 @@ include 'update.php';
                             Twitter Handle: <input type="text" name="Twitter" /><br><br>
                             Linkedin Id: <input type="text" name="Linkedin" /><br><br>
                             Facebook Id: <input type="text" name="Facebook" /><br><br>
+                            <input type="hidden" name="user_id" id="user_id" />
                             <input type="hidden" name="created_date" value="<?php echo date('Y-m-d H:i:s') ?>" />
                             <input type="hidden" name="mod_date" value='<?php echo date('Y-m-d H:i:s') ?>' />
-                            <button type="button" onclick="savecontact()" class="btn btn-primary">Add</button>
+                            <button type="button" onclick="savecontact()" id="Add" class="btn btn-primary">Add</button>
                         </form>
                     </div>
                 </div>
@@ -68,7 +74,7 @@ include 'update.php';
         </div>
     </div>
     <?php
-    $sql = "select*from contact_information where id_deleted=false ORDER BY User_Id Desc";
+    $sql = "select*from contact_information where is_deleted=0 ORDER BY User_Id Desc";
     $result = mysqli_query($con, $sql);
     ?>
     <div>
@@ -89,8 +95,8 @@ include 'update.php';
                     <th>Facebook Id</th>
                     <th>Created Date</th>
                     <th>Modified Date</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th style="text-align:center">Actions</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -111,14 +117,14 @@ include 'update.php';
                         <td>
                             <?php echo $rows['last_name']; ?>
                         </td>
-                        <td>
+                        <td style="text-align:right">
                             <?php echo $rows['mobile_number']; ?>
                         </td>
-                        <td>
+                        <td style="text-align:right">
                             <?php echo $rows['office_number']; ?>
                         </td>
                         <td>
-                            <?php echo $rows['email_id']; ?>
+                            <?php echo '<a href="mailto:' . $rows['email_id'] . '">' . $rows['email_id'] . '</a>'; ?>
                         </td>
                         <td>
                             <?php echo $rows['instagram_id']; ?>
@@ -132,7 +138,7 @@ include 'update.php';
                         <td>
                             <?php echo $rows['facebook_id']; ?>
                         </td>
-                        <td> <!-- For changing the date format and printing the created date -->
+                        <td style="text-align:right"> <!-- For changing the date format and printing the created date -->
 
                             <?php $timestamp = strtotime($rows['created_date']);
 
@@ -140,7 +146,7 @@ include 'update.php';
                             echo $date;
                             ?>
                         </td>
-                        <td>
+                        <td style="text-align:right">
                             <!-- For printing modifie date only if data is modified -->
                             <?php
                             $timestamp = date('Y-m-d H:i:s');
@@ -152,11 +158,12 @@ include 'update.php';
                             }
                             ?>
                         </td>
-                        <td><a class="btn btn-info btn-lg"
-                                href="update.php?user_id=<?php echo $rows['user_id']; ?>">Edit</a>
+                        <td><a class="btn btn-info btn-lg edit_data" id="<?php echo $rows['user_id']; ?>">Edit</a>
+
+                            <a class="btn btn-danger btn-lg"
+                                onclick="checkDelete(<?php echo $rows['user_id']; ?>)">Delete</a>
                         </td>
-                        <td><a class="btn btn-danger btn-lg" href="delete.php?user_id=<?php echo $rows['user_id']; ?>"
-                                onclick="return checkDelete()">Delete</a></td>
+
 
                     </tr>
                     <?php
@@ -168,9 +175,23 @@ include 'update.php';
 
     <script type="text/javascript">
 
-        function checkDelete() {
-            return confirm("Are you sure want to delete?");
+        function checkDelete(id) {
+            if (confirm("Are you sure you want to delete this record?")) {
+                $.ajax({
+                    type: "POST",
+                    url: 'delete.php',
+                    data: { user_id: id },
+                    success: function (data) {
+                        swal({
+                            text: "User details deleted successfully!",
+                            icon: "success",
+                        });
+                        location.reload();
+                    },
+                });
+            }
         }
+
         function savecontact() {
             var x = document.forms["contact"]["firstName"].value;
             const num = /^[0-9]/;
@@ -269,6 +290,7 @@ include 'update.php';
 
                 },
             });
+
         }
 
         $(document).ready(function () {
@@ -278,8 +300,42 @@ include 'update.php';
                     'copy', 'csv', 'excel', 'pdf', 'print'
 
                 ]
+
+
             });
         });
+
+        /* Edit in popup modal*/
+
+        $(document).on('click', '.edit_data', function () {
+
+            var user_id = $(this).attr("user_id");
+
+            $.ajax({
+                url: "fetch.php",
+                method: "POST",
+                data: { user_id: user_id },
+                dataType: "json",
+                success: function (data) {
+                    $('#firstName').val(data.firstName);
+                    $('#lastName').val(data.lastName);
+                    $('#mobileNumber').val(data.mobileNumber);
+                    $('#officeNumber').val(data.officeNumber);
+                    $('#Email').val(data.Email);
+                    $('#Instagram').val(data.Instagram);
+                    $('#Twitter').val(data.Twitter);
+                    $('#Linkedin').val(data.Linkedin);
+                    $('#Facebook').val(data.Facebook);
+                    $('#Add').val("update.php");
+                    $('#myForm').attr('action', $('#Add').val());//update.php
+                    $('#myModal').modal('show');
+
+                }
+            });
+        });
+
+
+
 
     </script>
 

@@ -14,10 +14,5 @@ if (isset($_POST['user_id'])) {
     // $result = mysqli_query($con, $sql);  
     // }
 
-    if ($result) {
-        echo "Record deleted successfully";
-    } else {
-        echo "Error:" . $sql . "<br>" . $con->error;
-    }
 }
 ?>

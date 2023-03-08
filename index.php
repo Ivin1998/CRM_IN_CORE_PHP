@@ -1,9 +1,7 @@
 <?php
 date_default_timezone_set('Asia/Calcutta');
 include 'connections.php';
-include 'update.php';
 ?>
-
 
 <body>
     <title>Users_list</title>
@@ -21,9 +19,8 @@ include 'update.php';
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <br>
     <center>
-        <div style="float: right;"><button type="button" class="btn btn-info btn-lg" data-toggle="modal"
-                data-target="#myModal">Add
-                Contact</button>
+        <div style="float: right;"><button id="add_con" type="button" class="btn btn-info btn-lg" data-toggle="modal"
+                data-target="#myModal">Add Contact</button>
     </center>
     </div>
     <link rel="stylesheet" href="styles.css">
@@ -49,26 +46,28 @@ include 'update.php';
                             <input type="submit" name="submit" value="Import">
 
                             <md style="color:red;display:flex;gap:5px;"><span style="color:black">First Name:</span>*
-                            </md><input type="text" name="firstName" /><br><br>
+                            </md><input type="text" name="firstName" id="firstName" /><br><br>
                             <md style="color:red;display:flex;gap:5px;" /><span style="color:black">Last Name:</span>*
-                            </md> <input type="text" name="lastName" /><br><br>
+                            </md> <input type="text" name="lastName" id="lastName" /><br><br>
                             <md style="color:red;display:flex;gap:5px;"> <span style="color:black">Mobile
-                                    Number:</span>*</md> <input type="text" name="mobileNumber" /><br><br>
-                            Office Number: <input type="text" name="officeNumber" /><br><br>
-                            Email Address: <input type="text" name="Email" /><br><br>
-                            Instagram Profile: <input type="text" name="Instagram" /><br><br>
-                            Twitter Handle: <input type="text" name="Twitter" /><br><br>
-                            Linkedin Id: <input type="text" name="Linkedin" /><br><br>
-                            Facebook Id: <input type="text" name="Facebook" /><br><br>
+                                    Number:</span>*</md> <input type="text" name="mobileNumber"
+                                id="mobileNumber" /><br><br>
+                            Office Number: <input type="text" name="officeNumber" id="officeNumber" /><br><br>
+                            Email Address: <input type="text" name="Email" id="Email" /><br><br>
+                            Instagram Profile: <input type="text" name="Instagram" id="Instagram" /><br><br>
+                            Twitter Handle: <input type="text" name="Twitter" id="Twitter" /><br><br>
+                            Linkedin Id: <input type="text" name="Linkedin" id="Linkedin" /><br><br>
+                            Facebook Id: <input type="text" name="Facebook" id="Facebook" /><br><br>
                             <input type="hidden" name="user_id" id="user_id" />
                             <input type="hidden" name="created_date" value="<?php echo date('Y-m-d H:i:s') ?>" />
                             <input type="hidden" name="mod_date" value='<?php echo date('Y-m-d H:i:s') ?>' />
                             <button type="button" onclick="savecontact()" id="Add" class="btn btn-primary">Add</button>
+                            <button id="update-btn" class="btn btn-primary" type="button">Update</button>
                         </form>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-default" id="reload" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
@@ -80,6 +79,7 @@ include 'update.php';
     <div>
 
         <table id="mytable" border="2" class="table-bordered" style="width:100%">
+
             <thead>
                 <tr>
                     <th>Sl.no.</th>
@@ -158,10 +158,12 @@ include 'update.php';
                             }
                             ?>
                         </td>
-                        <td><a class="btn btn-info btn-lg edit_data" id="<?php echo $rows['user_id']; ?>">Edit</a>
+                        <td><a class="btn btn-info btn-lg view_data" id="<?php echo $rows['user_id']; ?>">View</a>
+                            <a class="btn btn-info btn-lg edit_data" id="<?php echo $rows['user_id']; ?>">Edit</a>
 
                             <a class="btn btn-danger btn-lg"
                                 onclick="checkDelete(<?php echo $rows['user_id']; ?>)">Delete</a>
+
                         </td>
 
 
@@ -306,36 +308,77 @@ include 'update.php';
         });
 
         /* Edit in popup modal*/
-
         $(document).on('click', '.edit_data', function () {
-
-            var user_id = $(this).attr("user_id");
-
+            var user_id = $(this).attr("id");
             $.ajax({
                 url: "fetch.php",
                 method: "POST",
                 data: { user_id: user_id },
                 dataType: "json",
                 success: function (data) {
-                    $('#firstName').val(data.firstName);
-                    $('#lastName').val(data.lastName);
-                    $('#mobileNumber').val(data.mobileNumber);
-                    $('#officeNumber').val(data.officeNumber);
-                    $('#Email').val(data.Email);
-                    $('#Instagram').val(data.Instagram);
-                    $('#Twitter').val(data.Twitter);
-                    $('#Linkedin').val(data.Linkedin);
-                    $('#Facebook').val(data.Facebook);
-                    $('#Add').val("update.php");
-                    $('#myForm').attr('action', $('#Add').val());//update.php
-                    $('#myModal').modal('show');
+                    $('#firstName').val(data.first_name);
+                    $('#lastName').val(data.last_name);
+                    $('#mobileNumber').val(data.mobile_number);
+                    $('#officeNumber').val(data.office_number);
+                    $('#Email').val(data.email_id);
+                    $('#Instagram').val(data.instagram_id);
+                    $('#Twitter').val(data.twitter_id);
+                    $('#Linkedin').val(data.linkedin_id);
+                    $('#Facebook').val(data.facebook_id);
+                    $('#user_id').val(user_id);
+                    $('#add_con').click()
+                    $('#update-btn').show();
+                    $('#Add').hide();
+                    $('#reload').click(function () {
+                        location.reload();
+                    });
 
                 }
             });
         });
 
+        $("#update-btn").click(function () {
+            $.ajax({
+                url: "update.php",
+                type: "POST",
+                data: $('#mycontact').serialize(),
+                success: function (data) {
+                    swal({
+                        text: "User details Updated successfully!",
+                        icon: "success",
+                    });
+                    location.reload();
+                },
 
+            });
+        });
 
+        $(document).ready(function () {
+            $("#add_con").click(function () {
+                $('#update-btn').hide();
+                $('#Add').show();
+            });
+        });
+
+        $(document).on('click', '.view_data', function () {
+            var user_id = $(this).attr("id");
+            if (user_id != '') {
+                $.ajax({
+                    url: "select.php",
+                    method: "POST",
+                    data: { user_id: user_id },
+                    success: function (data) {
+                        $('#myForm').html(data);
+                        $('#add_con').click();
+                        $('#reload').click(function () {
+                            location.reload();
+                        });
+                    }
+
+                });
+
+            }
+        });
 
     </script>
 

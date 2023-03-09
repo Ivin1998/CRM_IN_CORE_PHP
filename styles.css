@@ -23,4 +23,55 @@
   margin-left: 600px;
   align-items: center;
 }
+.dataTables_filter{
+  padding: 8 px;
+}
 
+.sorting {
+  text-align: center;
+}
+.highlighted {
+ background-color: blanchedalmond;
+  border: 1px solid black;
+}
+
+thead {
+  background-color: aliceblue;
+}
+
+#mytable_paginate  {
+  text-align: center;
+  
+}
+
+#mytable_info {
+  text-align: center;
+  
+}
+#mytable_first {
+  padding: 8px 5px;
+  display: inline;
+}  
+#mytable_previous{
+  padding: 8px 16px;
+  display: inline;
+}
+#mytable_next{
+  padding: 8px 16px;
+  display: inline;
+}
+
+#paginate_button.last{
+  padding: 8px 16px;
+  display: inline;
+}
+#mytable_info {
+  padding: 10px 16px;
+  display: block;
+}
+#mytable_filter {
+  padding-bottom: 10;
+}
+#mytable_length {
+  padding-top: 15;
+}

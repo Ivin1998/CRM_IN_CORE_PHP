@@ -18,10 +18,10 @@ include 'connections.php';
     <script src="https://cdn.datatables.net/buttons/2.3.5/js/buttons.print.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <br>
-    <center>
+   
         <div style="float: right;"><button id="add_con" type="button" class="btn btn-info btn-lg" data-toggle="modal"
                 data-target="#myModal">Add Contact</button>
-    </center>
+   
     </div>
     <link rel="stylesheet" href="styles.css">
     <link type="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.css"> <!-- datatable css -->
@@ -87,15 +87,15 @@ include 'connections.php';
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Mobile Number</th>
-                    <th>Office Number</th>
-                    <th style="text-align:center">Email Address</th>
-                    <th>Instagram Profile</th>
+                    <!-- <th>Office Number</th> -->
+                    <th>Email Address</th>
+                    <!-- <th>Instagram Profile</th>
                     <th>Twitter Handle</th>
                     <th>LinkedIn profile</th>
-                    <th>Facebook Id</th>
+                    <th>Facebook Id</th> -->
                     <th>Created Date</th>
                     <th>Modified Date</th>
-                    <th style="text-align:center">Actions</th>
+                    <th style="width:250px">Actions</th>
 
                 </tr>
             </thead>
@@ -120,13 +120,13 @@ include 'connections.php';
                         <td style="text-align:right">
                             <?php echo $rows['mobile_number']; ?>
                         </td>
-                        <td style="text-align:right">
+                        <!-- <td style="text-align:right">
                             <?php echo $rows['office_number']; ?>
-                        </td>
+                        </td> -->
                         <td>
                             <?php echo '<a href="mailto:' . $rows['email_id'] . '">' . $rows['email_id'] . '</a>'; ?>
                         </td>
-                        <td>
+                        <!-- <td>
                             <?php echo $rows['instagram_id']; ?>
                         </td>
                         <td>
@@ -137,7 +137,7 @@ include 'connections.php';
                         </td>
                         <td>
                             <?php echo $rows['facebook_id']; ?>
-                        </td>
+                        </td> -->
                         <td style="text-align:right"> <!-- For changing the date format and printing the created date -->
 
                             <?php $timestamp = strtotime($rows['created_date']);
@@ -158,11 +158,11 @@ include 'connections.php';
                             }
                             ?>
                         </td>
-                        <td><a class="btn btn-info btn-lg view_data" id="<?php echo $rows['user_id']; ?>">View</a>
+                        <td><a class="btn btn-success btn-lg view_data" id="<?php echo $rows['user_id']; ?>">View</a>
                             <a class="btn btn-info btn-lg edit_data" id="<?php echo $rows['user_id']; ?>">Edit</a>
 
                             <a class="btn btn-danger btn-lg"
-                                onclick="checkDelete(<?php echo $rows['user_id']; ?>)">Delete</a>
+                                onclick="highlight(this); checkDelete(<?php echo $rows['user_id']; ?>,'<?php echo ($rows['first_name']); ?>'); ">Delete</a>
 
                         </td>
 
@@ -177,12 +177,19 @@ include 'connections.php';
 
     <script type="text/javascript">
 
-        function checkDelete(id) {
-            if (confirm("Are you sure you want to delete this record?")) {
+            function highlight(button){
+            var row=button.parentNode.parentNode; //one parentnode for tr and one parentNode for td
+            row.classList.add("highlighted");
+
+        }
+
+        function checkDelete(id,name) {
+            if (confirm("Are you sure want to delete the user "+ name+ "?")) {
                 $.ajax({
                     type: "POST",
                     url: 'delete.php',
                     data: { user_id: id },
+                    
                     success: function (data) {
                         swal({
                             text: "User details deleted successfully!",
@@ -193,7 +200,6 @@ include 'connections.php';
                 });
             }
         }
-
         function savecontact() {
             var x = document.forms["contact"]["firstName"].value;
             const num = /^[0-9]/;
@@ -289,27 +295,22 @@ include 'connections.php';
                         icon: "success",
                     });
                     location.reload();
-
+                 
+                    $('.edit_data').hide();
+                    
                 },
             });
 
         }
-
-        $(document).ready(function () {
-            $('#mytable').DataTable({
-                dom: 'Blfrtip',
-                buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
-
-                ]
-
-
-            });
-        });
-
+            
+        
         /* Edit in popup modal*/
         $(document).on('click', '.edit_data', function () {
             var user_id = $(this).attr("id");
+
+            var row=$(this).closest('tr'); 
+            row.addClass("highlighted");
+
             $.ajax({
                 url: "fetch.php",
                 method: "POST",
@@ -327,12 +328,13 @@ include 'connections.php';
                     $('#Facebook').val(data.facebook_id);
                     $('#user_id').val(user_id);
                     $('#add_con').click()
+                    $('.modal-title').html('Edit Details');
                     $('#update-btn').show();
-                    $('#Add').hide();
+                    $('#Add').hide();   
+                      
                     $('#reload').click(function () {
-                        location.reload();
-                    });
-
+                            location.reload();
+                        });            
                 }
             });
         });
@@ -358,7 +360,7 @@ include 'connections.php';
                 $('#update-btn').hide();
                 $('#Add').show();
             });
-        });
+        }); 
 
         $(document).on('click', '.view_data', function () {
             var user_id = $(this).attr("id");
@@ -370,18 +372,29 @@ include 'connections.php';
                     success: function (data) {
                         $('#myForm').html(data);
                         $('#add_con').click();
+                        $('.modal-title').html('User Details');
                         $('#reload').click(function () {
                             location.reload();
-                        });
+                        }); 
                     }
 
                 });
 
             }
         });
+            //Datatypes
+        $(document).ready(function () {
+            $('#mytable').DataTable({
+                dom: 'Blfrtip',
+                pagingType: 'full_numbers',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+
+                ]
+
+            });
+        });
 
     </script>
-
 </body>
-
 </html>

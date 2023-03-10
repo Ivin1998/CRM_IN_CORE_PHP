@@ -8,7 +8,6 @@ include 'connections.php';
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.5/js/dataTables.buttons.min.js"></script>
@@ -18,15 +17,17 @@ include 'connections.php';
     <script src="https://cdn.datatables.net/buttons/2.3.5/js/buttons.print.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <br>
-   
-        <div style="float: right;"><button id="add_con" type="button" class="btn btn-info btn-lg" data-toggle="modal"
-                data-target="#myModal">Add Contact</button>
-   
+
+    <div style="float: right;"><button id="add_con" type="button" class="btn btn-info btn-lg" data-toggle="modal"
+            data-target="#myModal">Add Contact</button>
+
     </div>
     <link rel="stylesheet" href="styles.css">
     <link type="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.css"> <!-- datatable css -->
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 
     <div id="myModal" class="modal fade" role="dialog">
@@ -121,22 +122,22 @@ include 'connections.php';
                             <?php echo $rows['mobile_number']; ?>
                         </td>
                         <!-- <td style="text-align:right">
-                            <?php echo $rows['office_number']; ?>
+                                <?php echo $rows['office_number']; ?>
                         </td> -->
                         <td>
                             <?php echo '<a href="mailto:' . $rows['email_id'] . '">' . $rows['email_id'] . '</a>'; ?>
                         </td>
                         <!-- <td>
-                            <?php echo $rows['instagram_id']; ?>
+                                <?php echo $rows['instagram_id']; ?>
                         </td>
                         <td>
-                            <?php echo $rows['twitter_id']; ?>
+                                <?php echo $rows['twitter_id']; ?>
                         </td>
                         <td>
-                            <?php echo $rows['linkedin_id']; ?>
+                                <?php echo $rows['linkedin_id']; ?>
                         </td>
                         <td>
-                            <?php echo $rows['facebook_id']; ?>
+                                <?php echo $rows['facebook_id']; ?>
                         </td> -->
                         <td style="text-align:right"> <!-- For changing the date format and printing the created date -->
 
@@ -158,11 +159,14 @@ include 'connections.php';
                             }
                             ?>
                         </td>
-                        <td><a class="btn btn-success btn-lg view_data" id="<?php echo $rows['user_id']; ?>">View</a>
-                            <a class="btn btn-info btn-lg edit_data" id="<?php echo $rows['user_id']; ?>">Edit</a>
+                        <td><a class=" btn-lg view_data eye-icon" id="<?php echo $rows['user_id']; ?>"><i
+                                    class="fa fa-eye"></i></a>
+                            <a class=" btn-lg edit_icon edit_data" id="<?php echo $rows['user_id']; ?>"><i
+                                    class="fa fa-edit"></i></a>
 
-                            <a class="btn btn-danger btn-lg"
-                                onclick="highlight(this); checkDelete(<?php echo $rows['user_id']; ?>,'<?php echo ($rows['first_name']); ?>'); ">Delete</a>
+                            <a class="btn btn-lg delete-icon"
+                                onclick="highlight(this); checkDelete(<?php echo $rows['user_id']; ?>,'<?php echo ($rows['first_name']); ?>'); "><i
+                                    class="fa fa-car"></i></a>
 
                         </td>
 
@@ -177,28 +181,37 @@ include 'connections.php';
 
     <script type="text/javascript">
 
-            function highlight(button){
-            var row=button.parentNode.parentNode; //one parentnode for tr and one parentNode for td
+        function highlight(button) {
+            var row = button.parentNode.parentNode; //one parentnode for tr and one parentNode for td
             row.classList.add("highlighted");
 
         }
 
-        function checkDelete(id,name) {
-            if (confirm("Are you sure want to delete the user "+ name+ "?")) {
-                $.ajax({
-                    type: "POST",
-                    url: 'delete.php',
-                    data: { user_id: id },
-                    
-                    success: function (data) {
-                        swal({
-                            text: "User details deleted successfully!",
-                            icon: "success",
-                        });
-                        location.reload();
-                    },
-                });
-            }
+        function checkDelete(id, name) {
+            swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085D6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "POST",
+                        url: 'delete.php',
+                        data: { user_id: id },
+                        success: function (data) {
+                            /*  swal({
+                                 text: "User details deleted successfully!",
+                                 icon: "success",
+                             }); */
+                            location.reload();
+                        },
+                    });
+                }
+            })
         }
         function savecontact() {
             var x = document.forms["contact"]["firstName"].value;
@@ -295,20 +308,20 @@ include 'connections.php';
                         icon: "success",
                     });
                     location.reload();
-                 
+
                     $('.edit_data').hide();
-                    
+
                 },
             });
 
         }
-            
-        
+
+
         /* Edit in popup modal*/
         $(document).on('click', '.edit_data', function () {
             var user_id = $(this).attr("id");
 
-            var row=$(this).closest('tr'); 
+            var row = $(this).closest('tr');
             row.addClass("highlighted");
 
             $.ajax({
@@ -330,11 +343,11 @@ include 'connections.php';
                     $('#add_con').click()
                     $('.modal-title').html('Edit Details');
                     $('#update-btn').show();
-                    $('#Add').hide();   
-                      
+                    $('#Add').hide();
+
                     $('#reload').click(function () {
-                            location.reload();
-                        });            
+                        location.reload();
+                    });
                 }
             });
         });
@@ -360,7 +373,7 @@ include 'connections.php';
                 $('#update-btn').hide();
                 $('#Add').show();
             });
-        }); 
+        });
 
         $(document).on('click', '.view_data', function () {
             var user_id = $(this).attr("id");
@@ -375,14 +388,14 @@ include 'connections.php';
                         $('.modal-title').html('User Details');
                         $('#reload').click(function () {
                             location.reload();
-                        }); 
+                        });
                     }
 
                 });
 
             }
         });
-            //Datatypes
+        //Datatypes
         $(document).ready(function () {
             $('#mytable').DataTable({
                 dom: 'Blfrtip',
@@ -397,4 +410,5 @@ include 'connections.php';
 
     </script>
 </body>
+
 </html>

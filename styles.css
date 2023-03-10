@@ -1,5 +1,5 @@
 
-  form{
+ form{
     
     width: auto;
     margin-top: auto;
@@ -74,4 +74,33 @@ thead {
 }
 #mytable_length {
   padding-top: 15;
+}
+.eye-icon{
+  color: green;
+  cursor: pointer;
+ 
+}
+
+.delete-icon{
+  color:red ;
+  cursor: pointer;
+}
+
+.edit_icon{
+  cursor: pointer;
+}
+.input {
+  width: 50%;
+}
+
+.login{
+  width: 35%;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+}
+
+#forgot{
+  text-align: center;
+  cursor: pointer;
 }

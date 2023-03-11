@@ -19,7 +19,7 @@ values('$first_name','$last_name','$mobile_number','$office_numer','$email_id','
 $success = mysqli_query($con, $sql);
 
 if ($success) {
-    echo "User Details added successfully";
+    echo "Jenifer is my hero";
 
 } else {
     echo "Error:" . $sql . "<br>" . $con->error;

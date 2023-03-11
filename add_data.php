@@ -19,7 +19,7 @@ values('$first_name','$last_name','$mobile_number','$office_numer','$email_id','
 $success = mysqli_query($con, $sql);
 
 if ($success) {
-    echo "Jenifer is my hero";
+    echo "User information updated successfully";
 
 } else {
     echo "Error:" . $sql . "<br>" . $con->error;

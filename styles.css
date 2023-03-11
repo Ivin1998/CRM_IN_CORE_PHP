@@ -1,77 +1,105 @@
-
-  form{
+form{
     
-    width: auto;
-    margin-top: auto;
-    margin-bottom: auto;
-    position: relative;
-    display: flex;
-    row-gap: 5px;
-    justify-content: center;
-    flex-direction: column;
-    padding: 20px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    border-radius: 5px;
+  width: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  position: relative;
+  display: flex;
+  row-gap: 5px;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
 
 }
 .dataTables_filter input {
-  margin-left: 10px;
+margin-left: 10px;
 }
 .dataTables_filter label {
-  margin-left: 600px;
-  align-items: center;
+margin-left: 600px;
+align-items: center;
 }
 .dataTables_filter{
-  padding: 8 px;
+padding: 8 px;
 }
 
 .sorting {
-  text-align: center;
+text-align: center;
 }
 .highlighted {
- background-color: blanchedalmond;
-  border: 1px solid black;
+background-color: blanchedalmond;
+border: 1px solid black;
 }
 
 thead {
-  background-color: aliceblue;
+background-color: aliceblue;
 }
 
 #mytable_paginate  {
-  text-align: center;
-  
+text-align: center;
+
 }
 
 #mytable_info {
-  text-align: center;
-  
+text-align: center;
+
 }
 #mytable_first {
-  padding: 8px 5px;
-  display: inline;
+padding: 8px 5px;
+display: inline;
 }  
 #mytable_previous{
-  padding: 8px 16px;
-  display: inline;
+padding: 8px 16px;
+display: inline;
 }
 #mytable_next{
-  padding: 8px 16px;
-  display: inline;
+padding: 8px 16px;
+display: inline;
 }
 
 #paginate_button.last{
-  padding: 8px 16px;
-  display: inline;
+padding: 8px 16px;
+display: inline;
 }
 #mytable_info {
-  padding: 10px 16px;
-  display: block;
+padding: 10px 16px;
+display: block;
 }
 #mytable_filter {
-  padding-bottom: 10;
+padding-bottom: 10;
 }
 #mytable_length {
-  padding-top: 15;
+padding-top: 15;
+}
+.eye-icon{
+color: green;
+cursor: pointer;
+
+}
+
+.delete-icon{
+color:red ;
+cursor: pointer;
+}
+
+.edit_icon{
+cursor: pointer;
+}
+.input {
+width: 50%;
+}
+
+.login{
+width: 35%;
+display: flex;
+flex-wrap: wrap;
+align-content: center;
+}
+
+#forgot{
+text-align: center;
+cursor: pointer;
 }

@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 form{
+=======
+
+ form{
+>>>>>>> assets
     
   width: auto;
   margin-top: auto;
@@ -72,6 +77,7 @@ display: block;
 padding-bottom: 10;
 }
 #mytable_length {
+<<<<<<< HEAD
 padding-top: 15;
 }
 .eye-icon{
@@ -103,3 +109,36 @@ align-content: center;
 text-align: center;
 cursor: pointer;
 }
+=======
+  padding-top: 15;
+}
+.eye-icon{
+  color: green;
+  cursor: pointer;
+ 
+}
+
+.delete-icon{
+  color:red ;
+  cursor: pointer;
+}
+
+.edit_icon{
+  cursor: pointer;
+}
+.input {
+  width: 50%;
+}
+
+.login{
+  width: 35%;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+}
+
+#forgot{
+  text-align: center;
+  cursor: pointer;
+}
+>>>>>>> assets

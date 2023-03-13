@@ -17,10 +17,6 @@ include 'connections.php';
     <script src="https://cdn.datatables.net/buttons/2.3.5/js/buttons.print.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <br>
-<<<<<<< HEAD
-=======
-
->>>>>>> assets
     <div style="float: right;"><button id="add_con" type="button" class="btn btn-info btn-lg" data-toggle="modal"
             data-target="#myModal">Add Contact</button>
     </div>
@@ -40,10 +36,11 @@ include 'connections.php';
                 </div>
                 <div class="modal-body">
                     <div id="myForm">
-                        <form name="contact" method="post" id="mycontact" enctype="multipart/form-data">
+                        <form name="contact" action="import.php" method="post" id="mycontact" enctype="multipart/form-data">
                             <label>Select CSV File:</label>
-                            <input type="file" name="file"><br>
+                            <input type="file" name="csv_file"><br>
                             <input type="submit" name="submit" value="Import">
+
 
                             <md style="color:red;display:flex;gap:5px;"><span style="color:black">First Name:</span>*
                             </md><input type="text" name="firstName" id="firstName" /><br><br>

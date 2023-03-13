@@ -36,12 +36,10 @@ include 'connections.php';
                 </div>
                 <div class="modal-body">
                     <div id="myForm">
-                        <form name="contact" action="import.php" method="post" id="mycontact" enctype="multipart/form-data">
+                        <form name="contact"method="post" action="import.php"id="mycontact" enctype="multipart/form-data">
                             <label>Select CSV File:</label>
-                            <input type="file" name="csv_file"><br>
-                            <input type="submit" name="submit" value="Import">
-
-
+                            <input type="file" name="csv_file" id><br>
+                            <input type="submit" name="submit" id="submit" value="Import">
                             <md style="color:red;display:flex;gap:5px;"><span style="color:black">First Name:</span>*
                             </md><input type="text" name="firstName" id="firstName" /><br><br>
                             <md style="color:red;display:flex;gap:5px;" /><span style="color:black">Last Name:</span>*
@@ -201,6 +199,7 @@ include 'connections.php';
                                 text: "User details deleted successfully!",
                                 icon: "success",
                             });
+                           
                             location.reload();
                         },
                     });
@@ -401,6 +400,23 @@ include 'connections.php';
 
             });
         });
+            
+     $("#submit").click(function () {
+            $.ajax({
+                url: "import.php",
+                type: "POST",
+                data: $('#mycontact').serialize(),
+                success: function (data) {
+                    swal.fire({
+                        text: "User details Updated successfully!",
+                        icon: "success",
+                    });
+                   location.reload(); 
+                },
+            });
+            location.reload(); 
+        }); 
+
 
     </script>
 </body>

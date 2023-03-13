@@ -7,11 +7,9 @@ if (count($_POST) > 0) {
     $sql = "SELECT * FROM users WHERE user_name= ?";
     $userName = $_POST['user_name'];
     $statement = $con->prepare($sql);
-    $statement->bind_param('s', $userName);
+    $statement->bind_param('user_name', $userName);
     $statement->execute();
     $result = $statement->get_result();
-   
-  
     while ($row = $result->fetch_assoc()) {
         if (!empty($row)) {
             $hashedPassword = $row["password"];
@@ -45,12 +43,6 @@ if (count($_POST) > 0) {
         <button type="submit" class="btn btn-primary" >Login</button>
         <h5 id="forgot" >Forgotten Password?</h5>
     </form>
-
-
-
-
-
-    
 
 </body>
 </center>

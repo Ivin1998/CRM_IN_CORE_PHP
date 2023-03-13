@@ -408,7 +408,7 @@ include 'connections.php';
                 data: $('#mycontact').serialize(),
                 success: function (data) {
                     swal.fire({
-                        text: "User details Updated successfully!",
+                        text: "User details Added successfully!",
                         icon: "success",
                     });
                    location.reload(); 

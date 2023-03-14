@@ -20,10 +20,13 @@ include 'connections.php';
     <div style="float: right;"><button id="add_con" type="button" class="btn btn-info btn-lg" data-toggle="modal"
             data-target="#myModal">Add Contact</button>
     </div>
+    <div style="float: right;"><button><a href="logout.php"><i class="fa fa-sign-out logout"></i></a></button>
+    </div>
+
     <link rel="stylesheet" href="styles.css">
     <link type="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.css"> <!-- datatable css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.15/sweetalert2.all.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -412,13 +415,16 @@ include 'connections.php';
                         icon: "success",
                     });
                    location.reload(); 
+                  
                 },
             });
             location.reload(); 
+           
         }); 
 
 
     </script>
+       
 </body>
 
 </html>

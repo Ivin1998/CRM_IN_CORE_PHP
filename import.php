@@ -50,8 +50,5 @@ if (isset($_POST["submit"])) {
         } else {
             echo "Error:" . $sql . "<br>" . $con->error;
         }   
-} else{
-    echo "eff";
 }
-
 ?>

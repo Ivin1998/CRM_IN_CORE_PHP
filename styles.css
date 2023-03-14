@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 form{
-=======
-
- form{
->>>>>>> assets
     
   width: auto;
   margin-top: auto;
@@ -22,13 +17,18 @@ form{
 }
 .dataTables_filter input {
 margin-left: 10px;
+
 }
 .dataTables_filter label {
 margin-left: 600px;
 align-items: center;
+
 }
 .dataTables_filter{
 padding: 8 px;
+display: inline-block;
+
+
 }
 
 .sorting {
@@ -75,10 +75,12 @@ display: block;
 }
 #mytable_filter {
 padding-bottom: 10;
+display: inline;
 }
 #mytable_length {
-<<<<<<< HEAD
 padding-top: 15;
+display: block;
+
 }
 .eye-icon{
 color: green;
@@ -109,36 +111,18 @@ align-content: center;
 text-align: center;
 cursor: pointer;
 }
-=======
-  padding-top: 15;
-}
-.eye-icon{
-  color: green;
-  cursor: pointer;
- 
-}
+.logout{
+  font-size: 25;
 
-.delete-icon{
-  color:red ;
-  cursor: pointer;
 }
-
-.edit_icon{
-  cursor: pointer;
+.dt-buttons {
+  display: unset;
+  
 }
-.input {
-  width: 50%;
+.form-control input{
+ display: inline;
 }
-
-.login{
-  width: 35%;
-  display: flex;
-  flex-wrap: wrap;
-  align-content: center;
+.show {
+  position: relative;
+  text-align: initial;
 }
-
-#forgot{
-  text-align: center;
-  cursor: pointer;
-}
->>>>>>> assets

@@ -19,7 +19,7 @@ include 'connections.php';
     <br>
     <div style="float: right;"><button id="add_con" type="button" class="btn btn-info btn-lg" data-toggle="modal"
             data-target="#myModal">Add Contact</button>
-    </div>
+    </div><br><br><br>
     <div style="float: right;"><button><a href="logout.php"><i class="fa fa-sign-out logout"></i></a></button>
     </div>
 

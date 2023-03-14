@@ -1,51 +1,75 @@
-<?php
-include 'connections.php';
-
-$message = "";
-if (count($_POST) > 0) {
-    $isSuccess = 0;
-    $sql = "SELECT * FROM users WHERE user_name= ?";
-    $userName = $_POST['user_name'];
-    $statement = $con->prepare($sql);
-    $statement->bind_param('user_name', $userName);
-    $statement->execute();
-    $result = $statement->get_result();
-    while ($row = $result->fetch_assoc()) {
-        if (!empty($row)) {
-            $hashedPassword = $row["password"];
-            if (password_verify($_POST["password"], $hashedPassword)) {
-                $isSuccess = 1;
-            }
-        }
-    }
-    if ($isSuccess == 0) {
-        $message = "Invalid Username or Password!";
-    } else {
-        header("Location:  contacts.php");
-    }
-}
-?>
-
 <html>
+
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
  <link rel="stylesheet" href="styles.css">
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 <center>
  <body>
     <title>Login</title>
     <h2>Login</h2>
     <div>
         <!-- had the first action temporary -->
-    <form method="post" action="contacts.php"action= "<?php echo $_SERVER['PHP_SELF']; ?>" class="login"> 
+    <form method="post"  class="login"> 
         <label style="text-align:left">User Name</label>
         <input type="text" name="user_name" placeholder="Enter your email"class="form-control input" ><br>
         <label style="text-align:left">Password</label>
-        <input type="password" name="password" placeholder="Enter your Password"class="form-control input"><br>
-        <button type="submit" class="btn btn-primary" >Login</button>
+        <input type="password" name="password" placeholder="Enter your Password" id="myInput" class="form-control input">
+       
+        <div class="show"><input type="checkbox" onclick="checkPassword()"> Show password</input></div>
+        <button type="submit" name="submit" class="btn btn-primary" >Login</button>
         <h5 id="forgot" >Forgotten Password?</h5>
     </form>
-
+    <script>
+    function checkPassword(){
+        var x = document.getElementById("myInput");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+        }
+    </script>
 </body>
 </center>
 
 
+
 </html>
+<?php
+session_start();
+include 'connections.php';
+
+if(isset($_POST["submit"])){
+$username = $_POST['user_name'];
+$password = md5($_POST['password']);
+$stmt = $con->prepare("SELECT user_name, password,user_id FROM users WHERE user_name=? AND password=? LIMIT 1");
+$stmt->bind_param('ss', $username, $password);
+$stmt->execute();
+$stmt->bind_result($username, $password,$user_id);
+$stmt->store_result();
+if($stmt->num_rows == 1){
+    if($stmt->fetch()){
+        {
+           
+                   $_SESSION['user_id'] = $user_id;
+                   $_SESSION['username'] = $username;
+                   header('Location: contacts.php');
+                   exit();
+        }
+    }
+    }else{
+        echo "
+        <script>Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Invalid username or password!',
+          });
+        </script>";
+    }
+    $stmt->close();
+}
+
+$con->close();
+
+?>

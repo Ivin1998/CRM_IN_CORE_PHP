@@ -1,7 +1,11 @@
 <?php
 date_default_timezone_set('Asia/Calcutta');
 include 'connections.php';
-?>
+session_start();
+$username = $_SESSION['username'];
+$user_id = $_SESSION['user_id'];
+/* echo "User ID: " . $user_id; 
+ */?>
 
 <body>
     <title>Users_list</title>
@@ -16,30 +20,35 @@ include 'connections.php';
     <script src="https://cdn.datatables.net/buttons/2.3.5/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.5/js/buttons.print.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <br>
-    <div style="float: right;"><button id="add_con" type="button" class="btn btn-info btn-lg" data-toggle="modal"
-            data-target="#myModal">Add Contact</button>
-    </div><br><br><br>
-    <div style="float: right;"><button><a href="logout.php"><i class="fa fa-sign-out logout"></i></a></button>
-    </div>
-
     <link rel="stylesheet" href="styles.css">
     <link type="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.css"> <!-- datatable css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
-   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <div class="row" style="padding-top: 15px;">
+        <div class="col col-sm-8 ">
+            <?php
+            echo "<p class=intro>Welcome $username!!</p>"; ?>
+        </div>
+        <div class="col col-sm-2"><button id="add_con" type="button" class="btn btn-info btn-lg" data-toggle="modal"
+                data-target="#myModal">Add Contact</button></div>
+        <div class="col col-sm-2"><button><a href="logout.php"><i class="fa fa-power-off logout"></i></a></button></div>
+    </div>
+
 
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
-
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Add Contact</h4>
                 </div>
+
                 <div class="modal-body">
                     <div id="myForm">
-                        <form name="contact"method="post" action="import.php"id="mycontact" enctype="multipart/form-data">
+                        <form name="contact" method="post" action="import.php" id="mycontact"
+                            enctype="multipart/form-data">
                             <label>Select CSV File:</label>
                             <input type="file" name="csv_file" id><br>
                             <input type="submit" name="submit" id="submit" value="Import">
@@ -71,9 +80,9 @@ include 'connections.php';
         </div>
     </div>
     <?php
-    $sql = "select*from contact_information where is_deleted=0 ORDER BY User_Id Desc";
-    $result = mysqli_query($con, $sql);
-    ?>
+    $sql = "SELECT * FROM contact_information WHERE is_deleted=0 ORDER BY User_Id DESC";
+
+    $result = mysqli_query($con, $sql) or die(mysqli_error($con)); ?>
     <div>
 
         <table id="mytable" border="2" class="table-bordered" style="width:100%">
@@ -119,22 +128,22 @@ include 'connections.php';
                             <?php echo $rows['mobile_number']; ?>
                         </td>
                         <!-- <td style="text-align:right">
-                                    <?php echo $rows['office_number']; ?>
+                                        <?php echo $rows['office_number']; ?>
                         </td> -->
                         <td>
                             <?php echo '<a href="mailto:' . $rows['email_id'] . '">' . $rows['email_id'] . '</a>'; ?>
                         </td>
                         <!-- <td>
-                                    <?php echo $rows['instagram_id']; ?>
+                                        <?php echo $rows['instagram_id']; ?>
                         </td>
                         <td>
-                                    <?php echo $rows['twitter_id']; ?>
+                                        <?php echo $rows['twitter_id']; ?>
                         </td>
                         <td>
-                                    <?php echo $rows['linkedin_id']; ?>
+                                        <?php echo $rows['linkedin_id']; ?>
                         </td>
                         <td>
-                                    <?php echo $rows['facebook_id']; ?>
+                                        <?php echo $rows['facebook_id']; ?>
                         </td> -->
                         <td style="text-align:right"> <!-- For changing the date format and printing the created date -->
 
@@ -202,7 +211,7 @@ include 'connections.php';
                                 text: "User details deleted successfully!",
                                 icon: "success",
                             });
-                           
+
                             location.reload();
                         },
                     });
@@ -403,8 +412,8 @@ include 'connections.php';
 
             });
         });
-            
-     $("#submit").click(function () {
+
+        $("#submit").click(function () {
             $.ajax({
                 url: "import.php",
                 type: "POST",
@@ -414,17 +423,17 @@ include 'connections.php';
                         text: "User details Added successfully!",
                         icon: "success",
                     });
-                   location.reload(); 
-                  
+                    location.reload();
+
                 },
             });
-            location.reload(); 
-           
-        }); 
+            location.reload();
+
+        });
 
 
     </script>
-       
+
 </body>
 
 </html>

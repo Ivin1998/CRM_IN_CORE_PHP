@@ -126,3 +126,6 @@ cursor: pointer;
   position: relative;
   text-align: initial;
 }
+.intro {
+  font-weight: bolder;
+}

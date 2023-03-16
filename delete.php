@@ -2,10 +2,10 @@
 include('connections.php');
 
 
-if (isset($_POST['user_id'])) {
-    $user_id = $_POST['user_id'];
+if (isset($_POST['id'])) {
+    $id = $_POST['id'];
 
-    $sql = "UPDATE contact_information SET is_deleted = 1 WHERE user_id = '$user_id'";
+    $sql = "UPDATE contact_information SET is_deleted = 1 WHERE id = '$id'";
     $result = mysqli_query($con, $sql);
 
     /* For hard deletion purpose we can use the below */

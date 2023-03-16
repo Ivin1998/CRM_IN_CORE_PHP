@@ -4,7 +4,7 @@
 include 'connections.php';
 
     $mod_date=$_POST['mod_date'];
-    $user_id = $_POST['user_id'];
+    $id = $_POST['id'];
     $first_name = $_POST['firstName'];
     $last_name = $_POST['lastName'];
     $mobile_number = $_POST['mobileNumber'];
@@ -17,7 +17,7 @@ include 'connections.php';
 
     $sql = "UPDATE contact_information SET first_name='$first_name',last_name='$last_name',
     mobile_number='$mobile_number',office_number='$office_number',email_id='$email_id',instagram_id=' $instagram_id',
-    twitter_id='$twitter_id',linkedin_id='$linkedin_id',facebook_id='$facebook_id',mod_date='$mod_date' where user_id='$user_id'";
+    twitter_id='$twitter_id',linkedin_id='$linkedin_id',facebook_id='$facebook_id',mod_date='$mod_date' where id='$id'";
 
     $result = $con->query($sql);
 

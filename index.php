@@ -1,23 +1,18 @@
 <html>
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="styles.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
+<link rel="stylesheet" href="./assets/indexbootstrap.css">
+<link rel="stylesheet" href="./assets/styles.css">
+<script type="text/javascript" src="./assets/sweetalert.js" ></script>
 <center>
-
     <body>
         <title>Login</title>
         <h2>Login</h2>
         <div>
-            <!-- had the first action temporary -->
             <form method="post" class="login">
                 <label style="text-align:left">User Name</label>
                 <input type="text" name="user_name" placeholder="Enter your email" class="form-control input"><br>
                 <label style="text-align:left">Password</label>
                 <input type="password" name="password" placeholder="Enter your Password" id="myInput"
                     class="form-control input">
-
                 <div class="show"><input type="checkbox" onclick="checkPassword()"> Show password</input></div>
                 <button type="submit" name="submit" class="btn btn-primary">Login</button>
                 <h5 id="forgot">Forgotten Password?</h5>
@@ -34,18 +29,11 @@
             </script>
     </body>
 </center>
-
-
-
 </html>
 <?php
-
 session_start();
-
 include 'connections.php';
 session_regenerate_id();
-
-
 if (isset($_POST["submit"])) {
     $username = $_POST['user_name'];
     $password = md5($_POST['password']);
@@ -60,7 +48,7 @@ if (isset($_POST["submit"])) {
         if ($stmt->fetch()) { {
                 $_SESSION['user_id'] = $user_id;
                 $_SESSION['username'] = $username;
-                header('Location: contacts.php');
+                header("Location: contacts.php?user_id=" . $user_id);
                 exit();
             }
         }
@@ -76,5 +64,4 @@ if (isset($_POST["submit"])) {
     $stmt->close();
 }
 $con->close();
-
 ?>

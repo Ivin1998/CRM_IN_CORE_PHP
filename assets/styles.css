@@ -129,3 +129,9 @@ cursor: pointer;
 .intro {
   font-weight: bolder;
 }
+.modal-title{
+  position: absolute;
+}
+.dashboard{
+  margin-top: 100;
+}

@@ -1,6 +1,7 @@
 <html>
 <link rel="stylesheet" href="./assets/indexbootstrap.css">
 <link rel="stylesheet" href="./assets/styles.css">
+
 <script type="text/javascript" src="./assets/sweetalert.js" ></script>
 <center>
     <body>
@@ -48,7 +49,7 @@ if (isset($_POST["submit"])) {
         if ($stmt->fetch()) { {
                 $_SESSION['user_id'] = $user_id;
                 $_SESSION['username'] = $username;
-                header("Location: contacts.php?user_id=" . $user_id);
+                header("Location: dashboards.php");
                 exit();
             }
         }

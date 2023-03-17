@@ -8,7 +8,9 @@ $user_id = $_SESSION['user_id'];
 
 
 <html>
+
 <head>
+
 <body>
     <title>Users_list</title>
     <link rel="stylesheet" href="./assets/bootstrapmin.css" />
@@ -31,9 +33,9 @@ $user_id = $_SESSION['user_id'];
         </div>
         <div class="col col-sm-2"><button id="add_con" type="button" class="btn btn-info btn-lg" data-toggle="modal"
                 data-target="#myModal">Add Contact</button></div>
-        <div class=" col col-sm-2 dropdown">
-            <button class="btn btn-primary rounded-circle" style="height:40px";"type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
+        <div class=" col col-sm-2">
+            <button class="btn btn-primary rounded-circle" style="height:40px" ;type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa-solid">
                     <?php echo "$username[0]$username[1]"; ?>
                 </i>
@@ -49,9 +51,6 @@ $user_id = $_SESSION['user_id'];
         </div>
     </div>
 
-
-
-
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -59,13 +58,13 @@ $user_id = $_SESSION['user_id'];
                 <div style="padding: 15px 15px 0px 15px">
                     <div class="row">
                         <div class="col col-sm-6">
-                        <h4>Add Contact</h4>
+                            <h4>Add Contact</h4>
                         </div>
                         <div class="col col-sm-6">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                     </div>
-                <!-- 
+                    <!-- 
                  -->
                 </div>
                 <div class="modal-body">
@@ -111,16 +110,10 @@ $user_id = $_SESSION['user_id'];
             <thead>
                 <tr>
                     <th>Sl.no.</th>
-                    <th>User Id</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Mobile Number</th>
-                    <!-- <th>Office Number</th> -->
                     <th>Email Address</th>
-                    <!-- <th>Instagram Profile</th>
-                    <th>Twitter Handle</th>
-                    <th>LinkedIn profile</th>
-                    <th>Facebook Id</th> -->
                     <th>Created Date</th>
                     <th>Modified Date</th>
                     <th style="width:250px">Actions</th>
@@ -136,9 +129,7 @@ $user_id = $_SESSION['user_id'];
                             <?php echo $no++; ?>
                         </td> <!-- incrementing the sl.no. -->
                         <td>
-                            <?php echo $rows['id']; ?>
-                        </td> <!-- primary key -->
-                        <td>
+
                             <?php echo $rows['first_name']; ?>
                         </td>
                         <td>
@@ -147,24 +138,11 @@ $user_id = $_SESSION['user_id'];
                         <td style="text-align:right">
                             <?php echo $rows['mobile_number']; ?>
                         </td>
-                        <!-- <td style="text-align:right">
-                                                                        <?php echo $rows['office_number']; ?>
-                        </td> -->
+
                         <td>
                             <?php echo '<a href="mailto:' . $rows['email_id'] . '">' . $rows['email_id'] . '</a>'; ?>
                         </td>
-                        <!-- <td>
-                                                                        <?php echo $rows['instagram_id']; ?>
-                        </td>
-                        <td>
-                                                                        <?php echo $rows['twitter_id']; ?>
-                        </td>
-                        <td>
-                                                                        <?php echo $rows['linkedin_id']; ?>
-                        </td>
-                        <td>
-                                                                        <?php echo $rows['facebook_id']; ?>
-                        </td> -->
+
                         <td style="text-align:right"> <!-- For changing the date format and printing the created date -->
 
                             <?php $timestamp = strtotime($rows['created_date']);

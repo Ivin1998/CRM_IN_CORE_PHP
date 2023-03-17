@@ -5,37 +5,68 @@ session_start();
 $username = $_SESSION['username'];
 $user_id = $_SESSION['user_id'];
 ?>
+
+
+<html>
+<head>
 <body>
     <title>Users_list</title>
+    <link rel="stylesheet" href="./assets/bootstrapmin.css" />
     <link rel="stylesheet" href="./assets/formbootstrap.css">
     <link rel="stylesheet" href="./assets/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
-    <script type="text/javascript" src="./assets/sweetalert.js" ></script>
+    <script type="text/javascript" src="./assets/sweetalert.js"></script>
     <script type="text/javascript" src="./assets/jquery.js"></script>
     <script type="text/javascript" src="./assets/bootstrapjs.js"></script>
-    <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.3.5/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.3.5/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.3.5/js/buttons.print.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" src="./assets/datatable1.js"></script>
+    <script type="text/javascript" src="./assets/datatable2.js"></script>
+    <script type="text/javascript" src="./assets/datatable3.js"></script>
+    <script type="text/javascript" src="./assets/datatable4.js"></script>
+    <script type="text/javascript" src="./assets/datatable5.js"></script>
+    <script type="text/javascript" src="./assets/datatable6.js"></script>
+    <script type="text/javascript" src="./assets/datatable7.js"></script>
+    </head>
     <div class="row" style="padding-top: 15px;">
         <div class="col col-sm-8 ">
-        <?php
-            echo "<p class=intro>Welcome $username!!</p>"; ?>
         </div>
         <div class="col col-sm-2"><button id="add_con" type="button" class="btn btn-info btn-lg" data-toggle="modal"
                 data-target="#myModal">Add Contact</button></div>
-        <div class="col col-sm-2"><button><a href="logout.php"><i class="fa fa-power-off logout"></i></a></button></div>
+        <div class=" col col-sm-2 dropdown">
+            <button class="btn btn-primary rounded-circle" style="height:40px";"type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fa-solid">
+                    <?php echo "$username[0]$username[1]"; ?>
+                </i>
+
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <button class="dropdown-item" href="#">My profile</button>
+                <button class="dropdown-item" href="#">
+                    <?php echo "<p class=intro> $username!</p>"; ?>
+                </button>
+                <a class="dropdown-item" href="logout.php" style="text-decoration:none">Log out</a>
+            </div>
+        </div>
     </div>
+
+
+
+
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Add Contact</h4>
+                <div style="padding: 15px 15px 0px 15px">
+                    <div class="row">
+                        <div class="col col-sm-6">
+                        <h4>Add Contact</h4>
+                        </div>
+                        <div class="col col-sm-6">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                    </div>
+                <!-- 
+                 -->
                 </div>
                 <div class="modal-body">
                     <div id="myForm">
@@ -49,7 +80,8 @@ $user_id = $_SESSION['user_id'];
                             <md style="color:red;display:flex;gap:5px;" /><span style="color:black">Last Name:</span>*
                             </md> <input type="text" name="lastName" id="lastName" /><br><br>
                             <md style="color:red;display:flex;gap:5px;"> <span style="color:black">
-                            Mobile Number:</span>*</md> <input type="text" name="mobileNumber" id="mobileNumber" /><br><br>
+                                    Mobile Number:</span>*</md> <input type="text" name="mobileNumber"
+                                id="mobileNumber" /><br><br>
                             Office Number: <input type="text" name="officeNumber" id="officeNumber" /><br><br>
                             Email Address: <input type="text" name="Email" id="Email" /><br><br>
                             Instagram Profile: <input type="text" name="Instagram" id="Instagram" /><br><br>
@@ -116,22 +148,22 @@ $user_id = $_SESSION['user_id'];
                             <?php echo $rows['mobile_number']; ?>
                         </td>
                         <!-- <td style="text-align:right">
-                                                                <?php echo $rows['office_number']; ?>
+                                                                        <?php echo $rows['office_number']; ?>
                         </td> -->
                         <td>
                             <?php echo '<a href="mailto:' . $rows['email_id'] . '">' . $rows['email_id'] . '</a>'; ?>
                         </td>
                         <!-- <td>
-                                                                <?php echo $rows['instagram_id']; ?>
+                                                                        <?php echo $rows['instagram_id']; ?>
                         </td>
                         <td>
-                                                                <?php echo $rows['twitter_id']; ?>
+                                                                        <?php echo $rows['twitter_id']; ?>
                         </td>
                         <td>
-                                                                <?php echo $rows['linkedin_id']; ?>
+                                                                        <?php echo $rows['linkedin_id']; ?>
                         </td>
                         <td>
-                                                                <?php echo $rows['facebook_id']; ?>
+                                                                        <?php echo $rows['facebook_id']; ?>
                         </td> -->
                         <td style="text-align:right"> <!-- For changing the date format and printing the created date -->
 

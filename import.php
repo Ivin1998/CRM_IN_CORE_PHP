@@ -25,6 +25,8 @@ if (isset($_POST["submit"])) {
         $cellIterator->next();
         $last_name = $cellIterator->current()->getValue();
         $cellIterator->next();
+        $department_id = $cellIterator->current()->getValue();
+        $cellIterator->next();
         $mobile_number = $cellIterator->current()->getValue();
         $cellIterator->next();
         $office_number = $cellIterator->current()->getValue();
@@ -42,8 +44,8 @@ if (isset($_POST["submit"])) {
         $created_date = date("Y-m-d H:i:s");
         $cellIterator->next();
 
-        $sql = "INSERT INTO contact_information (first_name,last_name,mobile_number,office_number,email_id,instagram_id,twitter_id,linkedin_id,facebook_id,created_date,user_id)
-        values('$first_name','$last_name','$mobile_number','$office_number','$email_id','$instagram_id','$twitter_id ','$linkedin_id','$facebook_id','$created_date','$user_id')";
+        $sql = "INSERT INTO contact_information (first_name,last_name,mobile_number,department_id,office_number,email_id,instagram_id,twitter_id,linkedin_id,facebook_id,created_date,user_id)
+        values('$first_name','$last_name','$mobile_number', $department_id,'$office_number','$email_id','$instagram_id','$twitter_id ','$linkedin_id','$facebook_id','$created_date','$user_id')";
         $success = mysqli_query($con, $sql);
     }
 

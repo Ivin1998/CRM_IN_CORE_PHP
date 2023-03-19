@@ -83,6 +83,14 @@ $user_id = $_SESSION['user_id'];
                                 id="mobileNumber" /><br><br>
                             Office Number: <input type="text" name="officeNumber" id="officeNumber" /><br><br>
                             Email Address: <input type="text" name="Email" id="Email" /><br><br>
+                            Deptartment Name: <select name="department_name">
+                                <option>Technology Services</option>
+                                <option>FI Research</option>
+                                <option>Medical Imaging</option>
+                                <option>CS Research</option>
+
+                            </select><br></br>
+
                             Instagram Profile: <input type="text" name="Instagram" id="Instagram" /><br><br>
                             Twitter Handle: <input type="text" name="Twitter" id="Twitter" /><br><br>
                             Linkedin Id: <input type="text" name="Linkedin" id="Linkedin" /><br><br>
@@ -112,6 +120,7 @@ $user_id = $_SESSION['user_id'];
                     <th>Sl.no.</th>
                     <th>First Name</th>
                     <th>Last Name</th>
+                    <th>Department</th>
                     <th>Mobile Number</th>
                     <th>Email Address</th>
                     <th>Created Date</th>
@@ -122,6 +131,7 @@ $user_id = $_SESSION['user_id'];
             <tbody>
                 <tr>
                     <?php
+
                     $no = 1;
                     while ($rows = mysqli_fetch_assoc($result)) {
                         ?>
@@ -135,9 +145,30 @@ $user_id = $_SESSION['user_id'];
                         <td>
                             <?php echo $rows['last_name']; ?>
                         </td>
+                        <td>
+
+                            <?php $department_name = $rows['department_id'];
+                            switch ($department_name) {
+                                case '10':
+                                    echo "Technology Services";
+                                    break;
+                                case '12':
+                                    echo "FI Research";
+                                    break;
+                                case '14':
+                                    echo "Medical Imaging";
+                                    break;
+                                case '16':
+                                    echo "Capestart Research";
+                                    break;
+                            }
+
+                            ?>
+                        </td>
                         <td style="text-align:right">
                             <?php echo $rows['mobile_number']; ?>
                         </td>
+
 
                         <td>
                             <?php echo '<a href="mailto:' . $rows['email_id'] . '">' . $rows['email_id'] . '</a>'; ?>
@@ -163,7 +194,7 @@ $user_id = $_SESSION['user_id'];
                             }
                             ?>
                         </td>
-                        <td><a class=" btn-lg view_data eye-icon" id="<?php echo $rows['id']; ?>"><i
+                        <td><a class="btn-lg view_data eye-icon" id="<?php echo $rows['id']; ?>"><i
                                     class="fa fa-eye"></i></a>
                             <a class=" btn-lg edit_icon edit_data" id="<?php echo $rows['id']; ?>"><i
                                     class="fa fa-edit"></i></a>
@@ -318,6 +349,7 @@ $user_id = $_SESSION['user_id'];
                 success: function (data) {
                     $('#firstName').val(data.first_name);
                     $('#lastName').val(data.last_name);
+                    $('#department_name').val(data.department_id);
                     $('#mobileNumber').val(data.mobile_number);
                     $('#officeNumber').val(data.office_number);
                     $('#Email').val(data.email_id);

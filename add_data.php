@@ -1,6 +1,24 @@
 <?php
 include 'connections.php';
 
+
+$department_name=$_POST['department_name'];
+
+switch($department_name){
+    case 'Technology Services':
+        $department_id='10';
+        break;
+        case 'FI Research':
+        $department_id='12';
+        break;
+        case 'Medical Imaging':
+        $department_id='14';
+        break;
+        case 'Capestart Research':
+        $department_id='16';
+        break;          
+}
+
 $user_id = $_POST['user_id'];
 $created_date = $_POST['created_date'];
 $first_name = $_POST['firstName'];
@@ -13,8 +31,8 @@ $twitter_id = $_POST['Twitter'];
 $linked_in = $_POST['Linkedin'];
 $fb_id = $_POST['Facebook'];
 
-$sql = "INSERT INTO contact_information(first_name,last_name,mobile_number,office_number,email_id,instagram_id,twitter_id,linkedin_id,facebook_id,created_date,user_id) 
-values('$first_name','$last_name','$mobile_number','$office_numer','$email_id','$insta_id','$twitter_id ','$linked_in','$fb_id','$created_date','$user_id')";
+$sql = "INSERT INTO contact_information(first_name,last_name,department_id,mobile_number,office_number,email_id,instagram_id,twitter_id,linkedin_id,facebook_id,created_date,user_id) 
+values('$first_name','$last_name','$department_id','$mobile_number','$office_numer','$email_id','$insta_id','$twitter_id ','$linked_in','$fb_id','$created_date','$user_id')";
 
 $success = mysqli_query($con, $sql);
 

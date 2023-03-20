@@ -4,13 +4,16 @@ include 'connections.php';
 session_start();
 $username = $_SESSION['username'];
 $user_id = $_SESSION['user_id'];
+
+if (isset($_GET["department_id"])){
+    $department_id=$_GET['department_id'];
+}
+else{
+    $department_id='';
+}
 ?>
-
-
 <html>
-
 <head>
-
 <body>
     <title>Users_list</title>
     <link rel="stylesheet" href="./assets/bootstrapmin.css" />
@@ -27,30 +30,34 @@ $user_id = $_SESSION['user_id'];
     <script type="text/javascript" src="./assets/datatable5.js"></script>
     <script type="text/javascript" src="./assets/datatable6.js"></script>
     <script type="text/javascript" src="./assets/datatable7.js"></script>
+    <script type="text/javascript" src="./assets/validations.js"></script>
     </head>
     <div class="row" style="padding-top: 15px;">
-        <div class="col col-sm-8 ">
+        <div class="col col-sm-6 ">
         </div>
-        <div class="col col-sm-2"><button id="add_con" type="button" class="btn btn-info btn-lg" data-toggle="modal"
+        <div class="col col-sm-2"><button id="add_con" type="button" class="btn btn-primary btn-lg" data-toggle="modal"
                 data-target="#myModal">Add Contact</button></div>
+                <div class="col col-sm-2"><button type="button" class="btn btn-primary btn-lg import" data-toggle="modal"
+                data-target="#myModal">Import Contact</button></div>
         <div class=" col col-sm-2">
             <button class="btn btn-primary rounded-circle" style="height:40px" ;type="button" id="dropdownMenuButton"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa-solid">
                     <?php echo "$username[0]$username[1]"; ?>
                 </i>
-
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <button class="dropdown-item" href="#">My profile</button>
                 <button class="dropdown-item" href="#">
                     <?php echo "<p class=intro> $username!</p>"; ?>
                 </button>
+                <a class="dropdown-item" href="dashboards.php" style="text-decoration:none">
+                  My Dashboard
+                </a>
                 <a class="dropdown-item" href="logout.php" style="text-decoration:none">Log out</a>
             </div>
         </div>
     </div>
-
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -64,43 +71,52 @@ $user_id = $_SESSION['user_id'];
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                     </div>
-                    <!-- 
-                 -->
                 </div>
                 <div class="modal-body">
                     <div id="myForm">
                         <form name="contact" method="post" action="import.php" id="mycontact"
                             enctype="multipart/form-data">
+                            <div id="importing">
                             <label>Select CSV File:</label>
                             <input type="file" name="csv_file" id><br>
                             <input type="submit" name="submit" id="submit" value="Import">
-                            <md style="color:red;display:flex;gap:5px;"><span style="color:black">First Name:</span>*
-                            </md><input type="text" name="firstName" id="firstName" /><br><br>
-                            <md style="color:red;display:flex;gap:5px;" /><span style="color:black">Last Name:</span>*
-                            </md> <input type="text" name="lastName" id="lastName" /><br><br>
+                            </div>
+                           <div id="Feed_input"> <md style="color:red;display:flex;gap:5px;"><span style="color:black">First Name:</span>*
+                            </md><input type="text" name="firstName" id="firstName" class="form-control"/><br><br>
+                            <md style="color:red;display:flex;gap:5px;" /><span style="color:black" >Last Name:</span>*
+                            </md> <input type="text" name="lastName" id="lastName" class="form-control"/><br><br>
                             <md style="color:red;display:flex;gap:5px;"> <span style="color:black">
                                     Mobile Number:</span>*</md> <input type="text" name="mobileNumber"
-                                id="mobileNumber" /><br><br>
-                            Office Number: <input type="text" name="officeNumber" id="officeNumber" /><br><br>
-                            Email Address: <input type="text" name="Email" id="Email" /><br><br>
-                            Deptartment Name: <select name="department_name">
-                                <option>Technology Services</option>
-                                <option>FI Research</option>
-                                <option>Medical Imaging</option>
-                                <option>CS Research</option>
-
+                                id="mobileNumber" class="form-control" /><br><br>
+                            Office Number: <input type="text" name="officeNumber" id="officeNumber" class="form-control" /><br><br>
+                            Email Address: <input type="text" name="Email" id="Email" class="form-control"/><br><br>
+                            Deptartment Name: <select name="department_name" class="form-control">
+                           <?php
+                           
+                                $sql="SELECT * FROM department";
+                                $result_dept=mysqli_query($con,$sql);
+                                $id = 10;
+                                while($rows_dep=mysqli_fetch_assoc($result_dept)){            
+                           ?>
+                           
+                            <option value=<?php echo $id++;?>>
+                          <?php echo $rows_dep['department_name']; ?>
+                          </option>
+                          <?php
+                              }
+                             ?>
                             </select><br></br>
-
-                            Instagram Profile: <input type="text" name="Instagram" id="Instagram" /><br><br>
-                            Twitter Handle: <input type="text" name="Twitter" id="Twitter" /><br><br>
-                            Linkedin Id: <input type="text" name="Linkedin" id="Linkedin" /><br><br>
-                            Facebook Id: <input type="text" name="Facebook" id="Facebook" /><br><br>
+                            Instagram Profile: <input type="text" name="Instagram" id="Instagram" class="form-control"/><br><br>
+                            Twitter Handle: <input type="text" name="Twitter" id="Twitter" class="form-control"/><br><br>
+                            Linkedin Id: <input type="text" name="Linkedin" id="Linkedin" class="form-control"/><br><br>
+                            Facebook Id: <input type="text" name="Facebook" id="Facebook" class="form-control"/><br><br>
                             <input type="hidden" name="id" id="id" />
                             <input type="hidden" name="user_id" id="user_id" value="<?php echo $user_id ?>">
                             <input type="hidden" name="created_date" value="<?php echo date('Y-m-d H:i:s') ?>" />
                             <input type="hidden" name="mod_date" value='<?php echo date('Y-m-d H:i:s') ?>' />
-                            <button type="button" onclick="savecontact()" id="Add" class="btn btn-primary">Add</button>
-                            <button id="update-btn" class="btn btn-primary" type="button">Update</button>
+                            <button type="button" onclick="savecontact()" id="Add" class="btn btn-primary" class="form-control">Add</button>
+                            <button id="update-btn" class="btn btn-primary" type="button" class="form-control">Update</button>
+                             </div>
                         </form>
                     </div>
                 </div>
@@ -110,9 +126,18 @@ $user_id = $_SESSION['user_id'];
             </div>
         </div>
     </div>
+    
     <?php
-    $sql = "SELECT * FROM contact_information WHERE is_deleted=0 AND user_id='$user_id' ORDER BY id DESC";
-    $result = mysqli_query($con, $sql); ?>
+    if($department_id){
+        $sql = "SELECT * FROM contact_information WHERE is_deleted=0 AND user_id='$user_id' AND department_id='$department_id' ORDER BY id DESC";
+        $result = mysqli_query($con, $sql);
+    }
+    else{
+        $sql = "SELECT * FROM contact_information WHERE is_deleted=0 AND user_id='$user_id' ORDER BY id DESC";
+        $result = mysqli_query($con, $sql);
+    }
+    
+     ?>
     <div>
         <table id="mytable" border="2" class="table-bordered" style="width:100%">
             <thead>
@@ -120,18 +145,17 @@ $user_id = $_SESSION['user_id'];
                     <th>Sl.no.</th>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th>Department</th>
                     <th>Mobile Number</th>
                     <th>Email Address</th>
                     <th>Created Date</th>
                     <th>Modified Date</th>
                     <th style="width:250px">Actions</th>
+                    <th>Department</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <?php
-
                     $no = 1;
                     while ($rows = mysqli_fetch_assoc($result)) {
                         ?>
@@ -139,37 +163,15 @@ $user_id = $_SESSION['user_id'];
                             <?php echo $no++; ?>
                         </td> <!-- incrementing the sl.no. -->
                         <td>
-
                             <?php echo $rows['first_name']; ?>
                         </td>
                         <td>
                             <?php echo $rows['last_name']; ?>
                         </td>
-                        <td>
-
-                            <?php $department_name = $rows['department_id'];
-                            switch ($department_name) {
-                                case '10':
-                                    echo "Technology Services";
-                                    break;
-                                case '12':
-                                    echo "FI Research";
-                                    break;
-                                case '14':
-                                    echo "Medical Imaging";
-                                    break;
-                                case '16':
-                                    echo "Capestart Research";
-                                    break;
-                            }
-
-                            ?>
-                        </td>
-                        <td style="text-align:right">
+                        
+                        <td style="text-align:right; padding:10">
                             <?php echo $rows['mobile_number']; ?>
                         </td>
-
-
                         <td>
                             <?php echo '<a href="mailto:' . $rows['email_id'] . '">' . $rows['email_id'] . '</a>'; ?>
                         </td>
@@ -203,236 +205,17 @@ $user_id = $_SESSION['user_id'];
                                 onclick="highlight(this); checkDelete(<?php echo $rows['id']; ?>,'<?php echo ($rows['first_name']); ?>'); "><i
                                     class="fa fa-trash"></i></a>
                         </td>
+                        <td>   
+                     <?php echo $rows['department_id']; ?>
+                        </td>
                     </tr>
                     <?php
                     }
                     ?>
             </tbody>
         </table>
+
     </div>
-    <script type="text/javascript">
-
-        function highlight(button) {
-            var row = button.parentNode.parentNode; //one parentnode for tr and one parentNode for td
-            row.classList.add("highlighted");
-        }
-        function checkDelete(id, name) {
-            swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085D6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: "POST",
-                        url: 'delete.php',
-                        data: { id: id },
-                        success: function (data) {
-                            swal.fire({
-                                text: "User details deleted successfully!",
-                                icon: "success",
-                            });
-                            location.reload();
-                        },
-                    });
-                }
-            })
-        }
-        function savecontact() {
-            var first_name = document.forms["contact"]["firstName"].value;
-            const numeric = /^[0-9]/;
-            const noalphabets = /^[A-Za-z]+$/;
-            if (first_name == "" || !noalphabets.test(first_name)) {
-                swal.fire({
-                    text: "Please enter a valid first name!",
-                    icon: "info"
-                });
-                return false;
-            }
-            let last_name = document.forms["contact"]["lastName"].value;
-            if (last_name == "" || !noalphabets.test(last_name)) {
-                swal.fire({
-                    text: "Please enter a valid last name!",
-                    icon: "info"
-                });
-                return false;
-            }
-            let mobile_number = document.forms["contact"]["mobileNumber"].value;
-            if (mobile_number == "" || !numeric.test(mobile_number)) {
-                swal.fire({
-                    text: "Please enter a valid contact number!",
-                    icon: "info"
-                });
-
-                return false;
-            }
-            let office_number = document.forms["contact"]["officeNumber"].value;
-            if (office_number) {
-                if (!numeric.test(office_number)) {
-                    swal.fire({
-                        text: "Please enter a valid office number!",
-                        icon: "info"
-                    });
-                    return false;
-                }
-            }
-            let email_id = document.forms["contact"]["Email"].value;
-            if (email_id) {
-                if (noalphabets.test(email_id)) {
-                    swal.fire({
-                        text: "Please enter a valid email id!",
-                        icon: "info"
-                    });
-                    return false;
-                }
-            }
-            let twitter_id = document.forms["contact"]["Twitter"].value;
-            if (twitter_id) {
-                if (noalphabets.test(twitter_id)) {
-                    swal.fire({
-                        text: "Please enter a valid Twitter handle!",
-                        icon: "info"
-                    });
-                    return false;
-                }
-            }
-            let linkedin_id = document.forms["contact"]["Linkedin"].value;
-            if (linkedin_id) {
-                if (!noalphabets.test(linkedin_id)) {
-                    swal.fire({
-                        text: "Please enter a valid Linkedin profile!",
-                        icon: "info"
-                    });
-                    return false;
-                }
-            }
-            let facebook_id = document.forms["contact"]["Facebook"].value;
-            if (facebook_id) {
-                if (!noalphabets.test(facebook_id)) {
-                    swal.fire({
-                        text: "Please enter a valid Facebook profile!",
-                        icon: "info"
-                    });
-                    return false;
-                }
-            }
-            $.ajax({
-                type: "POST",
-                url: 'add_data.php',
-                /* dataType : 'json', */
-                data: $('#mycontact').serialize(),
-                success: function (data) {
-                    swal.fire({
-                        text: "User details saved successfully!",
-                        icon: "success",
-                    });
-                    location.reload();
-                    $('.edit_data').hide();
-                },
-            });
-        }
-        /* Edit in popup modal*/
-        $(document).on('click', '.edit_data', function () {
-            var user_id = $(this).attr("id");
-
-            var row = $(this).closest('tr');
-            row.addClass("highlighted");
-            $.ajax({
-                url: "fetch.php",
-                method: "POST",
-                data: { id: user_id },
-                dataType: "json",
-                success: function (data) {
-                    $('#firstName').val(data.first_name);
-                    $('#lastName').val(data.last_name);
-                    $('#department_name').val(data.department_id);
-                    $('#mobileNumber').val(data.mobile_number);
-                    $('#officeNumber').val(data.office_number);
-                    $('#Email').val(data.email_id);
-                    $('#Instagram').val(data.instagram_id);
-                    $('#Twitter').val(data.twitter_id);
-                    $('#Linkedin').val(data.linkedin_id);
-                    $('#Facebook').val(data.facebook_id);
-                    $('#id').val(user_id);
-                    $('#add_con').click()
-                    $('.modal-title').html('Edit Details');
-                    $('#update-btn').show();
-                    $('#Add').hide();
-                    $('#reload').click(function () {
-                        location.reload();
-                    });
-                }
-            });
-        });
-        $("#update-btn").click(function () {
-            $.ajax({
-                url: "update.php",
-                type: "POST",
-                data: $('#mycontact').serialize(),
-                success: function (data) {
-                    swal.fire({
-                        text: "User details Updated successfully!",
-                        icon: "success",
-                    });
-                    location.reload();
-                },
-
-            });
-        });
-        $(document).ready(function () {
-            $("#add_con").click(function () {
-                $('#update-btn').hide();
-                $('#Add').show();
-            });
-        });
-        $(document).on('click', '.view_data', function () {
-            var user_id = $(this).attr("id");
-            if (user_id != '') {
-                $.ajax({
-                    url: "select.php",
-                    method: "POST",
-                    data: { id: user_id },
-                    success: function (data) {
-                        $('#myForm').html(data);
-                        $('#add_con').click();
-                        $('.modal-title').html('User Details');
-                        $('#reload').click(function () {
-                            location.reload();
-                        });
-                    }
-                });
-            }
-        });
-        //Datatypes
-        $(document).ready(function () {
-            $('#mytable').DataTable({
-                dom: 'Blfrtip',
-                pagingType: 'full_numbers',
-                buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
-                ]
-            });
-        });
-        $("#submit").click(function () {
-            $.ajax({
-                url: "import.php",
-                type: "POST",
-                data: $('#mycontact').serialize(),
-                success: function (data) {
-                    swal.fire({
-                        text: "User details Added successfully!",
-                        icon: "success",
-                    });
-                    location.reload();
-                },
-            });
-            location.reload();
-        });
-    </script>
 </body>
 
 </html>

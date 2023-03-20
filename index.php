@@ -1,7 +1,6 @@
 <html>
 <link rel="stylesheet" href="./assets/indexbootstrap.css">
 <link rel="stylesheet" href="./assets/styles.css">
-
 <script type="text/javascript" src="./assets/sweetalert.js" ></script>
 <center>
     <body>
@@ -40,6 +39,8 @@ if (isset($_POST["submit"])) {
     $password = md5($_POST['password']);
     $session_id = session_id();
     $_SESSION['username'] = $_POST['user_name'];
+   
+    echo $department_id;
     $stmt = $con->prepare("SELECT user_name, password,user_id FROM users WHERE user_name=? AND password=? LIMIT 1");
     $stmt->bind_param('ss', $username, $password);
     $stmt->execute();

@@ -11,6 +11,7 @@ $set = $row['COUNT(*)'];
 // echo $set;
 ?>
 <html>
+<title>Dashboards</title>
 
 <head>
 
@@ -29,7 +30,7 @@ $set = $row['COUNT(*)'];
                     <?php echo $set ?>
                 </div></a>
         </div>
-        <div class="col-sm-6"   > <a href="departments.php" class="btn btn-lg btn-primary "
+        <div class="col-sm-6"> <a href="departments.php" class="btn btn-lg btn-primary "
                 style="padding:90">Departments</a></div>
 </body>
 

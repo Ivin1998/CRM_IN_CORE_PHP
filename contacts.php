@@ -5,15 +5,16 @@ session_start();
 $username = $_SESSION['username'];
 $user_id = $_SESSION['user_id'];
 
-if (isset($_GET["department_id"])){
-    $department_id=$_GET['department_id'];
-}
-else{
-    $department_id='';
+if (isset($_GET["department_id"])) {
+    $department_id = $_GET['department_id'];
+} else {
+    $department_id = '';
 }
 ?>
 <html>
+
 <head>
+
 <body>
     <title>Users_list</title>
     <link rel="stylesheet" href="./assets/bootstrapmin.css" />
@@ -37,7 +38,7 @@ else{
         </div>
         <div class="col col-sm-2"><button id="add_con" type="button" class="btn btn-primary btn-lg" data-toggle="modal"
                 data-target="#myModal">Add Contact</button></div>
-                <div class="col col-sm-2"><button type="button" class="btn btn-primary btn-lg import" data-toggle="modal"
+        <div class="col col-sm-2"><button type="button" class="btn btn-primary btn-lg import" data-toggle="modal"
                 data-target="#myModal">Import Contact</button></div>
         <div class=" col col-sm-2">
             <button class="btn btn-primary rounded-circle" style="height:40px" ;type="button" id="dropdownMenuButton"
@@ -52,7 +53,7 @@ else{
                     <?php echo "<p class=intro> $username!</p>"; ?>
                 </button>
                 <a class="dropdown-item" href="dashboards.php" style="text-decoration:none">
-                  My Dashboard
+                    My Dashboard
                 </a>
                 <a class="dropdown-item" href="logout.php" style="text-decoration:none">Log out</a>
             </div>
@@ -77,46 +78,61 @@ else{
                         <form name="contact" method="post" action="import.php" id="mycontact"
                             enctype="multipart/form-data">
                             <div id="importing">
-                            <label>Select CSV File:</label>
-                            <input type="file" name="csv_file" id><br>
-                            <input type="submit" name="submit" id="submit" value="Import">
+                                <label>Select CSV File:</label>
+                                <input type="file" name="csv_file" id><br>
+                                <input type="submit" name="submit" id="submit" value="Import"
+                                    class="btn btn-primary form-control">
                             </div>
-                           <div id="Feed_input"> <md style="color:red;display:flex;gap:5px;"><span style="color:black">First Name:</span>*
-                            </md><input type="text" name="firstName" id="firstName" class="form-control"/><br><br>
-                            <md style="color:red;display:flex;gap:5px;" /><span style="color:black" >Last Name:</span>*
-                            </md> <input type="text" name="lastName" id="lastName" class="form-control"/><br><br>
-                            <md style="color:red;display:flex;gap:5px;"> <span style="color:black">
-                                    Mobile Number:</span>*</md> <input type="text" name="mobileNumber"
-                                id="mobileNumber" class="form-control" /><br><br>
-                            Office Number: <input type="text" name="officeNumber" id="officeNumber" class="form-control" /><br><br>
-                            Email Address: <input type="text" name="Email" id="Email" class="form-control"/><br><br>
-                            Deptartment Name: <select name="department_name" class="form-control">
-                           <?php
-                           
-                                $sql="SELECT * FROM department";
-                                $result_dept=mysqli_query($con,$sql);
-                                $id = 10;
-                                while($rows_dep=mysqli_fetch_assoc($result_dept)){            
-                           ?>
-                           
-                            <option value=<?php echo $id++;?>>
-                          <?php echo $rows_dep['department_name']; ?>
-                          </option>
-                          <?php
-                              }
-                             ?>
-                            </select><br></br>
-                            Instagram Profile: <input type="text" name="Instagram" id="Instagram" class="form-control"/><br><br>
-                            Twitter Handle: <input type="text" name="Twitter" id="Twitter" class="form-control"/><br><br>
-                            Linkedin Id: <input type="text" name="Linkedin" id="Linkedin" class="form-control"/><br><br>
-                            Facebook Id: <input type="text" name="Facebook" id="Facebook" class="form-control"/><br><br>
-                            <input type="hidden" name="id" id="id" />
-                            <input type="hidden" name="user_id" id="user_id" value="<?php echo $user_id ?>">
-                            <input type="hidden" name="created_date" value="<?php echo date('Y-m-d H:i:s') ?>" />
-                            <input type="hidden" name="mod_date" value='<?php echo date('Y-m-d H:i:s') ?>' />
-                            <button type="button" onclick="savecontact()" id="Add" class="btn btn-primary" class="form-control">Add</button>
-                            <button id="update-btn" class="btn btn-primary" type="button" class="form-control">Update</button>
-                             </div>
+                            <div id="Feed_input">
+                                <md style="color:red;display:flex;gap:5px;"><span style="color:black">First
+                                        Name:</span>*
+                                </md><input type="text" name="firstName" id="firstName" class="form-control" /><br><br>
+                                <md style="color:red;display:flex;gap:5px;" /><span style="color:black">Last
+                                    Name:</span>*
+                                </md> <input type="text" name="lastName" id="lastName" class="form-control" /><br><br>
+                                <md style="color:red;display:flex;gap:5px;"> <span style="color:black">
+                                        Mobile Number:</span>*</md> <input type="text" name="mobileNumber"
+                                    id="mobileNumber" class="form-control" /><br><br>
+                                Office Number: <input type="text" name="officeNumber" id="officeNumber"
+                                    class="form-control" /><br><br>
+                                Email Address: <input type="text" name="Email" id="Email"
+                                    class="form-control" /><br><br>
+                                Deptartment Name: <select name="department_name" class="form-control">
+                                    <?php
+
+                                    $sql = "SELECT * FROM department";
+                                    $result_dept = mysqli_query($con, $sql);
+                                    while ($rows_dep = mysqli_fetch_assoc($result_dept)) {
+                                        $selected_dept_id = $rows_dep['department_id'];
+                                        $selected = ($rows_dep['department_id'] == $selected_dept_id) ? 'selected' : '';
+
+                                        ?>
+
+                                        <option value="<?php echo $rows_dep['department_id']; ?>" <?php echo $selected ?>>
+
+                                            <?php echo $rows_dep['department_name']; ?>
+                                        </option>
+                                        <?php
+                                    }
+                                    ?>
+                                </select><br></br>
+                                Instagram Profile: <input type="text" name="Instagram" id="Instagram"
+                                    class="form-control" /><br><br>
+                                Twitter Handle: <input type="text" name="Twitter" id="Twitter"
+                                    class="form-control" /><br><br>
+                                Linkedin Id: <input type="text" name="Linkedin" id="Linkedin"
+                                    class="form-control" /><br><br>
+                                Facebook Id: <input type="text" name="Facebook" id="Facebook"
+                                    class="form-control" /><br><br>
+                                <input type="hidden" name="id" id="id" />
+                                <input type="hidden" name="user_id" id="user_id" value="<?php echo $user_id ?>">
+                                <input type="hidden" name="created_date" value="<?php echo date('Y-m-d H:i:s') ?>" />
+                                <input type="hidden" name="mod_date" value='<?php echo date('Y-m-d H:i:s') ?>' />
+                                <button type="button" onclick="savecontact()" id="Add"
+                                    class="btn btn-primary form-control">Add</button>
+                                <button id="update-btn" class="btn btn-primary form-control"
+                                    type="button">Update</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -126,18 +142,17 @@ else{
             </div>
         </div>
     </div>
-    
+
     <?php
-    if($department_id){
-        $sql = "SELECT * FROM contact_information WHERE is_deleted=0 AND user_id='$user_id' AND department_id='$department_id' ORDER BY id DESC";
+    if ($department_id) {
+        $sql = "SELECT * FROM contact_information a inner join department b on a.department_id=b.department_id WHERE is_deleted=0 AND user_id='$user_id' AND  a.department_id='$department_id' ORDER BY id DESC";
+        $result = mysqli_query($con, $sql);
+    } else {
+        $sql = "SELECT * FROM contact_information a left join department b on a.department_id=b.department_id WHERE is_deleted=0 AND user_id='$user_id' ORDER BY id DESC";
         $result = mysqli_query($con, $sql);
     }
-    else{
-        $sql = "SELECT * FROM contact_information WHERE is_deleted=0 AND user_id='$user_id' ORDER BY id DESC";
-        $result = mysqli_query($con, $sql);
-    }
-    
-     ?>
+
+    ?>
     <div>
         <table id="mytable" border="2" class="table-bordered" style="width:100%">
             <thead>
@@ -158,7 +173,10 @@ else{
                     <?php
                     $no = 1;
                     while ($rows = mysqli_fetch_assoc($result)) {
+
+
                         ?>
+
                         <td>
                             <?php echo $no++; ?>
                         </td> <!-- incrementing the sl.no. -->
@@ -168,7 +186,7 @@ else{
                         <td>
                             <?php echo $rows['last_name']; ?>
                         </td>
-                        
+
                         <td style="text-align:right; padding:10">
                             <?php echo $rows['mobile_number']; ?>
                         </td>
@@ -205,16 +223,18 @@ else{
                                 onclick="highlight(this); checkDelete(<?php echo $rows['id']; ?>,'<?php echo ($rows['first_name']); ?>'); "><i
                                     class="fa fa-trash"></i></a>
                         </td>
-                        <td>   
-                     <?php echo $rows['department_id']; ?>
+
+
+                        <td>
+                            <?php echo $rows['department_name']; ?>
                         </td>
+
                     </tr>
                     <?php
                     }
                     ?>
             </tbody>
         </table>
-
     </div>
 </body>
 

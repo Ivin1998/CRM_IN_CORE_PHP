@@ -2,28 +2,11 @@
 include 'connections.php';
 session_start();
 $user_id = $_SESSION['user_id'];
-$department_name=$_POST['department_name'];
 
 
-$sql = "SELECT COUNT(*) FROM contact_information WHERE is_deleted=0 AND department_id='$department_name'";
-$result1=mysqli_query($con,$sql);
-/* $conditions = [
-    "department_one" => "department_id=10",
-    "department_two" => "department_id=12",
-    "department_three" => "department_id=14",
-    "department_four" => "department_id=16",
-];
-$result1 = mysqli_query($con, $sql . $conditions["department_one"]);
-$row1 = mysqli_fetch_assoc($result1);
-$result2 = mysqli_query($con, $sql . $conditions["department_two"]);
-$row2 = mysqli_fetch_assoc($result2);
-$result3 = mysqli_query($con, $sql . $conditions["department_three"]);
-$row3 = mysqli_fetch_assoc($result3);
-$result4 = mysqli_query($con, $sql . $conditions["department_four"]);
-$row4 = mysqli_fetch_assoc($result4);
- */
 ?>
 <html>
+    <title>Department List</title>
 <head>
     <link rel="stylesheet" href="./assets/formbootstrap.css">
     <link rel="stylesheet" href="./assets/styles.css">
@@ -75,49 +58,28 @@ $row4 = mysqli_fetch_assoc($result4);
                 <th style="text-align: center;">No. of contacts</th>
             </tr>
         </thead>
-            <tr>
+            
         <?php
                            
-                           $sql="SELECT * FROM department";
+                           $sql="SELECT  a.department_id,department_name, count(*) as cnt FROM contacts.contact_information a right join contacts.department b on a.department_id=b.department_id where
+                           user_id='$user_id' group by user_id,department_name,a.department_id";
                            $result_dept=mysqli_query($con,$sql);
-                           while($rows=mysqli_fetch_assoc($result_dept)){            
-            ?>
+                           while($rows=mysqli_fetch_assoc($result_dept)){                    
+            ?>          <tr>
                         <td>
                             <?php echo $rows['department_name']; ?>
                         </td>
+                       
+                       
                         <td>
-                            <?php echo $rows['COUNT(*)']; ?>
+                        <a href="contacts.php?department_id=<?php echo $rows['department_id']?>"><?php echo $rows['cnt']; ?></a>
                         </td>
-
+            
                            </tr>
                            <?php
                     }
                     ?>
         
-        <!-- <tr>
-            <td>Technology Services</td>
-            <td>
-               <a href="contacts.php?department_id=10"><?php echo $row1['COUNT(*)']; ?></a>
-            </td>
-        </tr>
-        <tr>
-            <td>FI Research</td>
-            <td>
-            <a href="contacts.php?department_id=12"> <?php echo $row2['COUNT(*)']; ?></a>
-            </td>
-        </tr>
-        <tr>
-            <td>Medical Imaging</td>
-            <td>
-            <a href="contacts.php?department_id=14">  <?php echo $row3['COUNT(*)']; ?></a>
-            </td>
-        </tr>
-        <tr>
-            <td>CS Research</td>
-            <td>
-            <a href="contacts.php?department_id=16"><?php echo $row4['COUNT(*)']; ?></a>
-            </td>
-        </tr> -->
     </table>
     <button  class="btn btn-primary" data-toggle="modal"  data-target="#myModal">Add Department</button>
     

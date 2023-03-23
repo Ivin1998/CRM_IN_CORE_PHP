@@ -103,8 +103,7 @@ if (isset($_GET["department_id"])) {
                                     $sql = "SELECT * FROM department";
                                     $result_dept = mysqli_query($con, $sql);
                                     while ($rows_dep = mysqli_fetch_assoc($result_dept)) {
-                                        $selected_dept_id = $rows_dep['department_id'];
-                                        $selected = ($rows_dep['department_id'] == $selected_dept_id) ? 'selected' : '';
+                                        $selected = ($rows_dep['department_id'] ==$department_id) ? 'selected' : '';
 
                                         ?>
 

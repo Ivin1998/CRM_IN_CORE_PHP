@@ -1,3 +1,4 @@
+
 function highlight(button) {
     var row = button.parentNode.parentNode; //one parentnode for tr and one parentNode for td
     row.classList.add("highlighted");
@@ -251,6 +252,25 @@ $(document).ready(function () {
 
         });
     })
+
+window.onscroll = function() {myFunction()};
+
+var header = document.getElementById("myHeader");
+var sticky = header.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset > sticky) {
+    header.classList.add("sticky");
+  } else {
+    header.classList.remove("sticky");
+  }
+}
 });
+
+
+
+
+
+
 
 

@@ -18,6 +18,8 @@ if (isset($_GET["department_id"])) {
     <link rel="stylesheet" href="../assets/bootstrapmin.css" />
     <link rel="stylesheet" href="../assets/formbootstrap.css">
     <link rel="stylesheet" href="../assets/styles.css">
+    <link rel="stylesheet" href="../assets/style_sidebar.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
     <script type="text/javascript" src="../assets/sweetalert.js"></script>
     <script type="text/javascript" src="../assets/jquery.js"></script>
@@ -31,17 +33,30 @@ if (isset($_GET["department_id"])) {
     <script type="text/javascript" src="../assets/datatable7.js"></script>
     <script type="text/javascript" src="../assets/validations.js"></script>
     </head>
-    <div class="row" style="padding-top: 15px;">
+<body>
+<div class="header" id="myHeader">
+  <h2>User Application</h2>
+</div>
+
+    <div class="sidebar">
+    <a  href="contacts.php">Home</a>
+  <a class="active" href="contacts.php">Contacts</a>
+  <a href="../departments/departments.php">Departments</a>
+  <a href="#">About</a>
+    </div>
+
+    <div class="content"> 
+           <div class="row" style="padding-top: 15px;">
         <div class="col col-sm-6 ">
         </div>
-        <div class="col col-sm-2"><button id="add_con" type="button" class="btn btn-primary btn-lg" data-toggle="modal"
+        <div class="col col-sm-2"><button id="add_con" type="button" class="btn btn-primary btn-lg add_con_align " data-toggle="modal"
                 data-target="#myModal">Add Contact</button></div>
-        <div class="col col-sm-2"><button type="button" class="btn btn-primary btn-lg import" data-toggle="modal"
+        <div class="col col-sm-2"><button type="button" class="btn btn-primary btn-lg import add_con_align" data-toggle="modal"
                 data-target="#myModal">Import Contact</button></div>
         <div class=" col col-sm-2">
-            <button class="btn btn-primary rounded-circle" style="height:40px" ;type="button" id="dropdownMenuButton"
+            <button class="btn btn-primary rounded-circle" style="height:40px;margin: -85 60;" ;type="button" id="dropdownMenuButton"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa-solid">
+                <i class="fa-solid" >
                     <?php echo "$username[0]$username[1]"; ?>
                 </i>
             </button>
@@ -50,9 +65,6 @@ if (isset($_GET["department_id"])) {
                 <button class="dropdown-item" href="#">
                     <?php echo "<p class=intro> $username!</p>"; ?>
                 </button>
-                <a class="dropdown-item" href="../dashboards.php" style="text-decoration:none">
-                    My Dashboard
-                </a>
                 <a class="dropdown-item" href="logout.php" style="text-decoration:none">Log out</a>
             </div>
         </div>

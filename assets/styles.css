@@ -76,18 +76,16 @@ display: block;
 #mytable_filter {
 padding-bottom: 10;
 display: inline;
+margin: -120;
 }
 #mytable_length {
 padding-top: 15;
 display: block;
-
 }
 .eye-icon{
 color: green;
 cursor: pointer;
-
 }
-
 .delete-icon{
 color:red ;
 cursor: pointer;
@@ -135,3 +133,25 @@ cursor: pointer;
 .dashboard{
   margin-top: 100;
 }
+.add_con_align{
+  position: absolute;
+    top: 50;
+    right: -120;
+    float: right;
+    margin: -20;
+}
+
+.header {
+  padding: 10px 16px;
+  background: #555;
+  color: #f1f1f1;
+  z-index:99;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index:99;
+}
+

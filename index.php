@@ -50,7 +50,7 @@ if (isset($_POST["submit"])) {
         if ($stmt->fetch()) { {
                 $_SESSION['user_id'] = $user_id;
                 $_SESSION['username'] = $username;
-                header("Location: dashboards.php");
+                header("Location: contacts/contacts.php");
                 exit();
             }
         }

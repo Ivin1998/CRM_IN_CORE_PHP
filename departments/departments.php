@@ -5,15 +5,30 @@ $user_id = $_SESSION['user_id'];
 ?>
 <html>
 <title>Department List</title>
+
 <head>
     <link rel="stylesheet" href="../assets/formbootstrap.css">
     <link rel="stylesheet" href="../assets/styles.css">
+    <link rel="stylesheet" href="../assets/style_sidebar.css">
     <script type="text/javascript" src="../assets/sweetalert.js"></script>
     <script type="text/javascript" src="../assets/jquery.js"></script>
     <script type="text/javascript" src="../assets/bootstrapjs.js"></script>
     <script type="text/javascript" src="../assets/validations.js"></script>
 </head>
+
 <body>
+<div class="header" id="myHeader">
+<h2>User Application</h2>
+</div>
+
+
+    <div class="sidebar" id="myHeader">
+    <a  href="../contacts/contacts.php">Home</a>
+        <a href="../contacts/contacts.php">Contacts</a>
+        <a class="active" href="../departments/departments.php">Departments</a>
+        <a href="#">About</a>
+    </div>
+    <div class="content">
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -44,10 +59,8 @@ $user_id = $_SESSION['user_id'];
             </div>
         </div>
     </div>
-    </div>
-    </div>
-    <a href="../dashboards.php" class="btn btn-primary" style="margin:10">Back to Dashboard</button></a>
-    <table border="1" padding=15 class="table table-striped table-hover" style="width:50%">
+    
+      <table border="1" padding=15 class="table table-striped table-hover" style="width:50%">
         <thead>
             <h1 class="page-header">Department List</h1>
 
@@ -77,5 +90,13 @@ $user_id = $_SESSION['user_id'];
         ?>
     </table>
     <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Department</button>
+
+
+
+    </div>
+
+
+    </div>
 </body>
+
 </html>

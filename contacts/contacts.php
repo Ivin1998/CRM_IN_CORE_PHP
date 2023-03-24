@@ -1,6 +1,6 @@
 <?php
 date_default_timezone_set('Asia/Calcutta');
-include 'connections.php';
+include '../database/connections.php';
 session_start();
 $username = $_SESSION['username'];
 $user_id = $_SESSION['user_id'];
@@ -12,26 +12,24 @@ if (isset($_GET["department_id"])) {
 }
 ?>
 <html>
-
 <head>
-
 <body>
     <title>Users_list</title>
-    <link rel="stylesheet" href="./assets/bootstrapmin.css" />
-    <link rel="stylesheet" href="./assets/formbootstrap.css">
-    <link rel="stylesheet" href="./assets/styles.css">
+    <link rel="stylesheet" href="../assets/bootstrapmin.css" />
+    <link rel="stylesheet" href="../assets/formbootstrap.css">
+    <link rel="stylesheet" href="../assets/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
-    <script type="text/javascript" src="./assets/sweetalert.js"></script>
-    <script type="text/javascript" src="./assets/jquery.js"></script>
-    <script type="text/javascript" src="./assets/bootstrapjs.js"></script>
-    <script type="text/javascript" src="./assets/datatable1.js"></script>
-    <script type="text/javascript" src="./assets/datatable2.js"></script>
-    <script type="text/javascript" src="./assets/datatable3.js"></script>
-    <script type="text/javascript" src="./assets/datatable4.js"></script>
-    <script type="text/javascript" src="./assets/datatable5.js"></script>
-    <script type="text/javascript" src="./assets/datatable6.js"></script>
-    <script type="text/javascript" src="./assets/datatable7.js"></script>
-    <script type="text/javascript" src="./assets/validations.js"></script>
+    <script type="text/javascript" src="../assets/sweetalert.js"></script>
+    <script type="text/javascript" src="../assets/jquery.js"></script>
+    <script type="text/javascript" src="../assets/bootstrapjs.js"></script>
+    <script type="text/javascript" src="../assets/datatable1.js"></script>
+    <script type="text/javascript" src="../assets/datatable2.js"></script>
+    <script type="text/javascript" src="../assets/datatable3.js"></script>
+    <script type="text/javascript" src="../assets/datatable4.js"></script>
+    <script type="text/javascript" src="../assets/datatable5.js"></script>
+    <script type="text/javascript" src="../assets/datatable6.js"></script>
+    <script type="text/javascript" src="../assets/datatable7.js"></script>
+    <script type="text/javascript" src="../assets/validations.js"></script>
     </head>
     <div class="row" style="padding-top: 15px;">
         <div class="col col-sm-6 ">
@@ -52,7 +50,7 @@ if (isset($_GET["department_id"])) {
                 <button class="dropdown-item" href="#">
                     <?php echo "<p class=intro> $username!</p>"; ?>
                 </button>
-                <a class="dropdown-item" href="dashboards.php" style="text-decoration:none">
+                <a class="dropdown-item" href="../dashboards.php" style="text-decoration:none">
                     My Dashboard
                 </a>
                 <a class="dropdown-item" href="logout.php" style="text-decoration:none">Log out</a>
@@ -99,14 +97,11 @@ if (isset($_GET["department_id"])) {
                                     class="form-control" /><br><br>
                                 Deptartment Name: <select name="department_name" class="form-control">
                                     <?php
-
                                     $sql = "SELECT * FROM department";
                                     $result_dept = mysqli_query($con, $sql);
                                     while ($rows_dep = mysqli_fetch_assoc($result_dept)) {
-                                        $selected = ($rows_dep['department_id'] ==$department_id) ? 'selected' : '';
-
+                                        $selected = ($rows_dep['department_id'] == $department_id) ? 'selected' : '';
                                         ?>
-
                                         <option value="<?php echo $rows_dep['department_id']; ?>" <?php echo $selected ?>>
 
                                             <?php echo $rows_dep['department_name']; ?>
@@ -141,7 +136,6 @@ if (isset($_GET["department_id"])) {
             </div>
         </div>
     </div>
-
     <?php
     if ($department_id) {
         $sql = "SELECT * FROM contact_information a inner join department b on a.department_id=b.department_id WHERE is_deleted=0 AND user_id='$user_id' AND  a.department_id='$department_id' ORDER BY id DESC";
@@ -150,7 +144,6 @@ if (isset($_GET["department_id"])) {
         $sql = "SELECT * FROM contact_information a left join department b on a.department_id=b.department_id WHERE is_deleted=0 AND user_id='$user_id' ORDER BY id DESC";
         $result = mysqli_query($con, $sql);
     }
-
     ?>
     <div>
         <table id="mytable" border="2" class="table-bordered" style="width:100%">
@@ -172,10 +165,7 @@ if (isset($_GET["department_id"])) {
                     <?php
                     $no = 1;
                     while ($rows = mysqli_fetch_assoc($result)) {
-
-
                         ?>
-
                         <td>
                             <?php echo $no++; ?>
                         </td> <!-- incrementing the sl.no. -->
@@ -185,14 +175,12 @@ if (isset($_GET["department_id"])) {
                         <td>
                             <?php echo $rows['last_name']; ?>
                         </td>
-
                         <td style="text-align:right; padding:10">
                             <?php echo $rows['mobile_number']; ?>
                         </td>
                         <td>
                             <?php echo '<a href="mailto:' . $rows['email_id'] . '">' . $rows['email_id'] . '</a>'; ?>
                         </td>
-
                         <td style="text-align:right"> <!-- For changing the date format and printing the created date -->
 
                             <?php $timestamp = strtotime($rows['created_date']);
@@ -222,12 +210,9 @@ if (isset($_GET["department_id"])) {
                                 onclick="highlight(this); checkDelete(<?php echo $rows['id']; ?>,'<?php echo ($rows['first_name']); ?>'); "><i
                                     class="fa fa-trash"></i></a>
                         </td>
-
-
                         <td>
                             <?php echo $rows['department_name']; ?>
                         </td>
-
                     </tr>
                     <?php
                     }
@@ -236,5 +221,4 @@ if (isset($_GET["department_id"])) {
         </table>
     </div>
 </body>
-
 </html>

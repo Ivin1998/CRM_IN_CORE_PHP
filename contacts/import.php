@@ -1,7 +1,7 @@
 <?php
 date_default_timezone_set('Asia/Calcutta');
-include 'connections.php';
-require 'vendor/autoload.php';
+include '../database/connections.php';
+require '../vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 session_start();
@@ -13,7 +13,7 @@ if (isset($_POST["submit"])) {
     $fileExtension = explode('.', $fileName);
     $fileExtension = strtolower(end($fileExtension));
     $newFileName = date("Y.m.d") . "-" . date("h.i.s") . "." . $fileExtension;
-    $targetDirectory = "uploads/" . $newFileName;
+    $targetDirectory = "../uploads/" . $newFileName;
     move_uploaded_file($_FILES["csv_file"]["tmp_name"], $targetDirectory);
     error_reporting(-1);
     $spreadsheet = IOFactory::load($targetDirectory);

@@ -1,5 +1,5 @@
 <?php
-include 'connections.php';
+include '../database/connections.php';
 
 $department_name=$_POST['department_name'];
 $sql="INSERT INTO department (department_name) VALUES ('$department_name')";

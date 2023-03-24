@@ -32,7 +32,7 @@
 </html>
 <?php
 session_start();
-include 'connections.php';
+include './database/connections.php';
 session_regenerate_id();
 if (isset($_POST["submit"])) {
     $username = $_POST['user_name'];

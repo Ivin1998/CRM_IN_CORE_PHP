@@ -1,5 +1,5 @@
 <?php
-include('connections.php');
+include '../database/connections.php';
 
 
 if (isset($_POST['id'])) {

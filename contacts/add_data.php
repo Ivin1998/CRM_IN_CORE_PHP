@@ -1,5 +1,5 @@
 <?php
-include 'connections.php';
+include '../database/connections.php';
 $department_name=$_POST['department_name'];
 $user_id = $_POST['user_id'];
 $created_date = $_POST['created_date'];

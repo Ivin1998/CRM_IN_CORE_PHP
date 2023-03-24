@@ -1,5 +1,5 @@
 <?php
-include 'connections.php';
+include './database/connections.php';
 session_start();
 $username = $_SESSION['username'];
 $user_id = $_SESSION['user_id'];
@@ -26,11 +26,11 @@ $set = $row['COUNT(*)'];
     </button>
     <div class="container dashboard ">
         <div class="col-sm-6 " style="text-align:center">
-            <a href="contacts.php" class="btn btn-lg btn-primary " style="padding:80">Contacts<div>
+            <a href="contacts/contacts.php" class="btn btn-lg btn-primary " style="padding:80">Contacts<div>
                     <?php echo $set ?>
                 </div></a>
         </div>
-        <div class="col-sm-6"> <a href="departments.php" class="btn btn-lg btn-primary "
+        <div class="col-sm-6"> <a href="departments/departments.php" class="btn btn-lg btn-primary "
                 style="padding:90">Departments</a></div>
 </body>
 

@@ -1,5 +1,5 @@
 <?php
-include 'connections.php';
+include '../database/connections.php';
 
 
     session_start();
@@ -7,7 +7,7 @@ include 'connections.php';
     session_destroy();
     unset($_SESSION["user_id"]);
     unset($_SESSION["user_name"]);
-    header("Location:index.php");
+    header("Location:../index.php");
   
 
     echo "logged out";

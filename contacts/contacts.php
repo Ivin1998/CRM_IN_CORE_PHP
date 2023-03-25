@@ -4,6 +4,10 @@ include '../database/connections.php';
 session_start();
 $username = $_SESSION['username'];
 $user_id = $_SESSION['user_id'];
+$count_query = "SELECT COUNT(*) FROM contact_information WHERE is_deleted=0 AND user_id='$user_id'";
+$result = mysqli_query($con, $count_query);
+$row = mysqli_fetch_assoc($result);
+$set = $row['COUNT(*)'];
 
 if (isset($_GET["department_id"])) {
     $department_id = $_GET['department_id'];
@@ -40,7 +44,7 @@ if (isset($_GET["department_id"])) {
 
     <div class="sidebar">
     <a  href="contacts.php">Home</a>
-  <a class="active" href="contacts.php">Contacts</a>
+  <a class="active" href="contacts.php">Contacts <?php echo "<span class=badge>". $set ."</span>" ?></a>
   <a href="../departments/departments.php">Departments</a>
   <a href="#">About</a>
     </div>
@@ -168,7 +172,7 @@ if (isset($_GET["department_id"])) {
                     <th>Email Address</th>
                     <th>Created Date</th>
                     <th>Modified Date</th>
-                    <th style="width:250px">Actions</th>
+                    <th style="width:200px">Actions</th>
                     <th>Department</th>
                 </tr>
             </thead>
@@ -193,7 +197,7 @@ if (isset($_GET["department_id"])) {
                         <td>
                             <?php echo '<a href="mailto:' . $rows['email_id'] . '">' . $rows['email_id'] . '</a>'; ?>
                         </td>
-                        <td style="text-align:right"> <!-- For changing the date format and printing the created date -->
+                        <td style="text-align:right;padding:10"> <!-- For changing the date format and printing the created date -->
 
                             <?php $timestamp = strtotime($rows['created_date']);
 
@@ -201,7 +205,7 @@ if (isset($_GET["department_id"])) {
                             echo $date;
                             ?>
                         </td>
-                        <td style="text-align:right">
+                        <td style="text-align:right;padding:10">
                             <!-- For printing modifie date only if data is modified -->
                             <?php
                             $timestamp = date('Y-m-d H:i:s');
@@ -213,7 +217,7 @@ if (isset($_GET["department_id"])) {
                             }
                             ?>
                         </td>
-                        <td><a class="btn-lg view_data eye-icon" id="<?php echo $rows['id']; ?>"><i
+                        <td style="text-align:center"><a class="btn-lg view_data eye-icon" id="<?php echo $rows['id']; ?>"><i
                                     class="fa fa-eye"></i></a>
                             <a class=" btn-lg edit_icon edit_data" id="<?php echo $rows['id']; ?>"><i
                                     class="fa fa-edit"></i></a>

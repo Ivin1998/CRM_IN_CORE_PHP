@@ -2,6 +2,12 @@
 include '../database/connections.php';
 session_start();
 $user_id = $_SESSION['user_id'];
+
+$count_query = "SELECT COUNT(*) FROM contact_information WHERE is_deleted=0 AND user_id='$user_id'";
+$result = mysqli_query($con, $count_query);
+$row = mysqli_fetch_assoc($result);
+$set = $row['COUNT(*)'];
+
 ?>
 <html>
 <title>Department List</title>
@@ -24,7 +30,7 @@ $user_id = $_SESSION['user_id'];
 
     <div class="sidebar" id="myHeader">
     <a  href="../contacts/contacts.php">Home</a>
-        <a href="../contacts/contacts.php">Contacts</a>
+        <a href="../contacts/contacts.php">Contacts <?php echo "<span class=badge>". $set ."</span>" ?></a>
         <a class="active" href="../departments/departments.php">Departments</a>
         <a href="#">About</a>
     </div>

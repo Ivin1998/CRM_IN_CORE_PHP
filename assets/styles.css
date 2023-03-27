@@ -165,3 +165,12 @@ cursor: pointer;
   border-radius: 2px;
 }
 
+.sub-dropdown {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: -107%;
+}
+.dropdown-content:hover .sub-dropdown {
+  display: block;
+}

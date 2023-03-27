@@ -23,32 +23,29 @@ if (isset($_GET["department_id"])) {
     <link rel="stylesheet" href="../assets/formbootstrap.css">
     <link rel="stylesheet" href="../assets/styles.css">
     <link rel="stylesheet" href="../assets/style_sidebar.css">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
     <script type="text/javascript" src="../assets/sweetalert.js"></script>
     <script type="text/javascript" src="../assets/jquery.js"></script>
     <script type="text/javascript" src="../assets/bootstrapjs.js"></script>
-    <script type="text/javascript" src="../assets/datatable1.js"></script>
-    <script type="text/javascript" src="../assets/datatable2.js"></script>
-    <script type="text/javascript" src="../assets/datatable3.js"></script>
-    <script type="text/javascript" src="../assets/datatable4.js"></script>
-    <script type="text/javascript" src="../assets/datatable5.js"></script>
-    <script type="text/javascript" src="../assets/datatable6.js"></script>
-    <script type="text/javascript" src="../assets/datatable7.js"></script>
+    <script type="text/javascript" src="../assets/datatable1.js"></script> <!-- Pagination -->
+    <script type="text/javascript" src="../assets/datatable2.js"></script> <!-- CSV in database table -->
+    <script type="text/javascript" src="../assets/datatable3.js"></script><!-- Excel in database table -->
+    <script type="text/javascript" src="../assets/datatable4.js"></script> <!-- PDF button in database table -->
+    <script type="text/javascript" src="../assets/datatable5.js"></script> <!-- Displaying the datatables buttons -->
+    <script type="text/javascript" src="../assets/datatable6.js"></script><!-- Print in database table -->
+    <script type="text/javascript" src="../assets/datatable7.js"></script><!-- PDF download in database table -->
     <script type="text/javascript" src="../assets/validations.js"></script>
     </head>
 <body>
 <div class="header" id="myHeader">
   <h2>User Application</h2>
 </div>
-
     <div class="sidebar">
     <a  href="contacts.php">Home</a>
   <a class="active" href="contacts.php">Contacts <?php echo "<span class=badge>". $set ."</span>" ?></a>
   <a href="../departments/departments.php">Departments</a>
   <a href="#">About</a>
     </div>
-
     <div class="content"> 
            <div class="row" style="padding-top: 15px;">
         <div class="col col-sm-6 ">
@@ -58,18 +55,29 @@ if (isset($_GET["department_id"])) {
         <div class="col col-sm-2"><button type="button" class="btn btn-primary btn-lg import add_con_align" data-toggle="modal"
                 data-target="#myModal">Import Contact</button></div>
         <div class=" col col-sm-2">
-            <button class="btn btn-primary rounded-circle" style="height:40px;margin: -85 60;" ;type="button" id="dropdownMenuButton"
+            <button class="btn btn-primary rounded-circle" style="height:40px;margin: -70 70;" ;type="button" id="dropdownMenuButton"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa-solid" >
                     <?php echo "$username[0]$username[1]"; ?>
                 </i>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            
                 <button class="dropdown-item" href="#">My profile</button>
                 <button class="dropdown-item" href="#">
                     <?php echo "<p class=intro> $username!</p>"; ?>
                 </button>
+                <div class="dropdown-content">
+                <a  class="dropdown-item" style="text-decoration:none">Export</a>
+                <div class="sub-dropdown dropdown-menu">
+                    <a class="dropdown-item" href="export_csv.php" style="text-decoration:none">Comma Separated Values (.csv)</a>
+                    <a class="dropdown-item" href="export_excel.php" style="text-decoration:none">Microsoft Excel (.xlsx)</a>
+                    <a class="dropdown-item" href="export_pdf.php" style="text-decoration:none">PDF (.pdf)</a>
+
+                </div>
+                </div>
                 <a class="dropdown-item" href="logout.php" style="text-decoration:none">Log out</a>
+                
             </div>
         </div>
     </div>
@@ -235,6 +243,6 @@ if (isset($_GET["department_id"])) {
                     ?>
             </tbody>
         </table>
-    </div>
+   
 </body>
 </html>

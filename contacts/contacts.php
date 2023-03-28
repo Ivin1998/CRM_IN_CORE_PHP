@@ -1,14 +1,13 @@
 <?php
 date_default_timezone_set('Asia/Calcutta');
 include '../database/connections.php';
-session_start();
+include '../mvc/controller.php';
 $username = $_SESSION['username'];
 $user_id = $_SESSION['user_id'];
 $count_query = "SELECT COUNT(*) FROM contact_information WHERE is_deleted=0 AND user_id='$user_id'";
 $result = mysqli_query($con, $count_query);
 $row = mysqli_fetch_assoc($result);
 $set = $row['COUNT(*)'];
-
 if (isset($_GET["department_id"])) {
     $department_id = $_GET['department_id'];
 } else {
@@ -73,7 +72,6 @@ if (isset($_GET["department_id"])) {
                     <a class="dropdown-item" href="export_csv.php" style="text-decoration:none">Comma Separated Values (.csv)</a>
                     <a class="dropdown-item" href="export_excel.php" style="text-decoration:none">Microsoft Excel (.xlsx)</a>
                     <a class="dropdown-item" href="export_pdf.php" style="text-decoration:none">PDF (.pdf)</a>
-
                 </div>
                 </div>
                 <a class="dropdown-item" href="logout.php" style="text-decoration:none">Log out</a>
@@ -160,15 +158,7 @@ if (isset($_GET["department_id"])) {
             </div>
         </div>
     </div>
-    <?php
-    if ($department_id) {
-        $sql = "SELECT * FROM contact_information a inner join department b on a.department_id=b.department_id WHERE is_deleted=0 AND user_id='$user_id' AND  a.department_id='$department_id' ORDER BY id DESC";
-        $result = mysqli_query($con, $sql);
-    } else {
-        $sql = "SELECT * FROM contact_information a left join department b on a.department_id=b.department_id WHERE is_deleted=0 AND user_id='$user_id' ORDER BY id DESC";
-        $result = mysqli_query($con, $sql);
-    }
-    ?>
+
     <div>
         <table id="mytable" border="2" class="table-bordered" style="width:100%">
             <thead>
@@ -187,9 +177,11 @@ if (isset($_GET["department_id"])) {
             <tbody>
                 <tr>
                     <?php
-                    $no = 1;
-                    while ($rows = mysqli_fetch_assoc($result)) {
-                        ?>
+                     $no = 1;
+                    $array = new extract("localhost", "root", "CsAdmin12#$", "contacts");
+                    $row=$array->fetch_data(); 
+                    foreach($row as $rows){
+                             ?>
                         <td>
                             <?php echo $no++; ?>
                         </td> <!-- incrementing the sl.no. -->
@@ -206,9 +198,7 @@ if (isset($_GET["department_id"])) {
                             <?php echo '<a href="mailto:' . $rows['email_id'] . '">' . $rows['email_id'] . '</a>'; ?>
                         </td>
                         <td style="text-align:right;padding:10"> <!-- For changing the date format and printing the created date -->
-
                             <?php $timestamp = strtotime($rows['created_date']);
-
                             $date = date('M-d-Y H:i:s', $timestamp);
                             echo $date;
                             ?>
@@ -242,7 +232,6 @@ if (isset($_GET["department_id"])) {
                     }
                     ?>
             </tbody>
-        </table>
-   
+        </table> 
 </body>
 </html>

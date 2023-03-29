@@ -9,7 +9,7 @@ class extract extends database
         $user_id = $_SESSION['user_id'];  //for getting the user_id from session
 
         if (isset($_GET["department_id"])) {
-            $department_id = $_GET['department_id'];     //for getting the department-id from the
+            $department_id = $_GET['department_id'];     //for getting the department-id from the url
         } else {
             $department_id = '';
         }
@@ -21,12 +21,11 @@ class extract extends database
             $sql = "SELECT * FROM contact_information a left join department b on a.department_id=b.department_id WHERE is_deleted=0 AND user_id='$user_id' ORDER BY id DESC";
             $result = mysqli_query($this->con, $sql);
         }
-
-        
         while ($rows = mysqli_fetch_assoc($result)) {
             $array[] = $rows;
         }
         return $array;
     }
 }
+
 ?>

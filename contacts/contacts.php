@@ -7,6 +7,7 @@ $user_id = $_SESSION['user_id'];
 $count_query = "SELECT COUNT(*) FROM contact_information WHERE is_deleted=0 AND user_id='$user_id'";
 $result = mysqli_query($con, $count_query);
 $row = mysqli_fetch_assoc($result);
+
 $set = $row['COUNT(*)'];
 if (isset($_GET["department_id"])) {
     $department_id = $_GET['department_id'];
@@ -43,7 +44,7 @@ if (isset($_GET["department_id"])) {
     <a  href="contacts.php">Home</a>
   <a class="active" href="contacts.php">Contacts <?php echo "<span class=badge>". $set ."</span>" ?></a>
   <a href="../departments/departments.php">Departments</a>
-  <a href="#">About</a>
+  <a href="../region/region.php">Regions</a>
     </div>
     <div class="content"> 
            <div class="row" style="padding-top: 15px;">
@@ -74,8 +75,7 @@ if (isset($_GET["department_id"])) {
                     <a class="dropdown-item" href="export_pdf.php" style="text-decoration:none">PDF (.pdf)</a>
                 </div>
                 </div>
-                <a class="dropdown-item" href="logout.php" style="text-decoration:none">Log out</a>
-                
+                <a class="dropdown-item" href="logout.php" style="text-decoration:none">Log out</a>  
             </div>
         </div>
     </div>
@@ -85,7 +85,7 @@ if (isset($_GET["department_id"])) {
             <div class="modal-content">
                 <div style="padding: 15px 15px 0px 15px">
                     <div class="row">
-                        <div class="col col-sm-6">
+                        <div class="col col-sm-6" id="modal-title">
                             <h4>Add Contact</h4>
                         </div>
                         <div class="col col-sm-6">
@@ -132,6 +132,45 @@ if (isset($_GET["department_id"])) {
                                     }
                                     ?>
                                 </select><br></br>
+
+                                City: <select name="city_name" class="form-control">
+                                <?php
+                                $sql="SELECT region FROM region WHERE flag_value=1";
+                                $result_city=mysqli_query($con,$sql);
+                                while($rows_city=mysqli_fetch_assoc($result_city)){
+                                    ?><option>
+                                        <?php echo $rows_city['region'] ?>
+                                    </option>
+                                    <?php
+                                }
+                                ?>
+                                 </select><br></br>
+
+                                 State: <select name="city_name" class="form-control">
+                                <?php
+                                $sql="SELECT region FROM region WHERE flag_value=2";
+                                $result_city=mysqli_query($con,$sql);
+                                while($rows_city=mysqli_fetch_assoc($result_city)){
+                                    ?><option>
+                                        <?php echo $rows_city['region'] ?>
+                                    </option>
+                                    <?php
+                                }
+                                ?>
+                                 </select><br></br>
+
+                                 Country: <select name="city_name" class="form-control">
+                                <?php
+                                $sql="SELECT region FROM region WHERE flag_value=3";
+                                $result_city=mysqli_query($con,$sql);
+                                while($rows_city=mysqli_fetch_assoc($result_city)){
+                                    ?><option>
+                                        <?php echo $rows_city['region'] ?>
+                                    </option>
+                                    <?php
+                                }
+                                ?>
+                                 </select><br></br>
                                 Instagram Profile: <input type="text" name="Instagram" id="Instagram"
                                     class="form-control" /><br><br>
                                 Twitter Handle: <input type="text" name="Twitter" id="Twitter"
@@ -178,10 +217,10 @@ if (isset($_GET["department_id"])) {
                 <tr>
                     <?php
                      $no = 1;
-                    $array = new extract("localhost", "root", "CsAdmin12#$", "contacts");
-                    $row=$array->fetch_data(); 
+                    $value = new extract("localhost", "root", "CsAdmin12#$", "contacts");
+                    $row=$value->fetch_data(); 
                     foreach($row as $rows){
-                             ?>
+                    ?>
                         <td>
                             <?php echo $no++; ?>
                         </td> <!-- incrementing the sl.no. -->

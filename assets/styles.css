@@ -1,5 +1,5 @@
-form{
-    
+form {
+
   width: auto;
   margin-top: auto;
   margin-bottom: auto;
@@ -15,144 +15,165 @@ form{
   border-radius: 5px;
 
 }
+
 .dataTables_filter input {
-margin-left: 10px;
+  margin-left: 10px;
 
 }
+
 .dataTables_filter label {
-margin-left: 600px;
-align-items: center;
+  margin-left: 600px;
+  align-items: center;
 
 }
-.dataTables_filter{
-padding: 8 px;
-display: inline-block;
+
+.dataTables_filter {
+  padding: 8 px;
+  display: inline-block;
 
 
 }
 
 .sorting {
-text-align: center;
+  text-align: center;
 }
+
 .highlighted {
-background-color: blanchedalmond;
-border: 1px solid black;
+  background-color: blanchedalmond;
+  border: 1px solid black;
 }
 
 thead {
-background-color: aliceblue;
+  background-color: aliceblue;
 }
 
-#mytable_paginate  {
-text-align: center;
+#mytable_paginate {
+  text-align: center;
 
 }
 
 #mytable_info {
-text-align: center;
+  text-align: center;
 
 }
+
 #mytable_first {
-padding: 8px 5px;
-display: inline;
-}  
-#mytable_previous{
-padding: 8px 16px;
-display: inline;
-}
-#mytable_next{
-padding: 8px 16px;
-display: inline;
+  padding: 8px 5px;
+  display: inline;
 }
 
-#paginate_button.last{
-padding: 8px 16px;
-display: inline;
+#mytable_previous {
+  padding: 8px 16px;
+  display: inline;
 }
+
+#mytable_next {
+  padding: 8px 16px;
+  display: inline;
+}
+
+#paginate_button.last {
+  padding: 8px 16px;
+  display: inline;
+}
+
 #mytable_info {
-padding: 10px 16px;
-display: block;
+  padding: 10px 16px;
+  display: block;
 }
+
 #mytable_filter {
-padding-bottom: 10;
-display: inline;
-margin: -120;
+  padding-bottom: 10;
+  display: inline;
+  margin: -120;
 }
+
 #mytable_length {
-padding-top: 15;
-display: block;
-}
-.eye-icon{
-color: green;
-cursor: pointer;
-}
-.delete-icon{
-color:red ;
-cursor: pointer;
+  padding-top: 15;
+  display: block;
 }
 
-.edit_icon{
-cursor: pointer;
+.eye-icon {
+  color: green;
+  cursor: pointer;
 }
+
+.delete-icon {
+  color: red;
+  cursor: pointer;
+}
+
+.edit_icon {
+  cursor: pointer;
+}
+
 .input {
-width: 50%;
+  width: 50%;
 }
 
-.login{
-width: 35%;
-display: flex;
-flex-wrap: wrap;
-align-content: center;
+.login {
+  width: 35%;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
 }
 
-#forgot{
-text-align: center;
-cursor: pointer;
+#forgot {
+  text-align: center;
+  cursor: pointer;
 }
-.logout{
+
+.logout {
   font-size: 25;
 
 }
+
 .dt-buttons {
   display: unset;
-  
+
 }
-.form-control input{
- display: inline;
+
+.form-control input {
+  display: inline;
 }
+
 .show {
   position: relative;
   text-align: initial;
 }
+
 .intro {
   font-weight: bolder;
 }
-.modal-title{
+
+.modal-title {
   position: absolute;
 }
-.dashboard{
+
+.dashboard {
   margin-top: 100;
 }
-.add_con_align{
+
+.add_con_align {
   position: absolute;
-    top: 50;
-    right: -120;
-    float: right;
-    margin: -20;
+  top: 50;
+  right: -120;
+  float: right;
+  margin: -20;
 }
 
 .header {
   padding: 10px 16px;
   background: #555;
   color: #f1f1f1;
-  z-index:99;
+  z-index: 99;
 }
 
 .sticky {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index:99;
+  z-index: 99;
 }
 
 .count {
@@ -171,6 +192,15 @@ cursor: pointer;
   top: 50%;
   left: -107%;
 }
+
 .dropdown-content:hover .sub-dropdown {
   display: block;
+}
+
+.region_table {
+  width: 60%;
+}
+
+.region_style {
+  margin: 0 0 10;
 }

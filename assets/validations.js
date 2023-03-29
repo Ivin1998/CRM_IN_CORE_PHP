@@ -125,7 +125,6 @@ function savecontact() {
 /* Edit in popup modal*/
 $(document).on('click', '.edit_data', function () {
     var user_id = $(this).attr("id");
-
     var row = $(this).closest('tr');
     row.addClass("highlighted");
     $.ajax({
@@ -146,7 +145,7 @@ $(document).on('click', '.edit_data', function () {
             $('#Facebook').val(data.facebook_id);
             $('#id').val(user_id);
             $('#add_con').click()
-            $('.modal-title').html('Edit Details');
+            $('#modal-title').html('Edit Details');
             $('#update-btn').show();
             $('#Add').hide();
             $('#reload').click(function () {
@@ -154,6 +153,10 @@ $(document).on('click', '.edit_data', function () {
             });
         }
     });
+
+
+
+
 });
 
 $(document).ready(function () {
@@ -177,6 +180,7 @@ $(document).ready(function () {
         $('#Add').show();
     });
 });
+
 $(document).on('click', '.view_data', function () {
     var user_id = $(this).attr("id");
     if (user_id != '') {
@@ -253,23 +257,60 @@ $(document).ready(function () {
         });
     })
 
-window.onscroll = function() {myFunction()};
 
-var header = document.getElementById("myHeader");
-var sticky = header.offsetTop;
 
-function myFunction() {
-  if (window.pageYOffset > sticky) {
-    header.classList.add("sticky");
-  } else {
-    header.classList.remove("sticky");
-  }
-}
+    window.onscroll = function () { myFunction() };
+
+    var header = document.getElementById("myHeader");
+    var sticky = header.offsetTop;
+
+    function myFunction() {
+        if (window.pageYOffset > sticky) {
+            header.classList.add("sticky");
+        } else {
+            header.classList.remove("sticky");
+        }
+    }
 });
+function add_region(val) {
+    document.getElementById('flag_value').value = val;
+}
 
+$(document).ready(function () {
+    $("#add_region").click(function () {
+        $.ajax({
+            url: "add_region.php",
+            type: "POST",
+            data: $('#mycontact').serialize(),
+            success: function (data) {
+                swal.fire({
+                    text: "Region added successfully!",
+                    icon: "success",
+                });
+                location.reload();
+            },
 
+        });
 
+    });
 
+    $("#add_state").click(function () {
+
+        $('#modal-title').html('Add State');
+
+    });
+    $("#add_country").click(function () {
+
+        $('#modal-title').html('Add Country');
+
+    });
+    $("#add_city").click(function () {
+
+        $('#modal-title').html('Add City');
+
+    });
+
+});
 
 
 

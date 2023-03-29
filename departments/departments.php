@@ -31,7 +31,7 @@ $set = $row['COUNT(*)'];
             <?php echo "<span class=badge>" . $set . "</span>" ?>
         </a>
         <a class="active" href="../departments/departments.php">Departments</a>
-        <a href="#">About</a>
+        <a href="../region/region.php">Regions</a>
     </div>
     <div class="content">
         <div id="myModal" class="modal fade" role="dialog">

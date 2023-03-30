@@ -41,19 +41,25 @@ if (isset($_POST["submit"])) {
         $cellIterator->next();
         $facebook_id = $cellIterator->current()->getValue();
         $cellIterator->next();
+        $country_id = $cellIterator->current()->getValue();
+        $cellIterator->next();
+        $state = $cellIterator->current()->getValue();
+        $cellIterator->next();
+        $city = $cellIterator->current()->getValue();
+        $cellIterator->next();
         $created_date = date("Y-m-d H:i:s");
         $cellIterator->next();
 
-        $sql = "INSERT INTO contact_information (first_name,last_name,mobile_number,department_id,office_number,email_id,instagram_id,twitter_id,linkedin_id,facebook_id,created_date,user_id)
-        values('$first_name','$last_name','$mobile_number', $department_id,'$office_number','$email_id','$instagram_id','$twitter_id ','$linkedin_id','$facebook_id','$created_date','$user_id')";
+        $sql = "INSERT INTO contacts (first_name,last_name,mobile_number,department_id,office_number,email_id,instagram_id,twitter_id,linkedin_id,facebook_id,user_id,country_id,state,city,created_date)
+        values('$first_name','$last_name','$mobile_number', $department_id,'$office_number','$email_id','$instagram_id','$twitter_id ','$linkedin_id','$facebook_id','$user_id','$country_id','$state','$city','$created_date')";
         $success = mysqli_query($con, $sql);
-    }
+        }
 
-    if ($success) {
-        echo "User information updated successfully";
+        if ($success) {
+            echo "User information updated successfully";
 
-    } else {
-        echo "Error:" . $sql . "<br>" . $con->error;
-    }
+        } else {
+            echo "Error:" . $sql . "<br>" . $con->error;
+        }
 }
 ?>

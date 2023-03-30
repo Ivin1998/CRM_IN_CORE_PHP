@@ -12,9 +12,12 @@ $insta_id = $_POST['Instagram'];
 $twitter_id = $_POST['Twitter'];
 $linked_in = $_POST['Linkedin'];
 $fb_id = $_POST['Facebook'];
+$country=$_POST['country'];
+$state=$_POST['state'];
+$city=$_POST['city'];
 
-$sql = "INSERT INTO contact_information(first_name,last_name,department_id,mobile_number,office_number,email_id,instagram_id,twitter_id,linkedin_id,facebook_id,created_date,user_id) 
-values('$first_name','$last_name','$department_name','$mobile_number','$office_numer','$email_id','$insta_id','$twitter_id ','$linked_in','$fb_id','$created_date','$user_id')";
+$sql = "INSERT INTO contacts(first_name,last_name,department_id,mobile_number,office_number,email_id,instagram_id,twitter_id,linkedin_id,facebook_id,created_date,user_id,country_id,state,city) 
+values('$first_name','$last_name','$department_name','$mobile_number','$office_numer','$email_id','$insta_id','$twitter_id ','$linked_in','$fb_id','$created_date','$user_id','$country',$state,$city)";
 
 $success = mysqli_query($con, $sql);
 

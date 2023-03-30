@@ -3,7 +3,7 @@ include '../database/connections.php';
 session_start();
 $user_id = $_SESSION['user_id'];
 
-$count_query = "SELECT COUNT(*) FROM contact_information WHERE is_deleted=0 AND user_id='$user_id'";
+$count_query = "SELECT COUNT(*) FROM contacts WHERE is_deleted=0 AND user_id='$user_id'";
 $result = mysqli_query($con, $count_query);
 $row = mysqli_fetch_assoc($result);
 $set = $row['COUNT(*)'];
@@ -74,7 +74,7 @@ $set = $row['COUNT(*)'];
                 </tr>
             </thead>
             <?php
-            $sql = "SELECT  a.department_id,department_name, count(*) as cnt FROM contacts.contact_information a right join contacts.department b on a.department_id=b.department_id where
+            $sql = "SELECT  a.department_id,department_name, count(*) as cnt FROM contacts.contacts a right join contacts.department b on a.department_id=b.department_id where
                            user_id='$user_id' AND is_deleted=0 group by user_id,department_name,a.department_id";
             $result_dept = mysqli_query($con, $sql);
             while ($rows = mysqli_fetch_assoc($result_dept)) {

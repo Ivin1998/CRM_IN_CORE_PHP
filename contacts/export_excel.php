@@ -17,7 +17,7 @@ function filterData($str){
 
 $fileName = "members-data_" . date('Y-m-d') . ".xlsx"; 
 $fields = array('First Name','Last Name','Mobile Number','Office Number','Email','Instagram Id','Twitter Id','Linkedin Id','Facebook Id');
-$query=$con->query ("SELECT * FROM contact_information WHERE is_deleted=0  AND user_id='$user_id' ORDER BY id DESC");
+$query=$con->query ("SELECT * FROM contacts WHERE is_deleted=0  AND user_id='$user_id' ORDER BY id DESC");
 if($query->num_rows > 0){ 
 
     $objPHPExcel = new Spreadsheet();

@@ -4,7 +4,7 @@ include '../database/connections.php';
 include '../mvc/controller.php';
 $username = $_SESSION['username'];
 $user_id = $_SESSION['user_id'];
-$count_query = "SELECT COUNT(*) FROM contact_information WHERE is_deleted=0 AND user_id='$user_id'";
+$count_query = "SELECT COUNT(*) FROM contacts WHERE is_deleted=0 AND user_id='$user_id'";
 $result = mysqli_query($con, $count_query);
 $row = mysqli_fetch_assoc($result);
 
@@ -82,7 +82,7 @@ if (isset($_GET["department_id"])) {
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
-            <div class="modal-content">
+            <div class="modal-content" >
                 <div style="padding: 15px 15px 0px 15px">
                     <div class="row">
                         <div class="col col-sm-6" id="modal-title">
@@ -132,44 +132,27 @@ if (isset($_GET["department_id"])) {
                                     }
                                     ?>
                                 </select><br></br>
+                                 Country: <select name="country" id="country_dropdown" class="form-control">
+                                 <option value="">Select Country</option>
 
-                                City: <select name="city_name" class="form-control">
                                 <?php
-                                $sql="SELECT region FROM region WHERE flag_value=1";
-                                $result_city=mysqli_query($con,$sql);
-                                while($rows_city=mysqli_fetch_assoc($result_city)){
-                                    ?><option>
-                                        <?php echo $rows_city['region'] ?>
+                                $sql="SELECT * FROM countries";
+                                $result_country=mysqli_query($con,$sql);
+                                while($rows_country=mysqli_fetch_array($result_country)){
+                                    ?><option value="<?php echo $rows_country['country_id'] ?>">
+                                        <?php echo $rows_country['name']; ?>
                                     </option>
                                     <?php
                                 }
-                                ?>
+                                ?>  </select><br></br>
+       
+                                      State: <select name ="state" id="state_dropdown" class="form-control">                                  
+                                        <option value="">Select State</option>
+                                 
                                  </select><br></br>
+                                 City: <select name="city" id="city_dropdown" class="form-control">
+                                 <option value="">Select City</option>
 
-                                 State: <select name="city_name" class="form-control">
-                                <?php
-                                $sql="SELECT region FROM region WHERE flag_value=2";
-                                $result_city=mysqli_query($con,$sql);
-                                while($rows_city=mysqli_fetch_assoc($result_city)){
-                                    ?><option>
-                                        <?php echo $rows_city['region'] ?>
-                                    </option>
-                                    <?php
-                                }
-                                ?>
-                                 </select><br></br>
-
-                                 Country: <select name="city_name" class="form-control">
-                                <?php
-                                $sql="SELECT region FROM region WHERE flag_value=3";
-                                $result_city=mysqli_query($con,$sql);
-                                while($rows_city=mysqli_fetch_assoc($result_city)){
-                                    ?><option>
-                                        <?php echo $rows_city['region'] ?>
-                                    </option>
-                                    <?php
-                                }
-                                ?>
                                  </select><br></br>
                                 Instagram Profile: <input type="text" name="Instagram" id="Instagram"
                                     class="form-control" /><br><br>
@@ -211,6 +194,7 @@ if (isset($_GET["department_id"])) {
                     <th>Modified Date</th>
                     <th style="width:200px">Actions</th>
                     <th>Department</th>
+                    <th>Country</th>
                 </tr>
             </thead>
             <tbody>
@@ -266,11 +250,14 @@ if (isset($_GET["department_id"])) {
                         <td>
                             <?php echo $rows['department_name']; ?>
                         </td>
+                        <td>
+                            <?php echo $rows['name']; ?>
+                        </td> 
                     </tr>
                     <?php
                     }
                     ?>
             </tbody>
         </table> 
-</body>
+            </body>
 </html>

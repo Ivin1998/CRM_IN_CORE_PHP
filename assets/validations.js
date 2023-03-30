@@ -203,7 +203,6 @@ $(document).on('click', '.view_data', function () {
 $(document).ready(function () {
     $('#mytable').DataTable({
         dom: 'Blfrtip',
-        pagingType: 'full_numbers',
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
         ]
@@ -272,9 +271,9 @@ $(document).ready(function () {
         }
     }
 });
-function add_region(val) {
+/* function add_region(val) {
     document.getElementById('flag_value').value = val;
-}
+} */
 
 $(document).ready(function () {
     $("#add_region").click(function () {
@@ -309,8 +308,36 @@ $(document).ready(function () {
         $('#modal-title').html('Add City');
 
     });
+    
 
 });
+
+$(document).ready(function(){
+    $('#country_dropdown').change(function(){
+     var country_id=this.value;
+     $.ajax({
+     url: "../region/states.php",
+     type: "POST",
+     data: {country_id:country_id},
+     success: function (data) {
+      $('#state_dropdown').html(data);
+     }
+     });
+    });
+    $('#state_dropdown').change(function(){
+        var state_id=this.value;
+        $.ajax({
+        url: "../region/cities.php",
+        type: "POST",
+        data: {state_id:state_id},
+        success: function (data) {
+         $('#city_dropdown').html(data);
+        }
+        });
+       });
+     }); 
+     
+   
 
 
 

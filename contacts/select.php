@@ -2,7 +2,7 @@
 include '../database/connections.php';
 if (isset($_POST['id'])) {
     $output = '';
-    $query = "SELECT * FROM contact_information WHERE id= '" . $_POST["id"] . "'";
+    $query = "SELECT * FROM contacts WHERE id= '" . $_POST["id"] . "'";
     $result = mysqli_query($con, $query);
     $output .= '
     <div class="table-responsive">  

@@ -15,8 +15,12 @@
     $twitter_id = $_POST['Twitter'];
     $linkedin_id = $_POST['Linkedin'];
     $facebook_id = $_POST['Facebook'];
-    $sql = "UPDATE contact_information SET first_name='$first_name',last_name='$last_name',mobile_number='$mobile_number',office_number='$office_number',email_id='$email_id',instagram_id=' $instagram_id',
-    twitter_id='$twitter_id',linkedin_id='$linkedin_id',facebook_id='$facebook_id',mod_date='$mod_date',department_id=' $department_name' where id='$id'";
+    $country=$_POST['country'];
+    $state=$_POST['state'];
+    $city=$_POST['city'];
+
+    $sql = "UPDATE contacts SET first_name='$first_name',last_name='$last_name',mobile_number='$mobile_number',office_number='$office_number',email_id='$email_id',instagram_id=' $instagram_id',
+    twitter_id='$twitter_id',linkedin_id='$linkedin_id',facebook_id='$facebook_id',mod_date='$mod_date',department_id=' $department_name',country_id='$country',state='$state',city='$city' where id='$id'";
     $result = $con->query($sql);
     if ($result == TRUE) {
         echo "Record updated Successfully";

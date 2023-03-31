@@ -3,7 +3,7 @@ function highlight(button) {
     var row = button.parentNode.parentNode; //one parentnode for tr and one parentNode for td
     row.classList.add("highlighted");
 }
-function checkDelete(id, name) {
+function checkDelete(id) {
     swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -200,7 +200,7 @@ $(document).on('click', '.view_data', function () {
     }
 });
 //Datatypes
-$(document).ready(function () {
+/* $(document).ready(function () {
     $('#mytable').DataTable({
         dom: 'Blfrtip',
         buttons: [
@@ -208,7 +208,7 @@ $(document).ready(function () {
         ]
     });
 });
-
+ */
 
 
 $(document).ready(function () {
@@ -337,8 +337,51 @@ $(document).ready(function(){
        });
      }); 
      
-   
+     function check_country_Delete(id,type) {
 
+        swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085D6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: '../region/delete_region.php',
+                    data: { id: id,type},
+                    success: function (data) {
+                        swal.fire({
+                            text: "Deleted successfully!",
+                            icon: "success",
+                        });
+                         location.reload();
+                    },
+                });
+            }
+        })
+    }
+
+    $(document).on('click', '.edit_country', function () {
+        var country_id = $(this).attr("id");
+        $.ajax({
+            url: "fetch_country.php",
+            method: "POST",
+            data: { id: country_id },
+            dataType: "json",
+            success: function (data) {
+                $('#name').val(data.name);
+              
+                $('#add_con').click();
+               
+               
+            }
+        });
+
+    })
 
 
 

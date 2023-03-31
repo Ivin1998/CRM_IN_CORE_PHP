@@ -44,7 +44,9 @@ if (isset($_GET["department_id"])) {
     <a  href="contacts.php">Home</a>
   <a class="active" href="contacts.php">Contacts <?php echo "<span class=badge>". $set ."</span>" ?></a>
   <a href="../departments/departments.php">Departments</a>
-  <a href="../region/region.php">Regions</a>
+  <a  href="../region/country_crud.php">Countries</a>
+    <a  href="../region/state_crud.php">States</a>
+    <a  href="../region/city_crud.php">Cities</a>
     </div>
     <div class="content"> 
            <div class="row" style="padding-top: 15px;">
@@ -244,7 +246,7 @@ if (isset($_GET["department_id"])) {
                                     class="fa fa-edit"></i></a>
 
                             <a class="btn btn-lg delete-icon"
-                                onclick="highlight(this); checkDelete(<?php echo $rows['id']; ?>,'<?php echo ($rows['first_name']); ?>'); "><i
+                                onclick="highlight(this); checkDelete(<?php echo $rows['id']; ?>); "><i
                                     class="fa fa-trash"></i></a>
                         </td>
                         <td>

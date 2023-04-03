@@ -141,7 +141,7 @@ if (isset($_GET["department_id"])) {
                                 $sql="SELECT * FROM countries";
                                 $result_country=mysqli_query($con,$sql);
                                 while($rows_country=mysqli_fetch_array($result_country)){
-                                    ?><option value="<?php echo $rows_country['country_id'] ?>">
+                                    ?><option value="<?php echo $rows_country['id'] ?>">
                                         <?php echo $rows_country['name']; ?>
                                     </option>
                                     <?php

@@ -11,14 +11,15 @@ $set = $row['COUNT(*)'];
 <html>
 <title>Cities</title>
 <head>
+    <link rel="stylesheet" href="../assets/bootstrapmin.css" />
     <link rel="stylesheet" href="../assets/formbootstrap.css">
     <link rel="stylesheet" href="../assets/styles.css">
     <link rel="stylesheet" href="../assets/style_sidebar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
-
-   <script type="text/javascript" src="../assets/sweetalert.js"></script>
+    <script type="text/javascript" src="../assets/sweetalert.js"></script>
     <script type="text/javascript" src="../assets/jquery.js"></script>
-   <script type="text/javascript" src="../assets/validations.js"></script> 
+    <script type="text/javascript" src="../assets/bootstrapjs.js"></script>
+    <script type="text/javascript" src="../assets/validations.js"></script>
 </head>
 <div class="header" id="myHeader">
     <h2>User Application</h2>
@@ -38,8 +39,22 @@ $set = $row['COUNT(*)'];
 <div class="content">
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="col col-sm-4" id="modal-title">
+                    <h5>Edit City</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="country_name">
+                        City Name: <input type="text" id="name" name="name" class="form-control" /><br><br>
+                        <input type="hidden" name="id" id="id" />
+                        <button id="update_city" class="btn btn-primary form-control" type="button">Update</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
+   
 
     <!-- City -->
 
@@ -54,6 +69,7 @@ $set = $row['COUNT(*)'];
 
             <tr>
                 <th style="text-align: center;"> City</th>
+                <th style="text-align: center;"> Actions</th>
             </tr>
 
             <?php
@@ -69,9 +85,9 @@ $set = $row['COUNT(*)'];
                     <td>
                         <a class="btn-lg view_data eye-icon " id="<?php echo $rows_city['id']; ?>"><i
                                     class="fa fa-eye"></i></a>
-                        <a class=" btn-lg edit_icon" id="<?php echo $rows_city['id']; ?>"><i
-                                    class="fa fa-edit"></i></a>
-                        <a class="btn btn-lg delete-icon" onclick="check_country_Delete(<?php echo $rows_city['id'] ?>,3);"><i
+                        <a class=" btn-lg edit_icon" onclick="edit_region(<?php echo $rows_city['id'] ?>,3);"?><i
+                                        class="fa fa-edit" data-toggle="modal" data-target="#myModal"></i></a>
+                        <a class="btn btn-lg delete-icon" onclick="check_region_Delete(<?php echo $rows_city['id'] ?>,3);"><i
                                     class="fa fa-trash"></i></a>
                                     
                         </td>

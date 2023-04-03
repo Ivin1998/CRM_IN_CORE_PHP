@@ -42,14 +42,22 @@ $set = $row['COUNT(*)'];
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
+                <div class="col col-sm-4" id="modal-title">
+                    <h5>Edit Country</h5>
+                </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="country_name">
                         Country Name: <input type="text" id="name" name="name" class="form-control" /><br><br>
+                        <input type="hidden" name="id" id="id" />
+                        <button id="update_button" class="btn btn-primary form-control" type="button">Update</button>
                     </form>
-
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="reload" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
+        
     </div>
 
     <h1 class="page-header">Region</h1>
@@ -76,12 +84,12 @@ $set = $row['COUNT(*)'];
                                 <?php echo $rows_country['name'] ?>
                             </td>
                             <td>
-                                <a class="btn-lg view_data eye-icon" id="<?php echo $rows_country['country_id'] ?>"><i
-                                        class="fa fa-eye"></i></a>
-                                <a class=" btn-lg edit_icon edit_country" id="<?php echo $rows_country['country_id'] ?>"><i
+                                <a class="btn-lg eye-icon" onclick="view_region(<?php echo $rows_country['id'] ?>,1)"><i
+                                        class="fa fa-eye" data-toggle="modal" data-target="#myModal"></i></a>
+                                <a class=" btn-lg edit_icon" onclick="edit_region(<?php echo $rows_country['id'] ?>,1)"><i
                                         class="fa fa-edit" data-toggle="modal" data-target="#myModal"></i></a>
                                 <a class="btn btn-lg delete-icon"
-                                    onclick="check_country_Delete(<?php echo $rows_country['country_id'] ?>,1);"><i
+                                    onclick="check_region_Delete(<?php echo $rows_country['id'] ?>,1);"><i
                                         class="fa fa-trash"></i></a>
 
                             </td>

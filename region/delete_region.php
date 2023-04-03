@@ -3,7 +3,7 @@ include '../database/connections.php';
 if($_POST['type']==1){
     if(isset($_POST['id'])){
         $id=$_POST['id'];
-          $sql="UPDATE countries SET is_deleted = 1 WHERE country_id = $id";
+          $sql="UPDATE countries SET is_deleted = 1 WHERE id = $id";
           $result = mysqli_query($con, $sql);
 
 }}

@@ -199,8 +199,8 @@ $(document).on('click', '.view_data', function () {
         });
     }
 });
-//Datatypes
-/* $(document).ready(function () {
+//Datatables
+$(document).ready(function () {
     $('#mytable').DataTable({
         dom: 'Blfrtip',
         buttons: [
@@ -208,7 +208,7 @@ $(document).on('click', '.view_data', function () {
         ]
     });
 });
- */
+ 
 
 
 $(document).ready(function () {
@@ -308,80 +308,157 @@ $(document).ready(function () {
         $('#modal-title').html('Add City');
 
     });
-    
+
 
 });
 
-$(document).ready(function(){
-    $('#country_dropdown').change(function(){
-     var country_id=this.value;
-     $.ajax({
-     url: "../region/states.php",
-     type: "POST",
-     data: {country_id:country_id},
-     success: function (data) {
-      $('#state_dropdown').html(data);
-     }
-     });
-    });
-    $('#state_dropdown').change(function(){
-        var state_id=this.value;
+$(document).ready(function () {
+    $('#country_dropdown').change(function () {
+        var country_id = this.value;
         $.ajax({
-        url: "../region/cities.php",
-        type: "POST",
-        data: {state_id:state_id},
-        success: function (data) {
-         $('#city_dropdown').html(data);
-        }
-        });
-       });
-     }); 
-     
-     function check_country_Delete(id,type) {
-
-        swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085D6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    type: "POST",
-                    url: '../region/delete_region.php',
-                    data: { id: id,type},
-                    success: function (data) {
-                        swal.fire({
-                            text: "Deleted successfully!",
-                            icon: "success",
-                        });
-                         location.reload();
-                    },
-                });
-            }
-        })
-    }
-
-    $(document).on('click', '.edit_country', function () {
-        var country_id = $(this).attr("id");
-        $.ajax({
-            url: "fetch_country.php",
-            method: "POST",
-            data: { id: country_id },
-            dataType: "json",
+            url: "../region/states.php",
+            type: "POST",
+            data: { country_id: country_id },
             success: function (data) {
-                $('#name').val(data.name);
-              
-                $('#add_con').click();
-               
-               
+                $('#state_dropdown').html(data);
             }
         });
+    });
+    $('#state_dropdown').change(function () {
+        var state_id = this.value;
+        $.ajax({
+            url: "../region/cities.php",
+            type: "POST",
+            data: { state_id: state_id },
+            success: function (data) {
+                $('#city_dropdown').html(data);
+            }
+        });
+    });
+});
 
+function check_region_Delete(id, type) {
+
+    swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085D6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: '../region/delete_region.php',
+                data: { id: id, type },
+                success: function (data) {
+                    swal.fire({
+                        text: "Deleted successfully!",
+                        icon: "success",
+                    });
+                    location.reload();
+                },
+            });
+        }
     })
+}
+
+function edit_region(id, type) {      //for fetching county, state and city
+
+    $.ajax({
+        url: "fetch_region.php",
+        method: "POST",
+        data: { id: id, type },
+        dataType: "json",
+        success: function (data) {
+            $('#name').val(data.name);
+            $('#id').val(data.id);
+        }
+
+    });
+
+    $("#update_button").click(function () {
+        $.ajax({
+            url: "update_country.php",
+            type: "POST",
+            data: $("#country_name").serialize(),
+            success: function (data) {
+                swal.fire({
+                    text: "Country details Updated successfully!",
+                    icon: "success",
+                });
+
+                location.reload();
+            },
+        });
+    });
+
+    $("#update_state").click(function () {
+        $.ajax({
+            url: "update_state.php",
+            type: "POST",
+            data: $("#country_name").serialize(),
+            success: function (data) {
+                swal.fire({
+                    text: "State details Updated successfully!",
+                    icon: "success",
+                });
+
+                location.reload();
+            },
+        });
+    })
+
+    $("#update_city").click(function () {
+        $.ajax({
+            url: "update_city.php",
+            type: "POST",
+            data: $("#country_name").serialize(),
+            success: function (data) {
+                swal.fire({
+                    text: "City details Updated successfully!",
+                    icon: "success",
+                });
+
+                location.reload();
+            },
+        });
+    })
+
+
+}
+function view_region(id, type) {
+    $.ajax({
+        url: "view_region.php",
+        method: "POST",
+        data: { id: id, type: type },
+        success: function (data) {
+            $('#name').val(data.name);
+            $('#country_name').html(data);
+            $('#reload').click(function () {
+                location.reload();
+            });
+            if (type == 2) {
+                $('#modal-title').html('<br><b>City List</b>');
+            }
+            else if (type == 1) {
+                $('#modal-title').html('<br><b>State List</b>');
+            }
+        }
+    });
+}
+
+
+ 
+
+
+
+
+
+
+
 
 
 

@@ -46,10 +46,13 @@ $set = $row['COUNT(*)'];
                     <h5>Edit Country</h5>
                 </div>
                 <div class="modal-body">
-                    <form id="country_name">
+                    <form id="country_name" method="post">
                         Country Name: <input type="text" id="name" name="name" class="form-control" /><br><br>
                         <input type="hidden" name="id" id="id" />
-                        <button id="update_button" class="btn btn-primary form-control" type="button">Update</button>
+                        <button id="update_button" class="btn btn-primary form-control" type="button"
+                            onclick="update_region(1)">Update</button>
+                        <button id="add_button" class="btn btn-primary form-control" onclick="add_region(1)"
+                            type="button">Add</button>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -57,10 +60,11 @@ $set = $row['COUNT(*)'];
                 </div>
             </div>
         </div>
-        
+
     </div>
 
-    <h1 class="page-header">Region</h1>
+    <h1 class="page-header">Region</h1> <button class="btn btn-primary country_name" id="add_country"
+        data-toggle="modal" data-target="#myModal">Add country</button>
     <div class="col col-sm-4 region_table">
         <!-- Country -->
         <div>
@@ -74,7 +78,7 @@ $set = $row['COUNT(*)'];
 
                     </tr>
                     <?php
-                    $sql = "SELECT * FROM countries WHERE is_deleted=0";
+                    $sql = "SELECT * FROM countries WHERE is_deleted=0 ORDER BY id DESC ";
                     $result_country = mysqli_query($con, $sql);
 
                     while ($rows_country = mysqli_fetch_assoc($result_country)) {

@@ -10,6 +10,7 @@ $set = $row['COUNT(*)'];
 ?>
 <html>
 <title>States</title>
+
 <head>
     <link rel="stylesheet" href="../assets/bootstrapmin.css" />
     <link rel="stylesheet" href="../assets/formbootstrap.css">
@@ -30,11 +31,9 @@ $set = $row['COUNT(*)'];
         <?php echo "<span class=badge>" . $set . "</span>" ?>
     </a>
     <a href="../departments/departments.php">Departments</a>
-    <a  href="../region/country_crud.php">Countries</a>
+    <a href="../region/country_crud.php">Countries</a>
     <a class="active" href="../region/state_crud.php">States</a>
-    <a  href="../region/city_crud.php">Cities</a>
-
-
+    <a href="../region/city_crud.php">Cities</a>
 </div>
 
 <div class="content">
@@ -49,7 +48,10 @@ $set = $row['COUNT(*)'];
                     <form id="country_name">
                         State Name: <input type="text" id="name" name="name" class="form-control" /><br><br>
                         <input type="hidden" name="id" id="id" />
-                        <button id="update_state" class="btn btn-primary form-control" type="button">Update</button>
+                        <button id="update_button" class="btn btn-primary form-control" type="button"
+                            onclick="update_region(2)">Update</button>
+                        <button id="add_button" class="btn btn-primary form-control" onclick="add_region(2)"
+                            type="button">Add</button>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -58,47 +60,46 @@ $set = $row['COUNT(*)'];
             </div>
         </div>
     </div>
-    
-
-    <h1 class="page-header">Region</h1>
+    <h1 class="page-header">Region</h1> <button class="btn btn-primary state_name" id="add_state" data-toggle="modal"
+        data-target="#myModal">Add State</button>
     <div class="col col-sm-4 region_table">
-      
-    <div>
-        <div class="col col-sm-4 region_table">
 
-            <table border="1" padding=15 class="table table-striped table-hover">
+        <div>
+            <div class="col col-sm-4 region_table">
 
-                <tr>
-                    <th style="text-align: center;"> State</th>
-                       <th style="text-align: center;"> Actions</th>
-                </tr>
-                <?php
-                $sql = "SELECT * FROM states WHERE is_deleted=0";
-                $result_state = mysqli_query($con, $sql);
+                <table border="1" padding=15 class="table table-striped table-hover ">
 
-                while ($rows_state= mysqli_fetch_assoc($result_state)) {
-                    ?>
                     <tr>
-                        <td>
-                            <?php echo $rows_state['name'] ?>
-                        </td>
-                        <td>
-                        <a class="btn-lg eye-icon" onclick="view_region(<?php echo $rows_state['id'] ?>,2)"><i
-                                    class="fa fa-eye" data-toggle="modal" data-target="#myModal"></i></a>
-                        <a class=" btn-lg edit_icon" onclick="edit_region(<?php echo $rows_state['id'] ?>,2);"?><i
-                                        class="fa fa-edit" data-toggle="modal" data-target="#myModal"></i></a>
-                        <a class=" btn-lg delete-icon" onclick="check_region_Delete(<?php echo $rows_state['id'] ?>,2);"><i
-                                    class="fa fa-trash"></i></a>
-                                    
-                        </td>
+                        <th style="text-align: center;"> State</th>
+                        <th style="text-align: center;"> Actions</th>
                     </tr>
                     <?php
-                }
-                ?>
+                    $sql = "SELECT * FROM states WHERE is_deleted=0 ORDER BY id DESC";
+                    $result_state = mysqli_query($con, $sql);
 
-            </table>
+                    while ($rows_state = mysqli_fetch_assoc($result_state)) {
+                        ?>
+                        <tr>
+                            <td>
+                                <?php echo $rows_state['name'] ?>
+                            </td>
+                            <td>
+                                <a class="btn-lg eye-icon" onclick="view_region(<?php echo $rows_state['id'] ?>,2)"><i
+                                        class="fa fa-eye" data-toggle="modal" data-target="#myModal"></i></a>
+                                <a class=" btn-lg edit_icon" onclick="edit_region(<?php echo $rows_state['id'] ?>,2);" ?><i
+                                        class="fa fa-edit" data-toggle="modal" data-target="#myModal"></i></a>
+                                <a class="btn btn-lg delete-icon"
+                                    onclick="check_region_Delete(<?php echo $rows_state['id'] ?>,2);"><i
+                                        class="fa fa-trash"></i></a>
+
+                            </td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+
+                </table>
+            </div>
         </div>
-    </div> 
-</div>
 
 </html>

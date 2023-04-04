@@ -30,9 +30,9 @@ $set = $row['COUNT(*)'];
         <?php echo "<span class=badge>" . $set . "</span>" ?>
     </a>
     <a href="../departments/departments.php">Departments</a>
-    <a  href="../region/country_crud.php">Countries</a>
-    <a  href="../region/state_crud.php">States</a>
-    <a  class="active" href="../region/city_crud.php">Cities</a>
+    <a href="../region/country_crud.php">Countries</a>
+    <a href="../region/state_crud.php">States</a>
+    <a class="active" href="../region/city_crud.php">Cities</a>
 
 </div>
 
@@ -48,56 +48,58 @@ $set = $row['COUNT(*)'];
                     <form id="country_name">
                         City Name: <input type="text" id="name" name="name" class="form-control" /><br><br>
                         <input type="hidden" name="id" id="id" />
-                        <button id="update_city" class="btn btn-primary form-control" type="button">Update</button>
+                        <button id="add_button" class="btn btn-primary form-control" onclick="add_region(3)"
+                            type="button">Add</button>
+                        <button id="update_button" class="btn btn-primary form-control" type="button"
+                            onclick="update_region(3)">Update</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-   
+
 
     <!-- City -->
-
-    <h1 class="page-header">Region</h1>
+    <h1 class="page-header">Region</h1> <button class="btn btn-primary city_name" id="add_city" data-toggle="modal"
+        data-target="#myModal">Add city</button>
     <div class="col col-sm-4 region_table">
-    <div>
+        <div>
 
-    <div class="col col-sm-4 region_table">
+            <div class="col col-sm-4 region_table">
 
-        <table border="1" padding=15 class="table table-striped table-hover">
+                <table border="1" padding=15 class="table table-striped table-hover">
 
 
-            <tr>
-                <th style="text-align: center;"> City</th>
-                <th style="text-align: center;"> Actions</th>
-            </tr>
+                    <tr>
+                        <th style="text-align: center;"> City</th>
+                        <th style="text-align: center;"> Actions</th>
+                    </tr>
 
-            <?php
-            $sql = "SELECT * FROM cities WHERE is_deleted=0";
-            $result_city = mysqli_query($con, $sql);
+                    <?php
+                    $sql = "SELECT * FROM cities WHERE is_deleted=0 ORDER BY id DESC";
+                    $result_city = mysqli_query($con, $sql);
 
-            while ($rows_city = mysqli_fetch_assoc($result_city)) {
-                ?>
-                <tr>
-                    <td>
-                        <?php echo $rows_city['name'] ?>
-                    </td>
-                    <td>
-                        <a class="btn-lg view_data eye-icon " id="<?php echo $rows_city['id']; ?>"><i
-                                    class="fa fa-eye"></i></a>
-                        <a class=" btn-lg edit_icon" onclick="edit_region(<?php echo $rows_city['id'] ?>,3);"?><i
+                    while ($rows_city = mysqli_fetch_assoc($result_city)) {
+                        ?>
+                        <tr>
+                            <td>
+                                <?php echo $rows_city['name'] ?>
+                            </td>
+                            <td>
+                                <a class=" btn-lg edit_icon " onclick="edit_region(<?php echo $rows_city['id'] ?>,3);" ?><i
                                         class="fa fa-edit" data-toggle="modal" data-target="#myModal"></i></a>
-                        <a class="btn btn-lg delete-icon" onclick="check_region_Delete(<?php echo $rows_city['id'] ?>,3);"><i
-                                    class="fa fa-trash"></i></a>
-                                    
-                        </td>
-                </tr>
-                <?php
-            }
-            ?>
-        </table>
-    </div>
-    </div>
+                                <a class="btn btn-lg delete-icon"
+                                    onclick="check_region_Delete(<?php echo $rows_city['id'] ?>,3);"><i
+                                        class="fa fa-trash"></i></a>
+
+                            </td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 

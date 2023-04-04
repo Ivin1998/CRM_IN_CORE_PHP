@@ -110,7 +110,6 @@ function savecontact() {
     $.ajax({
         type: "POST",
         url: 'add_data.php',
-        /* dataType : 'json', */
         data: $('#mycontact').serialize(),
         success: function (data) {
             swal.fire({
@@ -154,9 +153,6 @@ $(document).on('click', '.edit_data', function () {
         }
     });
 
-
-
-
 });
 
 $(document).ready(function () {
@@ -176,7 +172,7 @@ $(document).ready(function () {
         });
     });
     $("#add_con").click(function () {
-        $('#update-btn').hide();
+        $('#update_button').hide();
         $('#Add').show();
     });
 });
@@ -208,7 +204,7 @@ $(document).ready(function () {
         ]
     });
 });
- 
+
 
 
 $(document).ready(function () {
@@ -271,9 +267,6 @@ $(document).ready(function () {
         }
     }
 });
-/* function add_region(val) {
-    document.getElementById('flag_value').value = val;
-} */
 
 $(document).ready(function () {
     $("#add_region").click(function () {
@@ -295,18 +288,21 @@ $(document).ready(function () {
 
     $("#add_state").click(function () {
 
-        $('#modal-title').html('Add State');
+        $('#modal-title').html('<br>Add State');
+        $('#add_button').show();
+        $('#update_button').hide();
 
     });
     $("#add_country").click(function () {
 
-        $('#modal-title').html('Add Country');
+        $('#modal-title').html('<br>Add Country');
 
     });
     $("#add_city").click(function () {
 
-        $('#modal-title').html('Add City');
-
+        $('#modal-title').html('<br>Add City');
+        $('#add_button').show();
+        $('#update_button').hide();
     });
 
 
@@ -378,56 +374,6 @@ function edit_region(id, type) {      //for fetching county, state and city
         }
 
     });
-
-    $("#update_button").click(function () {
-        $.ajax({
-            url: "update_country.php",
-            type: "POST",
-            data: $("#country_name").serialize(),
-            success: function (data) {
-                swal.fire({
-                    text: "Country details Updated successfully!",
-                    icon: "success",
-                });
-
-                location.reload();
-            },
-        });
-    });
-
-    $("#update_state").click(function () {
-        $.ajax({
-            url: "update_state.php",
-            type: "POST",
-            data: $("#country_name").serialize(),
-            success: function (data) {
-                swal.fire({
-                    text: "State details Updated successfully!",
-                    icon: "success",
-                });
-
-                location.reload();
-            },
-        });
-    })
-
-    $("#update_city").click(function () {
-        $.ajax({
-            url: "update_city.php",
-            type: "POST",
-            data: $("#country_name").serialize(),
-            success: function (data) {
-                swal.fire({
-                    text: "City details Updated successfully!",
-                    icon: "success",
-                });
-
-                location.reload();
-            },
-        });
-    })
-
-
 }
 function view_region(id, type) {
     $.ajax({
@@ -450,8 +396,72 @@ function view_region(id, type) {
     });
 }
 
+$(document).ready(function () {
+    $('#add_country').click(function () {
 
- 
+        $('#update_button').hide();
+        $('#add_button').show();
+        $('#name').val('');
+
+
+    })
+
+    $('#add_state').click(function () {
+
+        $('#update_state').hide();
+        $('#add_button').show();
+        $('#name').val('');
+
+
+    })
+
+    $('.edit_icon').click(function () {
+
+        $('#add_button').hide();
+        $('#update_button').show();
+
+
+    });
+});
+
+
+function add_region(type) {
+    $.ajax({
+        type: "POST",
+        url: 'add_region.php',
+        data: $('#country_name').serialize() + "&type=" + type,
+        success: function (data) {
+            swal.fire({
+                text: "New Region added successfully!",
+                icon: "success",
+            });
+            location.reload();
+        },
+    });
+
+}
+
+
+function update_region(type) {
+    $.ajax({
+        url: "update_region.php",
+        type: "POST",
+        data: $("#country_name").serialize() + "&type=" + type,
+        success: function (data) {
+            swal.fire({
+                text: "Updated successfully!",
+                icon: "success",
+            });
+
+            location.reload();
+        },
+    });
+
+}
+
+
+
+
 
 
 

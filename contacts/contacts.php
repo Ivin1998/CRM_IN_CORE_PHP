@@ -138,7 +138,7 @@ if (isset($_GET["department_id"])) {
                                  <option value="">Select Country</option>
 
                                 <?php
-                                $sql="SELECT * FROM countries";
+                                $sql="SELECT * FROM countries WHERE is_deleted=0";
                                 $result_country=mysqli_query($con,$sql);
                                 while($rows_country=mysqli_fetch_array($result_country)){
                                     ?><option value="<?php echo $rows_country['id'] ?>">
@@ -170,7 +170,7 @@ if (isset($_GET["department_id"])) {
                                 <input type="hidden" name="mod_date" value='<?php echo date('Y-m-d H:i:s') ?>' />
                                 <button type="button" onclick="savecontact()" id="Add"
                                     class="btn btn-primary form-control">Add</button>
-                                <button id="update-btn" class="btn btn-primary form-control"
+                                <button id="update_button" class="btn btn-primary form-control"
                                     type="button">Update</button>
                             </div>
                         </form>
@@ -242,9 +242,8 @@ if (isset($_GET["department_id"])) {
                         </td>
                         <td style="text-align:center"><a class="btn-lg view_data eye-icon" id="<?php echo $rows['id']; ?>"><i
                                     class="fa fa-eye"></i></a>
-                            <a class=" btn-lg edit_icon edit_data" id="<?php echo $rows['id']; ?>"><i
+                            <a class="btn-lg edit_icon edit_data" id="<?php echo $rows['id']; ?>"><i
                                     class="fa fa-edit"></i></a>
-
                             <a class="btn btn-lg delete-icon"
                                 onclick="highlight(this); checkDelete(<?php echo $rows['id']; ?>); "><i
                                     class="fa fa-trash"></i></a>

@@ -123,7 +123,7 @@ function savecontact() {
 }
 /* Edit in popup modal*/
 $(document).on('click', '.edit_data', function () {
-    var user_id = $(this).attr("id");
+    var user_id = $(this).attr('id');
     var row = $(this).closest('tr');
     row.addClass("highlighted");
     $.ajax({
@@ -142,10 +142,14 @@ $(document).on('click', '.edit_data', function () {
             $('#Twitter').val(data.twitter_id);
             $('#Linkedin').val(data.linkedin_id);
             $('#Facebook').val(data.facebook_id);
-            $('#id').val(user_id);
+            $('#country').val(data.country_id);
+            $('#state').val(data.state);
+            $('#city').val(data.city);
+            $('#id').val(data.unique_id);
+            $('#user_id').val(user_id);
             $('#add_con').click()
             $('#modal-title').html('Edit Details');
-            $('#update-btn').show();
+            $('#update_button').show();
             $('#Add').hide();
             $('#reload').click(function () {
                 location.reload();
@@ -156,7 +160,7 @@ $(document).on('click', '.edit_data', function () {
 });
 
 $(document).ready(function () {
-    $("#update-btn").click(function () {
+    $("#update_button").click(function () {
         $.ajax({
             url: "update.php",
             type: "POST",
@@ -187,7 +191,7 @@ $(document).on('click', '.view_data', function () {
             success: function (data) {
                 $('#myForm').html(data);
                 $('#add_con').click();
-                $('.modal-title').html('User Details');
+                $('#modal-title').html('User Details');
                 $('#reload').click(function () {
                     location.reload();
                 });
@@ -452,7 +456,6 @@ function update_region(type) {
                 text: "Updated successfully!",
                 icon: "success",
             });
-
             location.reload();
         },
     });

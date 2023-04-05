@@ -1,6 +1,5 @@
 <?php
  date_default_timezone_set('Asia/Calcutta');
-
  include '../database/connections.php';
 
     $department_name=$_POST['department_name'];
@@ -19,9 +18,10 @@
     $state=$_POST['state'];
     $city=$_POST['city'];
 
-    $sql = "UPDATE contacts SET first_name='$first_name',last_name='$last_name',mobile_number='$mobile_number',office_number='$office_number',email_id='$email_id',instagram_id=' $instagram_id',
-    twitter_id='$twitter_id',linkedin_id='$linkedin_id',facebook_id='$facebook_id',mod_date='$mod_date',department_id=' $department_name',country_id='$country',state='$state',city='$city' where id='$id'";
-    $result = $con->query($sql);
+    $sql = "UPDATE contacts SET first_name='$first_name', last_name='$last_name', mobile_number='$mobile_number', office_number='$office_number', email_id='$email_id', mod_date='$mod_date', instagram_id='$instagram_id',
+    twitter_id='$twitter_id', linkedin_id='$linkedin_id', facebook_id='$facebook_id', department_id='$department_name', country_id='$country', state='$state', city='$city' WHERE unique_id='$id'";
+    $result = mysqli_query($con, $sql);
+
     if ($result == TRUE) {
         echo "Record updated Successfully";
     } else {

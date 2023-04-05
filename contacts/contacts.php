@@ -164,7 +164,7 @@ if (isset($_GET["department_id"])) {
                                     class="form-control" /><br><br>
                                 Facebook Id: <input type="text" name="Facebook" id="Facebook"
                                     class="form-control" /><br><br>
-                                <input type="hidden" name="id" id="id" />
+                                <input type="hidden" name="id" id="id"/>
                                 <input type="hidden" name="user_id" id="user_id" value="<?php echo $user_id ?>">
                                 <input type="hidden" name="created_date" value="<?php echo date('Y-m-d H:i:s') ?>" />
                                 <input type="hidden" name="mod_date" value='<?php echo date('Y-m-d H:i:s') ?>' />
@@ -182,7 +182,6 @@ if (isset($_GET["department_id"])) {
             </div>
         </div>
     </div>
-
     <div>
         <table id="mytable" border="2" class="table-bordered" style="width:100%">
             <thead>
@@ -234,18 +233,17 @@ if (isset($_GET["department_id"])) {
                             $timestamp = date('Y-m-d H:i:s');
                             if (!empty($rows['mod_date'])) {
                                 $timestamp = strtotime($rows['mod_date']);
-
                                 $date = date('M-d-Y H:i:s', $timestamp);
                                 echo $date;
                             }
                             ?>
                         </td>
-                        <td style="text-align:center"><a class="btn-lg view_data eye-icon" id="<?php echo $rows['id']; ?>"><i
-                                    class="fa fa-eye"></i></a>
-                            <a class="btn-lg edit_icon edit_data" id="<?php echo $rows['id']; ?>"><i
+                        <td style="text-align:center"><a class="btn-lg view_data eye-icon" id="<?php echo $rows['unique_id']; ?>"><i
+                                    class="fa fa-eye" ></i></a>
+                            <a class="btn-lg edit_icon edit_data" id="<?php echo $rows['unique_id']; ?>"><i
                                     class="fa fa-edit"></i></a>
                             <a class="btn btn-lg delete-icon"
-                                onclick="highlight(this); checkDelete(<?php echo $rows['id']; ?>); "><i
+                                onclick="highlight(this); checkDelete(<?php echo $rows['unique_id']; ?>); "><i
                                     class="fa fa-trash"></i></a>
                         </td>
                         <td>

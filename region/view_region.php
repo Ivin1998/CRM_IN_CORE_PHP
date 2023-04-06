@@ -25,12 +25,15 @@ include '../database/connections.php';
                     <h4>View Cities</h4>
                 <?php }
                 ?>
+
             </button>
         </h2>
         <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
             data-bs-parent="#accordionFlushExample">
             <div class="accordion-body">
+
                 <?php
+
                 if ($_POST['type'] == 1) {
 
                     if (isset($_POST['id'])) {
@@ -39,11 +42,13 @@ include '../database/connections.php';
                             FROM contacts.countries a 
                             INNER JOIN contacts.states b ON b.country_id = a.id 
                             WHERE b.country_id = '" . $_POST["id"] . "'";
+
                         $result = mysqli_query($con, $query);
                         $output .=
                             $last_country = '
                         <div class="accordion">  
                         <div class="panel">';
+
                         while ($row = mysqli_fetch_assoc($result)) {
                             $country_name = $row["country_name"];
                             $name = $row["name"];
@@ -55,6 +60,7 @@ include '../database/connections.php';
                             $output .= '
                         <ul> 
                         <li>' . $name . '</li>  </ul> ';
+
                         }
                         $output .= '
                     </table>

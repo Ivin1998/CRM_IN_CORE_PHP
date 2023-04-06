@@ -1,5 +1,7 @@
 <?php
 include '../database/connections.php';
+include '../contacts/header.php';
+
 session_start();
 $user_id = $_SESSION['user_id'];
 
@@ -10,17 +12,6 @@ $set = $row['COUNT(*)'];
 ?>
 <html>
 <title>Cities</title>
-<head>
-    <link rel="stylesheet" href="../assets/bootstrapmin.css" />
-    <link rel="stylesheet" href="../assets/formbootstrap.css">
-    <link rel="stylesheet" href="../assets/styles.css">
-    <link rel="stylesheet" href="../assets/style_sidebar.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
-    <script type="text/javascript" src="../assets/sweetalert.js"></script>
-    <script type="text/javascript" src="../assets/jquery.js"></script>
-    <script type="text/javascript" src="../assets/bootstrapjs.js"></script>
-    <script type="text/javascript" src="../assets/validations.js"></script>
-</head>
 <div class="header" id="myHeader">
     <h2>User Application</h2>
 </div>

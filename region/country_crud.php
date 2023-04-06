@@ -1,5 +1,7 @@
 <?php
 include '../database/connections.php';
+include '../contacts/header.php';
+
 session_start();
 $user_id = $_SESSION['user_id'];
 
@@ -10,19 +12,6 @@ $set = $row['COUNT(*)'];
 ?>
 <html>
 <title>Countries</title>
-
-<head>
-    <link rel="stylesheet" href="../assets/bootstrapmin.css" />
-    <link rel="stylesheet" href="../assets/formbootstrap.css">
-    <link rel="stylesheet" href="../assets/styles.css">
-    <link rel="stylesheet" href="../assets/style_sidebar.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript" src="../assets/sweetalert.js"></script>
-    <script type="text/javascript" src="../assets/jquery.js"></script>
-    <script type="text/javascript" src="../assets/bootstrapjs.js"></script>
-    <script type="text/javascript" src="../assets/validations.js"></script>
-</head>
 
 <body>
     <div class="header" id="myHeader">
@@ -67,25 +56,25 @@ $set = $row['COUNT(*)'];
 
         <h1 class="page-header">Region</h1> <button class="btn btn-primary country_name" id="add_country"
             data-toggle="modal" data-target="#myModal">Add country</button>
-        <div class="col col-sm-4 region_table">
+        <div class="col col-sm-4 region_table ">
             <!-- Country -->
-            <div>
-                <div class="col col-sm-4 region_table">
+            <div >
+                <div class="col col-sm-4 region_table ">
 
-                    <table border="1" padding=15 class="table table-striped table-hover ">
+                    <table border="1" padding=15 class="table table-striped table-hover postList ">
 
                         <tr>
                             <th style="text-align: center;"> Country</th>
                             <th style="text-align: center;"> Actions</th>
                         </tr>
                         <?php
-                        $sql = "SELECT * FROM countries WHERE is_deleted=0 ORDER BY id DESC ";
+                        $sql = "SELECT * FROM countries WHERE is_deleted=0 ORDER BY id DESC LIMIT 4";
                         $result_country = mysqli_query($con, $sql);
-
-                        while ($rows_country = mysqli_fetch_assoc($result_country)) {
+                            while ($rows_country = mysqli_fetch_assoc($result_country)) {
+                                $postID=$rows_country['id']
                             ?>
-                            <tr id="virtual-scroll-container">
-                                <td class="item">
+                            <tr >
+                                <td>
                                     <?php echo $rows_country['name'] ?>
                                 </td>
                                 <td>
@@ -103,48 +92,43 @@ $set = $row['COUNT(*)'];
                             <?php
                         }
                         ?>
+                         </table> 
+                      </div>
+                                                      
                 </div>
-                </table>
+                
+                <div class="show_more_main" id="show_more_main<?php echo $postID; ?>">
+                <span id="<?php echo   $postID; ?>" class="show_more" title="Load more posts">Show more</span>
+                <span class="loding" style="display: none;"><span class="loading_txt">Loading...</span></span>            
+                
             </div>
         </div>
 
         <!-- Vitrual scroll -->
-        <style type="text/css">
-            #virtual-scroll-container {
-                position: relative;
-                height: 30px;
-                overflow-y: scroll;
-            }
-
-            .item {
-                height: 50px;
-                padding: 10px;
-                border-bottom: 1px solid #ccc;
-            }
-        </style>
+    
         <script type="text/javascript">
-         $(document).ready(function () {
-                var container = $('#virtual-scroll-container');
-                var items = container.find('.item'); 
-                var itemHeight = items.outerHeight();
-                container.scroll(function () {
-                    var visibleItems = container.children(':visible').length;
-                    if (visibleItems * itemHeight >= container.scrollTop() + container.outerHeight()) {
-                        $.ajax({
-                            url: 'load_more.php',
-                            method: 'POST',
-                            data: { last_id: items.last().text() },
-                            success: function (data) {
-                                container.append(data);
-                                items = container.find('.item');
-                            }
+                $(document).ready(function(){
+                        $(document).on('click','.show_more',function(){
+                            var ID=$(this).attr('id');
+                            $('.show_more').hide();
+                            $('.loading_txt').show();
+                            $.ajax({
+                                type:'POST',
+                                url:'load_more.php',
+                                data:'id='+ID,
+                                success:function(html){
+                                    $('#show_more_main'+ID).remove();
+                                    $('.postList').append(html);
 
-                        });
-                    }
+                                }
+                            });
 
+
+                        }); 
                 });
-            });
-        </script>
+
+
+    </script>
 </body>
 
 </html>

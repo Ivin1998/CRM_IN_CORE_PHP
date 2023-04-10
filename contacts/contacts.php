@@ -2,7 +2,7 @@
 date_default_timezone_set('Asia/Calcutta');
 include '../database/connections.php';
 include '../mvc/controller.php';
-require 'header.php';
+include 'header.php';
 $username = $_SESSION['username'];
 $user_id = $_SESSION['user_id'];
 $count_query = "SELECT COUNT(*) FROM contacts WHERE is_deleted=0 AND user_id='$user_id'";
@@ -31,6 +31,7 @@ if (isset($_GET["department_id"])) {
         <a class="active" href="contacts.php">Contacts
             <?php echo "<span class=badge>" . $set . "</span>" ?>
         </a>
+        <a href="../files/files.php">Files</a>
         <a href="../departments/departments.php">Departments</a>
         <a href="../region/country_crud.php">Countries</a>
         <a href="../region/state_crud.php">States</a>

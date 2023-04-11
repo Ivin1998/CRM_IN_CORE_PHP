@@ -23,7 +23,6 @@ $set = $row['COUNT(*)'];
             <?php echo "<span class=badge>" . $set . "</span>" ?>
         </a>
         <a href="../files/files.php">Files</a>
-
         <a href="../departments/departments.php">Departments</a>
         <a class="active" href="../region/country_crud.php">Countries</a>
         <a href="../region/state_crud.php">States</a>
@@ -56,18 +55,19 @@ $set = $row['COUNT(*)'];
             </div>
         </div>
 
-        <h1 class="page-header">Region</h1> <button class="btn btn-primary country_name" id="add_country"
-            data-toggle="modal" data-target="#myModal">Add country</button>
-        <div class="col col-sm-4 region_table ">
+        <h1 class="page-header">Countries</h1> 
+        <div class="region_table ">
+        <button class="btn btn-primary country_name" id="add_country"
+            data-toggle="modal" data-target="#myModal" style="margin: 10 10 5 820;">Add country</button>
             <!-- Country -->
             <div>
-                <div class="col col-sm-4 region_table ">
+                <div class="region_table ">
 
                     <table border="1" class="table table-striped table-hover">
                         <thead>
 
-                            <th style="text-align: center;"> Country</th>
-                            <th style="text-align: center;"> Actions</th>
+                            <th style="text-align: left;"> Name</th>
+                            <th style="text-align: left;"> Actions</th>
                         </thead>
                         <tbody class="postList">
                             <?php
@@ -82,13 +82,13 @@ $set = $row['COUNT(*)'];
                                     </td>
 
                                     <td>
-                                        <a class="btn-lg eye-icon"
+                                        <a  title="view states of this country"class="btn-lg eye-icon"
                                             onclick="view_region(<?php echo $rows_country['id'] ?>,1)"><i class="fa fa-eye"
                                                 data-toggle="modal" data-target="#myModal"></i></a>
-                                        <a class=" btn-lg edit_icon"
+                                        <a title="edit the country name"class=" btn-lg edit_icon"
                                             onclick="edit_region(<?php echo $rows_country['id'] ?>,1)"><i class="fa fa-edit"
                                                 data-toggle="modal" data-target="#myModal"></i></a>
-                                        <a class="btn btn-lg delete-icon"
+                                        <a title="delete this country" class="btn btn-lg delete-icon"
                                             onclick="check_region_Delete(<?php echo $rows_country['id'] ?>,1);"><i
                                                 class="fa fa-trash"></i></a>
 

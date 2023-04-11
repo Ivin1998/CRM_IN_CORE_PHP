@@ -11,13 +11,10 @@ $result = mysqli_query($con, $count_query);
 $row = mysqli_fetch_assoc($result);
 $set = $row['COUNT(*)'];
 ?>
-
 <html>
-
 <head>
     <title>Users_list</title>
 </head>
-
 <body>
     <div class="header" id="myHeader">
         <h2>User Application</h2>
@@ -34,37 +31,54 @@ $set = $row['COUNT(*)'];
         <a href="../region/city_crud.php">Cities</a>
     </div>
     <div class="content"><br>
-        <form action="uploadscript.php" style="width:30%" id="files" method="post" enctype="multipart/form-data">
-            <input type="file" class="btn btn-primary btn-lg" name="the_file"><br>
-            <input type="submit" class="btn btn-success" name="submit" value="Upload" />
-
+        <form style="width:30%" method="post"  id="myInput_upload" style="text-decoration: none;" enctype="multipart/form-data">
+            <input type="file" name="the_file"><br>
+            <input type="submit" name="submit" id="submit" value="Upload" /> <br>
+            <input type="hidden" name="created_date" value="<?php echo date('Y-m-d H:i:s') ?>" />
         </form>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Preview</h5>
+                        <div class="col col-sm-12">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <img id="previewImage" src="" alt="" style=" max-width: 100%" ;>
+
+                    </div>
+                </div>
+            </div>
+        </div>
         <br>
         <table class="table-bordered" style="width:50%">
             <thead>
                 <tr>
+                    <th style="text-align:center"> Sl.no.</th>
                     <th style="text-align:center"> File Name</th>
                     <th style="text-align:center"> Actions</th>
 
                 </tr>
             </thead>
-
             <?php
             $file = "SELECT * FROM files";
             $result = mysqli_query($con, $file);
+            $no = 1;
             while ($row = mysqli_fetch_assoc($result)) {
-
-
                 $fileName = $row['file_name'];
-
-
                 ?>
                 <tr>
                     <td>
-                        <?php echo $fileName ?>
+                        <?php echo $no++; ?>
                     </td>
                     <td>
-                        <?php echo "<a href='upload_files/$fileName'>" . '<i class="fa fa-eye eye-icon btn-lg"></i>' . "</a>" ?></a>
+                        <?php echo "<a href='upload_files/$fileName'>" . $fileName . "</a>" ?>
+                    </td>
+                    <td>
+                        <?php echo "<a href='#' data-toggle='modal' data-target='#myModal' data-file='upload_files/$fileName'>" . '<i class="fa fa-eye eye-icon btn-lg"></i>' . "</a>" ?>
                         <?php echo "<a href='upload_files/$fileName' download>" . '<i class="fa fa-download"></i>' . "</a>" ?></a>
                     </td>
                 </tr>
@@ -76,9 +90,9 @@ $set = $row['COUNT(*)'];
     </div>
     <script>
         $(document).ready(function () {
-            $('#files').submit(function (event) {
+            $('#submit').click(function (event) {
                 event.preventDefault();
-                var formdata = new FormData(this);
+                var formdata = new FormData(document.getElementById('myInput_upload'));
                 $.ajax({
                     url: "uploadscript.php",
                     type: "POST",
@@ -93,9 +107,19 @@ $set = $row['COUNT(*)'];
                         location.reload();
                     },
                 });
-            })
+            });
+            $('#myModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var filePath = button.data('file');
+              
+                var image = $('#previewImage');
+                image.attr('src', filePath);
+            });
+
         });
     </script>
+
+
 </body>
 
 </html>

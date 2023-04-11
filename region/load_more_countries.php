@@ -23,7 +23,7 @@ if (!empty($_POST["id"])) {
                             <a class="btn btn-lg delete-icon" onclick="check_region_Delete(' . $postID . ',1);"><i
                                                 class="fa fa-trash"></i></a></td>
 
-                    </tr> ';
+                    </tr>';
 
         } ?>
 

@@ -53,18 +53,20 @@ $set = $row['COUNT(*)'];
             </div>
         </div>
     </div>
-    <h1 class="page-header">Region</h1> <button class="btn btn-primary state_name" id="add_state" data-toggle="modal"
-        data-target="#myModal">Add State</button>
-    <div class="col col-sm-4 region_table">
+    <h1 class="page-header">States</h1> 
+    <div class=" region_table">
+    <button class="btn btn-primary state_name" id="add_state" data-toggle="modal"
+        data-target="#myModal" style="margin: 10 10 5 820;">Add State</button>
+    
 
         <div>
-            <div class="col col-sm-4 region_table">
+            <div class="region_table">
 
                 <table border="1" padding=15 class="table table-striped table-hover ">
 
                     <tr>
-                        <th style="text-align: center;"> State</th>
-                        <th style="text-align: center;"> Actions</th>
+                    <th style="text-align: left;"> Name</th>
+                        <th style="text-align: left;"> Actions</th>
                     </tr>
                     <?php
                     $sql = "SELECT * FROM states WHERE is_deleted=0 ORDER BY id DESC";
@@ -77,11 +79,11 @@ $set = $row['COUNT(*)'];
                                 <?php echo $rows_state['name'] ?>
                             </td>
                             <td>
-                                <a class="btn-lg eye-icon" onclick="view_region(<?php echo $rows_state['id'] ?>,2)"><i
+                                <a title="view cities of this state" class="btn-lg eye-icon" onclick="view_region(<?php echo $rows_state['id'] ?>,2)"><i
                                         class="fa fa-eye" data-toggle="modal" data-target="#myModal"></i></a>
-                                <a class=" btn-lg edit_icon" onclick="edit_region(<?php echo $rows_state['id'] ?>,2);" ?><i
+                                <a title="edit the state name" class=" btn-lg edit_icon" onclick="edit_region(<?php echo $rows_state['id'] ?>,2);" ?><i
                                         class="fa fa-edit" data-toggle="modal" data-target="#myModal"></i></a>
-                                <a class="btn btn-lg delete-icon"
+                                <a title="delete this state" class="btn btn-lg delete-icon"
                                     onclick="check_region_Delete(<?php echo $rows_state['id'] ?>,2);"><i
                                         class="fa fa-trash"></i></a>
 

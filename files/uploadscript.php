@@ -2,10 +2,9 @@
 include '../database/connections.php';
 $currentDirectory = getcwd();
 $uploadDirectory = '/upload_files/';
-
-$errors = [];
-
-$fileExtensionAllowed = ['jpeg', 'jpg', 'pdf', 'doc', 'csv', 'xlsx', 'png'];
+session_start();
+$user_id = $_SESSION['user_id'];
+$fileExtensionAllowed = ['pdf'];
 
 $fileName = $_FILES['the_file']['name'];
 $fileSize = $_FILES['the_file']['size'];
@@ -16,28 +15,40 @@ $fileExtension = strtolower(end($fileNameParts));
 
 $uploadPath = $currentDirectory . $uploadDirectory . basename($fileName);
 
+$created_date=$_POST['created_date'];
+
+$isValidFile=1;
+
 if (isset($_POST['submit'])) {
+
     if (!in_array($fileExtension, $fileExtensionAllowed)) {
-        $errors[] = "This file extension is not allowed";
+        echo "file format not supported";
+        $isValidFile = 0;
+
     }
-}
-
-
 if ($fileSize > 40000000) {
-    $errors[] = "File exceeds maximum size (4MB)";
+    echo "File format exceeds the limit";
+    $isValidFile = 0;
+
 }
-if (empty($errors)) {
+if ($isValidFile==1) {
     $didupload = move_uploaded_file($fileTmpName, $uploadPath);
 
     if ($didupload) {
         echo "The file" . basename($fileName) . "has been uploaded successfully";
     } else {
-        echo "An error occurred. Please contact the administrator.";
+         echo "Error: " . mysqli_error($con);
+
     }
 }
-
-
-$sql = "INSERT INTO files (file_name, file_size, file_type) VALUES ('$fileName', '$fileSize', '$fileType')";
+}
+$sql = "INSERT INTO files (file_name, file_size, file_type,uploaded_date,user_id) VALUES ('$fileName', '$fileSize', '$fileType','$created_date','$user_id')";
 $result = mysqli_query($con, $sql);
 
+if ($result) {
+    echo "File details added to database";
+} else {
+    echo "Error".mysqli_error($con);
+}
+   
 ?>

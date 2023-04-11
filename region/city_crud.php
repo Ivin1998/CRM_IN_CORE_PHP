@@ -53,19 +53,21 @@ $set = $row['COUNT(*)'];
 
 
     <!-- City -->
-    <h1 class="page-header">Region</h1> <button class="btn btn-primary city_name" id="add_city" data-toggle="modal"
-        data-target="#myModal">Add city</button>
-    <div class="col col-sm-4 region_table">
+    <h1 class="page-header">Cities</h1> 
+    <div class="region_table">
+    <button class="btn btn-primary city_name" id="add_city" data-toggle="modal"
+        data-target="#myModal" style="margin: 10 10 5 820;">Add city</button>
+  
         <div>
 
-            <div class="col col-sm-4 region_table">
+            <div class=" region_table">
 
                 <table border="1" padding=15 class="table table-striped table-hover">
 
 
                     <tr>
-                        <th style="text-align: center;"> City</th>
-                        <th style="text-align: center;"> Actions</th>
+                        <th style="text-align: left;"> Name</th>
+                        <th style="text-align: left;"> Actions</th>
                     </tr>
 
                     <?php
@@ -79,9 +81,9 @@ $set = $row['COUNT(*)'];
                                 <?php echo $rows_city['name'] ?>
                             </td>
                             <td>
-                                <a class=" btn-lg edit_icon " onclick="edit_region(<?php echo $rows_city['id'] ?>,3);" ?><i
+                                <a title="edit the city name" class=" btn-lg edit_icon " onclick="edit_region(<?php echo $rows_city['id'] ?>,3);" ?><i
                                         class="fa fa-edit" data-toggle="modal" data-target="#myModal"></i></a>
-                                <a class="btn btn-lg delete-icon"
+                                <a title="delete this city" class="btn btn-lg delete-icon"
                                     onclick="check_region_Delete(<?php echo $rows_city['id'] ?>,3);"><i
                                         class="fa fa-trash"></i></a>
 

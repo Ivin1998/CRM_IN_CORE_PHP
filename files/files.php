@@ -12,9 +12,11 @@ $row = mysqli_fetch_assoc($result);
 $set = $row['COUNT(*)'];
 ?>
 <html>
+
 <head>
     <title>Users_list</title>
 </head>
+
 <body>
     <div class="header" id="myHeader">
         <h2>User Application</h2>
@@ -31,9 +33,10 @@ $set = $row['COUNT(*)'];
         <a href="../region/city_crud.php">Cities</a>
     </div>
     <div class="content"><br>
-        <form style="width:30%" method="post"  id="myInput_upload" style="text-decoration: none;" enctype="multipart/form-data">
+        <form style="width:30%" id="myInput_upload" method="post" style="text-decoration: none;"
+            enctype="multipart/form-data">
             <input type="file" name="the_file"><br>
-            <input type="submit" name="submit" id="submit" value="Upload" /> <br>
+            <input type="submit" name="submit" value="Upload" /> <br>
             <input type="hidden" name="created_date" value="<?php echo date('Y-m-d H:i:s') ?>" />
         </form>
         <!-- Modal -->
@@ -47,7 +50,35 @@ $set = $row['COUNT(*)'];
                         </div>
                     </div>
                     <div class="modal-body">
-                        <img id="previewImage" src="" alt="" style=" max-width: 100%" ;>
+                        <img id="previewImage" style=" max-width: 100%"></img>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal for full screen-->
+        <div class="modal fade" id="myModal_click" tabindex="-1" role="dialog" aria-labelledby="myModal_click"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <a class="back" data-dismiss="modal" style="text-decoration:none;">Back</a>
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Preview</h5>
+                        <div class="col col-sm-12">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <img id="previewImage_click" style=" max-width: 100%" ;>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 
                     </div>
                 </div>
@@ -75,7 +106,7 @@ $set = $row['COUNT(*)'];
                         <?php echo $no++; ?>
                     </td>
                     <td>
-                        <?php echo "<a href='upload_files/$fileName'>" . $fileName . "</a>" ?>
+                        <?php echo "<a href='#' style=text-decoration:none; data-toggle='modal' data-target='#myModal_click' data-file='upload_files/$fileName'>" . $fileName . "</a>" ?>
                     </td>
                     <td>
                         <?php echo "<a href='#' data-toggle='modal' data-target='#myModal' data-file='upload_files/$fileName'>" . '<i class="fa fa-eye eye-icon btn-lg"></i>' . "</a>" ?>
@@ -88,35 +119,54 @@ $set = $row['COUNT(*)'];
         </table>
 
     </div>
+
     <script>
         $(document).ready(function () {
-            $('#submit').click(function (event) {
+            $('#myInput_upload').submit(function (event) {
                 event.preventDefault();
-                var formdata = new FormData(document.getElementById('myInput_upload'));
+                var formdata = new FormData(this);
                 $.ajax({
                     url: "uploadscript.php",
                     type: "POST",
+                    dataType: 'json',
                     data: formdata,
                     processData: false, //to prevent it from converting into query string
                     contentType: false, //to prevent from the default content type
                     success: function (data) {
-                        swal.fire({
-                            text: "Uploaded successfully",
-                            icon: "success",
-                        });
-                        location.reload();
+
+                        if (data.result == 1) {
+
+                            swal.fire({
+                                text: "" + data.msg + "",
+                                icon: "error",
+                            });
+                        } else if (data.result == 0) {
+                            swal.fire({
+                                text: "" + data.msg + "",
+                                icon: "success",
+                            });
+                            location.reload();
+                        }
                     },
                 });
             });
             $('#myModal').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget);
                 var filePath = button.data('file');
-              
                 var image = $('#previewImage');
+                image.attr('src', filePath);
+            });
+            $('#myModal_click').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var filePath = button.data('file');
+                var image = $('#previewImage_click');
                 image.attr('src', filePath);
             });
 
         });
+
+        var modal = document.getElementById("myModal");
+
     </script>
 
 

@@ -61,7 +61,7 @@ if (isset($_GET["department_id"])) {
                     <div class="dropdown-content">
                         <a class="dropdown-item" style="text-decoration:none">Export</a>
                         <div class="sub-dropdown dropdown-menu">
-                            <a class="dropdown-item" href="export_csv.php" style="text-decoration:none">Comma Separated
+                            <a class="dropdown-item" href="export_csv.php" style="">Comma Separated
                                 Values (.csv)</a>
                             <a class="dropdown-item" href="export_excel.php" style="text-decoration:none">Microsoft
                                 Excel (.xlsx)</a>

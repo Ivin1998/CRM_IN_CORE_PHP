@@ -4,7 +4,9 @@ $currentDirectory = getcwd();
 $uploadDirectory = '/upload_files/';
 session_start();
 $user_id = $_SESSION['user_id'];
-$fileExtensionAllowed = ['pdf'];
+$errors = [];
+
+$fileExtensionAllowed = ['pdf', 'xlsx', 'png', 'jpg','mp4'];
 
 $fileName = $_FILES['the_file']['name'];
 $fileSize = $_FILES['the_file']['size'];
@@ -15,40 +17,44 @@ $fileExtension = strtolower(end($fileNameParts));
 
 $uploadPath = $currentDirectory . $uploadDirectory . basename($fileName);
 
-$created_date=$_POST['created_date'];
+$created_date = $_POST['created_date'];
 
-$isValidFile=1;
+$flag = 0;
 
-if (isset($_POST['submit'])) {
 
-    if (!in_array($fileExtension, $fileExtensionAllowed)) {
-        echo "file format not supported";
-        $isValidFile = 0;
-
-    }
-if ($fileSize > 40000000) {
-    echo "File format exceeds the limit";
-    $isValidFile = 0;
-
+if (!$fileName) {
+    $flag = 1;
+    echo json_encode(array("result" => $flag, 'msg' => 'No file selected'));
+    exit();
 }
-if ($isValidFile==1) {
-    $didupload = move_uploaded_file($fileTmpName, $uploadPath);
 
-    if ($didupload) {
-        echo "The file" . basename($fileName) . "has been uploaded successfully";
+if (!in_array($fileExtension, $fileExtensionAllowed)) {
+    $flag = 1;
+    echo json_encode(array("result" => $flag, 'msg' => 'This file extension is not allowed'));
+    exit();
+}
+
+
+if ($fileSize > 8000000) {
+    $flag = 1;
+    echo json_encode(array("result" => $flag, 'msg' => 'File exceeds 4MB! Please try with different image'));
+    exit();
+}
+
+
+
+$didupload = move_uploaded_file($fileTmpName, $uploadPath);
+
+if ($didupload) {
+    $sql = "INSERT INTO files (file_name, file_size, file_type,uploaded_date,user_id) VALUES ('$fileName', '$fileSize', '$fileType','$created_date','$user_id')";
+    $result = mysqli_query($con, $sql);
+    if ($result) {
+
+        echo json_encode(array("result" => $flag, 'msg' => 'File uploaded successfully'));
     } else {
-         echo "Error: " . mysqli_error($con);
+        $flag = 1;
+        echo json_encode(array('result' => $flag, 'msg' => 'File upload failed'));
 
     }
 }
-}
-$sql = "INSERT INTO files (file_name, file_size, file_type,uploaded_date,user_id) VALUES ('$fileName', '$fileSize', '$fileType','$created_date','$user_id')";
-$result = mysqli_query($con, $sql);
-
-if ($result) {
-    echo "File details added to database";
-} else {
-    echo "Error".mysqli_error($con);
-}
-   
 ?>

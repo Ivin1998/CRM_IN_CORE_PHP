@@ -58,7 +58,7 @@ $set = $row['COUNT(*)'];
         <h1 class="page-header">Countries</h1> 
         <div class="region_table ">
         <button class="btn btn-primary country_name" id="add_country"
-            data-toggle="modal" data-target="#myModal" style="margin: 10 10 5 820;">Add country</button>
+            data-toggle="modal" data-target="#myModal" style="margin: 10 10 5 700;">Add country</button>
             <!-- Country -->
             <div>
                 <div class="region_table ">

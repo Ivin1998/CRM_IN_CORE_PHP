@@ -208,5 +208,8 @@ form {
   #myInput_upload{
     all: initial;
   }
-  
-
+  .back{
+    display: flex;
+    margin: 10 10 -5;
+    cursor: pointer;
+  }

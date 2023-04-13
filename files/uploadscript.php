@@ -6,7 +6,7 @@ session_start();
 $user_id = $_SESSION['user_id'];
 $errors = [];
 
-$fileExtensionAllowed = ['pdf', 'xlsx', 'png', 'jpg','mp4'];
+$fileExtensionAllowed = ['jpeg', 'jpg', 'pdf', 'docx', 'csv', 'xlsx', 'png','mp4'];
 
 $fileName = $_FILES['the_file']['name'];
 $fileSize = $_FILES['the_file']['size'];
@@ -40,7 +40,6 @@ if ($fileSize > 8000000) {
     echo json_encode(array("result" => $flag, 'msg' => 'File exceeds 4MB! Please try with different image'));
     exit();
 }
-
 
 
 $didupload = move_uploaded_file($fileTmpName, $uploadPath);

@@ -14,7 +14,7 @@ $set = $row['COUNT(*)'];
 <html>
 
 <head>
-    <title>Users_list</title>
+    <title>Files</title>
 </head>
 
 <body>
@@ -49,13 +49,13 @@ $set = $row['COUNT(*)'];
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                     </div>
-                    <div class="modal-body">
-                        <img id="previewImage" style=" max-width: 100%"></img>
+                    <div class="modal-body-view">
+                        <img class="previewImage" style="max-width: 100%;max-height: 100%;" />
+
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-
                     </div>
                 </div>
             </div>
@@ -74,7 +74,7 @@ $set = $row['COUNT(*)'];
                         </div>
                     </div>
                     <div class="modal-body">
-                        <img id="previewImage_click" style=" max-width: 100%" ;>
+                        <img class="previewImage_click" style="max-width: 100%;max-height: 100%;" ;>
 
                     </div>
                     <div class="modal-footer">
@@ -109,8 +109,8 @@ $set = $row['COUNT(*)'];
                         <?php echo "<a href='#' style=text-decoration:none; data-toggle='modal' data-target='#myModal_click' data-file='upload_files/$fileName'>" . $fileName . "</a>" ?>
                     </td>
                     <td>
-                        <?php echo "<a href='#' data-toggle='modal' data-target='#myModal' data-file='upload_files/$fileName'>" . '<i class="fa fa-eye eye-icon btn-lg"></i>' . "</a>" ?>
-                        <?php echo "<a href='upload_files/$fileName' download>" . '<i class="fa fa-download"></i>' . "</a>" ?></a>
+                        <?php echo "<a href='#' data-toggle='modal' data-target='#myModal' data-file='upload_files/$fileName'>" . '<i title="View the file" class="fa fa-eye eye-icon btn-lg"></i>' . "</a>" ?>
+                        <?php echo "<a href='upload_files/$fileName' download>" . '<i title="download the file" class="fa fa-download"></i>' . "</a>" ?></a>
                     </td>
                 </tr>
                 <?php
@@ -147,25 +147,69 @@ $set = $row['COUNT(*)'];
                             });
                             location.reload();
                         }
+                      
                     },
                 });
             });
             $('#myModal').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget);
                 var filePath = button.data('file');
-                var image = $('#previewImage');
-                image.attr('src', filePath);
+
+                fileExtension = filePath.replace(/^.*\./, '');
+                if (fileExtension == 'jpg' || fileExtension == 'png') {
+                    var image = $('.previewImage');
+                    image.attr('src', filePath);
+                    $('.previewVideo').replaceWith($('<img>', {
+                        addClass: 'previewImage',
+                        src: filePath,
+                        style: 'width:100%'
+                    }));
+
+                }
+                else if (fileExtension == 'mp4'|| fileExtension=='pdf'|| fileExtension=='xlsx'|| fileExtension=='docx') {
+                    var image = $('.previewImage');
+                    $(image).addClass('previewVideo');
+                    image.attr('src', filePath);
+                    $('.previewVideo').replaceWith($('<iframe>', {
+                        addClass: 'previewVideo',
+                        src: filePath,
+                    }));
+
+                }
             });
             $('#myModal_click').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget);
                 var filePath = button.data('file');
-                var image = $('#previewImage_click');
-                image.attr('src', filePath);
+
+                fileExtension = filePath.replace(/^.*\./, '');
+                if (fileExtension == 'jpg' || fileExtension == 'png') {
+                    var image = $('.previewImage_click');
+                    image.attr('src', filePath);
+                    $('.previewVideo_click').replaceWith($('<img>', {
+                        addClass: 'previewImage_click',
+                        src: filePath,
+                        style: 'width:100%'
+                    }));
+
+                }
+                else if (fileExtension == 'mp4'|| fileExtension=='pdf'|| fileExtension=='xlsx'|| fileExtension=='docx') {
+                    var image = $('.previewImage_click');
+                    $(image).addClass('previewVideo_click');
+                    image.attr('src', filePath);
+                    $('.previewVideo_click').replaceWith($('<iframe>', {
+                        addClass: 'previewVideo_click',
+                        src: filePath,
+                        style: 'width:100%; height:100% ;'
+
+                    }));
+
+                }
             });
+
+
 
         });
 
-        var modal = document.getElementById("myModal");
 
     </script>
 

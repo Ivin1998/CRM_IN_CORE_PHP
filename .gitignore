@@ -3,3 +3,4 @@ uploads
 composer.json
 composer.lock
 mpdf
+files/upload_files/

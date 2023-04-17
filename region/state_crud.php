@@ -1,34 +1,10 @@
 <?php
 include '../database/connections.php';
-include '../contacts/header.php';
-
-session_start();
-$user_id = $_SESSION['user_id'];
-
-$count_query = "SELECT COUNT(*) FROM contacts WHERE is_deleted=0 AND user_id='$user_id'";
-$result = mysqli_query($con, $count_query);
-$row = mysqli_fetch_assoc($result);
-$set = $row['COUNT(*)'];
+include '../header.php';
+include '../static_bar.php';
 ?>
 <html>
 <title>States</title>
-
-<div class="header" id="myHeader">
-    <h2>User Application</h2>
-</div>
-<div class="sidebar" id="myHeader">
-    <a href="../contacts/contacts.php">Home</a>
-    <a href="../contacts/contacts.php">Contacts
-        <?php echo "<span class=badge>" . $set . "</span>" ?>
-    </a>
-    <a href="../files/files.php">Files</a>
-
-    <a href="../departments/departments.php">Departments</a>
-    <a href="../region/country_crud.php">Countries</a>
-    <a class="active" href="../region/state_crud.php">States</a>
-    <a href="../region/city_crud.php">Cities</a>
-</div>
-
 <div class="content">
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -53,11 +29,11 @@ $set = $row['COUNT(*)'];
             </div>
         </div>
     </div>
-    <h1 class="page-header">States</h1> 
+    <h1 class="page-header">States</h1>
     <div class=" region_table">
-    <button class="btn btn-primary state_name" id="add_state" data-toggle="modal"
-        data-target="#myModal" style="margin: 10 10 5 820;">Add State</button>
-    
+        <button class="btn btn-primary state_name" id="add_state" data-toggle="modal" data-target="#myModal"
+            style="margin: 10 10 5 820;">Add State</button>
+
 
         <div>
             <div class="region_table">
@@ -65,7 +41,7 @@ $set = $row['COUNT(*)'];
                 <table border="1" padding=15 class="table table-striped table-hover ">
 
                     <tr>
-                    <th style="text-align: left;"> Name</th>
+                        <th style="text-align: left;"> Name</th>
                         <th style="text-align: left;"> Actions</th>
                     </tr>
                     <?php
@@ -79,10 +55,12 @@ $set = $row['COUNT(*)'];
                                 <?php echo $rows_state['name'] ?>
                             </td>
                             <td>
-                                <a title="view cities of this state" class="btn-lg eye-icon" onclick="view_region(<?php echo $rows_state['id'] ?>,2)"><i
-                                        class="fa fa-eye" data-toggle="modal" data-target="#myModal"></i></a>
-                                <a title="edit the state name" class=" btn-lg edit_icon" onclick="edit_region(<?php echo $rows_state['id'] ?>,2);" ?><i
-                                        class="fa fa-edit" data-toggle="modal" data-target="#myModal"></i></a>
+                                <a title="view cities of this state" class="btn-lg eye-icon"
+                                    onclick="view_region(<?php echo $rows_state['id'] ?>,2)"><i class="fa fa-eye"
+                                        data-toggle="modal" data-target="#myModal"></i></a>
+                                <a title="edit the state name" class=" btn-lg edit_icon"
+                                    onclick="edit_region(<?php echo $rows_state['id'] ?>,2);" ?><i class="fa fa-edit"
+                                        data-toggle="modal" data-target="#myModal"></i></a>
                                 <a title="delete this state" class="btn btn-lg delete-icon"
                                     onclick="check_region_Delete(<?php echo $rows_state['id'] ?>,2);"><i
                                         class="fa fa-trash"></i></a>
@@ -92,9 +70,15 @@ $set = $row['COUNT(*)'];
                         <?php
                     }
                     ?>
-
                 </table>
             </div>
         </div>
+        <script>
+            $(document).ready(function () {
+                $('.sidebar a').removeClass('active');
+                $('.states').addClass('active');
+            })
+        </script>
+        </script>
 
 </html>

@@ -1,34 +1,10 @@
 <?php
 include '../database/connections.php';
-include '../contacts/header.php';
-
-session_start();
-$user_id = $_SESSION['user_id'];
-
-$count_query = "SELECT COUNT(*) FROM contacts WHERE is_deleted=0 AND user_id='$user_id'";
-$result = mysqli_query($con, $count_query);
-$row = mysqli_fetch_assoc($result);
-$set = $row['COUNT(*)'];
+include '../header.php';
+include '../static_bar.php';
 ?>
 <html>
 <title>Cities</title>
-<div class="header" id="myHeader">
-    <h2>User Application</h2>
-</div>
-<div class="sidebar" id="myHeader">
-    <a href="../contacts/contacts.php">Home</a>
-    <a href="../contacts/contacts.php">Contacts
-        <?php echo "<span class=badge>" . $set . "</span>" ?>
-    </a>
-    <a href="../files/files.php">Files</a>
-
-    <a href="../departments/departments.php">Departments</a>
-    <a href="../region/country_crud.php">Countries</a>
-    <a href="../region/state_crud.php">States</a>
-    <a class="active" href="../region/city_crud.php">Cities</a>
-
-</div>
-
 <div class="content">
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -53,11 +29,11 @@ $set = $row['COUNT(*)'];
 
 
     <!-- City -->
-    <h1 class="page-header">Cities</h1> 
+    <h1 class="page-header">Cities</h1>
     <div class="region_table">
-    <button class="btn btn-primary city_name" id="add_city" data-toggle="modal"
-        data-target="#myModal" style="margin: 10 10 5 700;">Add city</button>
-  
+        <button class="btn btn-primary city_name" id="add_city" data-toggle="modal" data-target="#myModal"
+            style="margin: 10 10 5 700;">Add city</button>
+
         <div>
 
             <div class=" region_table">
@@ -81,8 +57,9 @@ $set = $row['COUNT(*)'];
                                 <?php echo $rows_city['name'] ?>
                             </td>
                             <td>
-                                <a title="edit the city name" class=" btn-lg edit_icon " onclick="edit_region(<?php echo $rows_city['id'] ?>,3);" ?><i
-                                        class="fa fa-edit" data-toggle="modal" data-target="#myModal"></i></a>
+                                <a title="edit the city name" class=" btn-lg edit_icon "
+                                    onclick="edit_region(<?php echo $rows_city['id'] ?>,3);" ?><i class="fa fa-edit"
+                                        data-toggle="modal" data-target="#myModal"></i></a>
                                 <a title="delete this city" class="btn btn-lg delete-icon"
                                     onclick="check_region_Delete(<?php echo $rows_city['id'] ?>,3);"><i
                                         class="fa fa-trash"></i></a>
@@ -97,5 +74,15 @@ $set = $row['COUNT(*)'];
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('.sidebar a').removeClass('active');
+        $('.cities').addClass('active');
+    })
+
+
+
+</script>
 
 </html>

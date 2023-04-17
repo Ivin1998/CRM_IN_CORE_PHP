@@ -1,41 +1,11 @@
 <?php
 include '../database/connections.php';
-session_start();
+include '../header.php';
+include '../static_bar.php';
 $user_id = $_SESSION['user_id'];
-
-$count_query = "SELECT COUNT(*) FROM contacts WHERE is_deleted=0 AND user_id='$user_id'";
-$result = mysqli_query($con, $count_query);
-$row = mysqli_fetch_assoc($result);
-$set = $row['COUNT(*)'];
 ?>
-
 <html>
 <title>Department List</title>
-
-<head>
-    <link rel="stylesheet" href="../assets/formbootstrap.css">
-    <link rel="stylesheet" href="../assets/styles.css">
-    <link rel="stylesheet" href="../assets/style_sidebar.css">
-    <script type="text/javascript" src="../assets/sweetalert.js"></script>
-    <script type="text/javascript" src="../assets/jquery.js"></script>
-    <script type="text/javascript" src="../assets/bootstrapjs.js"></script>
-    <script type="text/javascript" src="../assets/validations.js"></script>
-</head>
-<body>
-    <div class="header" id="myHeader">
-        <h2>User Application</h2>
-    </div>
-    <div class="sidebar" id="myHeader">
-        <a href="../contacts/contacts.php">Home</a>
-        <a href="../contacts/contacts.php">Contacts
-            <?php echo "<span class=badge>" . $set . "</span>" ?>
-        </a>
-        <a href="../files/files.php">Files</a>
-        <a class="active" href="../departments/departments.php">Departments</a>
-        <a  href="../region/country_crud.php">Countries</a>
-    <a  href="../region/state_crud.php">States</a>
-    <a  href="../region/city_crud.php">Cities</a>
-    </div>
     <div class="content">
         <div id="myModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -98,5 +68,13 @@ $set = $row['COUNT(*)'];
     </div>
     </div>
 </body>
+<script>
+    $(document).ready(function(){
+        $('.sidebar a').removeClass('active');
+        $('.department').addClass('active');
+    })
 
+
+
+</script>
 </html>

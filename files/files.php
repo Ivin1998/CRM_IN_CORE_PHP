@@ -1,42 +1,19 @@
 <?php
-date_default_timezone_set('Asia/Calcutta');
 include '../database/connections.php';
-include '../contacts/header.php';
-session_start();
-
-$username = $_SESSION['username'];
+include '../header.php';
+include '../static_bar.php';
 $user_id = $_SESSION['user_id'];
-$count_query = "SELECT COUNT(*) FROM contacts WHERE is_deleted=0 AND user_id='$user_id'";
-$result = mysqli_query($con, $count_query);
-$row = mysqli_fetch_assoc($result);
-$set = $row['COUNT(*)'];
 ?>
 <html>
-
 <head>
     <title>Files</title>
 </head>
-
 <body>
-    <div class="header" id="myHeader">
-        <h2>User Application</h2>
-    </div>
-    <div class="sidebar">
-        <a href="contacts.php">Home</a>
-        <a href="../contacts/contacts.php">Contacts
-            <?php echo "<span class=badge>" . $set . "</span>" ?>
-        </a>
-        <a class="active" href="../files/files.php">Files</a>
-        <a href="../departments/departments.php">Departments</a>
-        <a href="../region/country_crud.php">Countries</a>
-        <a href="../region/state_crud.php">States</a>
-        <a href="../region/city_crud.php">Cities</a>
-    </div>
     <div class="content"><br>
         <form style="width:30%" id="myInput_upload" method="post" style="text-decoration: none;"
             enctype="multipart/form-data">
-            <input type="file" name="the_file"><br>
-            <input type="submit" name="submit" value="Upload" /> <br>
+            <input type="file" name="the_file[]" multiple><br>
+            <input type="submit" name="submit" value="Upload" multiple="multiple" /> <br>
             <input type="hidden" name="created_date" value="<?php echo date('Y-m-d H:i:s') ?>" />
         </form>
         <!-- Modal -->
@@ -51,8 +28,6 @@ $set = $row['COUNT(*)'];
                     </div>
                     <div class="modal-body-view">
                         <img class="previewImage" style="max-width: 100%;max-height: 100%;" />
-
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -95,7 +70,8 @@ $set = $row['COUNT(*)'];
                 </tr>
             </thead>
             <?php
-            $file = "SELECT * FROM files";
+            $file = "SELECT * FROM files WHERE user_id='$user_id'";
+
             $result = mysqli_query($con, $file);
             $no = 1;
             while ($row = mysqli_fetch_assoc($result)) {
@@ -115,11 +91,8 @@ $set = $row['COUNT(*)'];
                 </tr>
                 <?php
             } ?>
-
         </table>
-
     </div>
-
     <script>
         $(document).ready(function () {
             $('#myInput_upload').submit(function (event) {
@@ -133,21 +106,22 @@ $set = $row['COUNT(*)'];
                     processData: false, //to prevent it from converting into query string
                     contentType: false, //to prevent from the default content type
                     success: function (data) {
+                        for (var key in data) {   // for...in loop to iterate over each key in the "data" object.
+                            if (data[key].result == 1) {
 
-                        if (data.result == 1) {
-
-                            swal.fire({
-                                text: "" + data.msg + "",
-                                icon: "error",
-                            });
-                        } else if (data.result == 0) {
-                            swal.fire({
-                                text: "" + data.msg + "",
-                                icon: "success",
-                            });
-                            location.reload();
+                                swal.fire({
+                                    text: "" + data[key].msg + "",
+                                    icon: "error",
+                                });
+                            } else if (data[key].result == 0) {
+                                swal.fire({
+                                    text: "" + data[key].msg + "",
+                                    icon: "success",
+                                });
+                                location.reload();
+                            }
                         }
-                      
+
                     },
                 });
             });
@@ -166,7 +140,7 @@ $set = $row['COUNT(*)'];
                     }));
 
                 }
-                else if (fileExtension == 'mp4'|| fileExtension=='pdf'|| fileExtension=='xlsx'|| fileExtension=='docx') {
+                else if (fileExtension == 'mp4' || fileExtension == 'pdf' || fileExtension == 'xlsx' || fileExtension == 'docx') {
                     var image = $('.previewImage');
                     $(image).addClass('previewVideo');
                     image.attr('src', filePath);
@@ -192,7 +166,7 @@ $set = $row['COUNT(*)'];
                     }));
 
                 }
-                else if (fileExtension == 'mp4'|| fileExtension=='pdf'|| fileExtension=='xlsx'|| fileExtension=='docx') {
+                else if (fileExtension == 'mp4' || fileExtension == 'pdf' || fileExtension == 'xlsx' || fileExtension == 'docx') {
                     var image = $('.previewImage_click');
                     $(image).addClass('previewVideo_click');
                     image.attr('src', filePath);
@@ -205,15 +179,11 @@ $set = $row['COUNT(*)'];
 
                 }
             });
-
-
-
         });
-
-
+        $(document).ready(function () {
+            $('.sidebar a').removeClass('active');
+            $('.files').addClass('active');
+        })
     </script>
-
-
 </body>
-
 </html>

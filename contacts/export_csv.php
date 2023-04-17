@@ -3,7 +3,7 @@ include '../database/connections.php';
 session_start();
 $user_id = $_SESSION['user_id'];
 
-$query=$con->query ("SELECT * FROM contacts WHERE is_deleted=0  AND user_id='$user_id'  ORDER BY id DESC ");
+$query=$con->query ("SELECT * FROM contacts WHERE is_deleted=0  AND user_id='$user_id'  ORDER BY unique_id DESC ");
 
 if($query->num_rows>0)
 {

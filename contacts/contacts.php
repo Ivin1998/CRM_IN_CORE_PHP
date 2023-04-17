@@ -2,10 +2,14 @@
 date_default_timezone_set('Asia/Calcutta');
 include '../database/connections.php';
 include '../mvc/controller.php';
-include 'header.php';
+include '../header.php';
 $username = $_SESSION['username'];
 $user_id = $_SESSION['user_id'];
-$count_query = "SELECT COUNT(*) FROM contacts WHERE is_deleted=0 AND user_id='$user_id'";
+$todays_date=date('Y-m-d');
+$count_query = "SELECT COUNT(*), DATE_FORMAT(created_date, 'Y-m-d') AS formatted_date 
+FROM contacts WHERE DATE(created_date) = '$todays_date' AND is_deleted = 0 AND user_id = '$user_id'
+GROUP BY DATE_FORMAT(created_date, 'Y-m-d');";
+
 $result = mysqli_query($con, $count_query);
 $row = mysqli_fetch_assoc($result);
 
@@ -15,6 +19,7 @@ if (isset($_GET["department_id"])) {
 } else {
     $department_id = '';
 }
+
 ?>
 <html>
 
@@ -28,7 +33,7 @@ if (isset($_GET["department_id"])) {
     </div>
     <div class="sidebar">
         <a href="contacts.php">Home</a>
-        <a class="active" href="contacts.php">Contacts
+        <a class="contact" href="contacts.php">Contacts
             <?php echo "<span class=badge>" . $set . "</span>" ?>
         </a>
         <a href="../files/files.php">Files</a>
@@ -36,8 +41,9 @@ if (isset($_GET["department_id"])) {
         <a href="../region/country_crud.php">Countries</a>
         <a href="../region/state_crud.php">States</a>
         <a href="../region/city_crud.php">Cities</a>
+        <a href="logout.php" style="position: fixed; bottom: 0; left: 0;"><i class="fa fa-power-off" aria-hidden="true"></i></a>
     </div>
-    <div class="content">
+    
         <div class="row" style="padding-top: 15px;">
             <div class="col col-sm-6 ">
             </div>
@@ -59,9 +65,9 @@ if (isset($_GET["department_id"])) {
                         <?php echo "<p class=intro> $username!</p>"; ?>
                     </button>
                     <div class="dropdown-content">
-                        <a class="dropdown-item" style="text-decoration:none">Export</a>
+                        <a class="dropdown-item" style="text-decoration:none">Export Contacts</a>
                         <div class="sub-dropdown dropdown-menu">
-                            <a class="dropdown-item" href="export_csv.php" style="">Comma Separated
+                            <a class="dropdown-item" href="export_csv.php" style="text-decoration:none">Comma Separated
                                 Values (.csv)</a>
                             <a class="dropdown-item" href="export_excel.php" style="text-decoration:none">Microsoft
                                 Excel (.xlsx)</a>
@@ -72,6 +78,7 @@ if (isset($_GET["department_id"])) {
                 </div>
             </div>
         </div>
+        <div class="content">
         <div id="myModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <!-- Modal content-->
@@ -255,6 +262,16 @@ if (isset($_GET["department_id"])) {
                         ?>
                 </tbody>
             </table>
+
 </body>
+<script>
+    $(document).ready(function(){
+        $('.sidebar a').removeClass('active');
+        $('.contact').addClass('active');
+    })
+
+
+
+</script>
 
 </html>

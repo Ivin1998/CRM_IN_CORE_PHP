@@ -1,5 +1,5 @@
 <?php
-include 'contacts/header.php';
+include 'header.php';
 ?>
 <html>
     

@@ -2,13 +2,19 @@
 session_start();
 $user_id = $_SESSION['user_id'];
 $username = $_SESSION['username'];
-$todays_date=date('Y-m-d');
-$count_query = "SELECT COUNT(*), DATE_FORMAT(created_date, 'Y-m-d') AS formatted_date 
+$todays_date = date('Y-m-d');
+$count_query = "SELECT COUNT(*) As new_count, DATE_FORMAT(created_date, 'Y-m-d') AS formatted_date 
 FROM contacts WHERE DATE(created_date) = '$todays_date' AND is_deleted = 0 AND user_id = '$user_id'
 GROUP BY DATE_FORMAT(created_date, 'Y-m-d');";
 $result = mysqli_query($con, $count_query);
 $row = mysqli_fetch_assoc($result);
-$set = $row['COUNT(*)'];
+if($row){
+    $set = $row['new_count'];
+} else
+{
+    $set=0;
+}
+
 ?>
 <html>
 <body>
@@ -16,7 +22,7 @@ $set = $row['COUNT(*)'];
         <h2>User Application</h2>
     </div>
     <div class="sidebar">
-        <a href="../contacts/contacts.php">Home</a>
+        <a class="home" href="../home/home.php">Home</a>
         <a class="contact" href="../contacts/contacts.php">Contacts
             <?php echo "<span class=badge>" . $set . "</span>" ?>
         </a>
@@ -43,7 +49,6 @@ $set = $row['COUNT(*)'];
                 </i>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
                 <button class="dropdown-item" href="#">My profile</button>
                 <button class="dropdown-item" href="#">
                     <?php echo "<p class=intro> $username!</p>"; ?>

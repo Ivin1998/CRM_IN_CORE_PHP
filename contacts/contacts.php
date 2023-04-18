@@ -5,21 +5,23 @@ include '../mvc/controller.php';
 include '../header.php';
 $username = $_SESSION['username'];
 $user_id = $_SESSION['user_id'];
-$todays_date=date('Y-m-d');
-$count_query = "SELECT COUNT(*), DATE_FORMAT(created_date, 'Y-m-d') AS formatted_date 
+$todays_date = date('Y-m-d');
+$count_query = "SELECT COUNT(*) AS new_count, DATE_FORMAT(created_date, 'Y-m-d') AS formatted_date 
 FROM contacts WHERE DATE(created_date) = '$todays_date' AND is_deleted = 0 AND user_id = '$user_id'
 GROUP BY DATE_FORMAT(created_date, 'Y-m-d');";
 
 $result = mysqli_query($con, $count_query);
 $row = mysqli_fetch_assoc($result);
-
-$set = $row['COUNT(*)'];
+if ($row) {
+    $set = $row['new_count'];
+} else {
+    $set = 0;
+}
 if (isset($_GET["department_id"])) {
     $department_id = $_GET['department_id'];
 } else {
     $department_id = '';
 }
-
 ?>
 <html>
 
@@ -32,7 +34,7 @@ if (isset($_GET["department_id"])) {
         <h2>User Application</h2>
     </div>
     <div class="sidebar">
-        <a href="contacts.php">Home</a>
+    <a class="home" href="../home/home.php">Home</a>
         <a class="contact" href="contacts.php">Contacts
             <?php echo "<span class=badge>" . $set . "</span>" ?>
         </a>
@@ -41,44 +43,45 @@ if (isset($_GET["department_id"])) {
         <a href="../region/country_crud.php">Countries</a>
         <a href="../region/state_crud.php">States</a>
         <a href="../region/city_crud.php">Cities</a>
-        <a href="logout.php" style="position: fixed; bottom: 0; left: 0;"><i class="fa fa-power-off" aria-hidden="true"></i></a>
+        <a href="logout.php" style="position: fixed; bottom: 0; left: 0;"><i class="fa fa-power-off"
+                aria-hidden="true"></i></a>
     </div>
-    
-        <div class="row" style="padding-top: 15px;">
-            <div class="col col-sm-6 ">
-            </div>
-            <div class="col col-sm-2"><button id="add_con" type="button" class="btn btn-primary btn-lg add_con_align "
-                    data-toggle="modal" data-target="#myModal">Add Contact</button></div>
-            <div class="col col-sm-2"><button type="button" class="btn btn-primary btn-lg import add_con_align"
-                    data-toggle="modal" data-target="#myModal">Import Contact</button></div>
-            <div class=" col col-sm-2">
-                <button class="btn btn-primary rounded-circle" style="height:40px;margin: -70 70;" ;type="button"
-                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa-solid">
-                        <?php echo "$username[0]$username[1]"; ?>
-                    </i>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-                    <button class="dropdown-item" href="#">My profile</button>
-                    <button class="dropdown-item" href="#">
-                        <?php echo "<p class=intro> $username!</p>"; ?>
-                    </button>
-                    <div class="dropdown-content">
-                        <a class="dropdown-item" style="text-decoration:none">Export Contacts</a>
-                        <div class="sub-dropdown dropdown-menu">
-                            <a class="dropdown-item" href="export_csv.php" style="text-decoration:none">Comma Separated
-                                Values (.csv)</a>
-                            <a class="dropdown-item" href="export_excel.php" style="text-decoration:none">Microsoft
-                                Excel (.xlsx)</a>
-                            <a class="dropdown-item" href="export_pdf.php" style="text-decoration:none">PDF (.pdf)</a>
-                        </div>
+    <div class="row" style="padding-top: 15px;">
+        <div class="col col-sm-6 ">
+        </div>
+        <div class="col col-sm-2"><button id="add_con" type="button" class="btn btn-primary btn-lg add_con_align "
+                data-toggle="modal" data-target="#myModal">Add Contact</button></div>
+        <div class="col col-sm-2"><button type="button" class="btn btn-primary btn-lg import add_con_align"
+                data-toggle="modal" data-target="#myModal">Import Contact</button></div>
+        <div class=" col col-sm-2">
+            <button class="btn btn-primary rounded-circle" style="height:40px;margin: -70 70;" ;type="button"
+                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa-solid">
+                    <?php echo "$username[0]$username[1]"; ?>
+                </i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                <button class="dropdown-item" href="#">My profile</button>
+                <button class="dropdown-item" href="#">
+                    <?php echo "<p class=intro> $username!</p>"; ?>
+                </button>
+                <div class="dropdown-content">
+                    <a class="dropdown-item" style="text-decoration:none">Export Contacts</a>
+                    <div class="sub-dropdown dropdown-menu">
+                        <a class="dropdown-item" href="export_csv.php" style="text-decoration:none">Comma Separated
+                            Values (.csv)</a>
+                        <a class="dropdown-item" href="export_excel.php" style="text-decoration:none">Microsoft
+                            Excel (.xlsx)</a>
+                        <a class="dropdown-item" href="export_pdf.php" style="text-decoration:none">PDF (.pdf)</a>
                     </div>
-                    <a class="dropdown-item" href="logout.php" style="text-decoration:none">Log out</a>
                 </div>
+                <a class="dropdown-item" href="logout.php" style="text-decoration:none">Log out</a>
             </div>
         </div>
-        <div class="content">
+    </div>
+    <div class="content">
         <div id="myModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <!-- Modal content-->
@@ -265,7 +268,7 @@ if (isset($_GET["department_id"])) {
 
 </body>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         $('.sidebar a').removeClass('active');
         $('.contact').addClass('active');
     })

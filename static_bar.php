@@ -12,7 +12,7 @@ if($row){
     $set = $row['new_count'];
 } else
 {
-    $set=0;
+    $set='';
 }
 
 ?>

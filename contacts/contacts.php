@@ -15,13 +15,19 @@ $row = mysqli_fetch_assoc($result);
 if ($row) {
     $set = $row['new_count'];
 } else {
-    $set = 0;
+    $set = '';
 }
 if (isset($_GET["department_id"])) {
     $department_id = $_GET['department_id'];
 } else {
     $department_id = '';
 }
+
+$query="SELECT COUNT(*) AS records_count FROM contacts WHERE is_deleted=0 AND user_id='$user_id'";
+$result=mysqli_query($con,$query);
+$contacts_count = mysqli_fetch_assoc($result);
+$total_count=$contacts_count['records_count'];
+
 ?>
 <html>
 
@@ -51,9 +57,10 @@ if (isset($_GET["department_id"])) {
         <div class="col col-sm-6 ">
         </div>
         <div class="col col-sm-2"><button id="add_con" type="button" class="btn btn-primary btn-lg add_con_align "
-                data-toggle="modal" data-target="#myModal">Add Contact</button></div>
+                data-toggle="modal" data-target="#myModal">Add a Contact</button></div>
         <div class="col col-sm-2"><button type="button" class="btn btn-primary btn-lg import add_con_align"
-                data-toggle="modal" data-target="#myModal">Import Contact</button></div>
+                data-toggle="modal" data-target="#myModal">Import Contacts</button></div>
+             
         <div class=" col col-sm-2">
             <button class="btn btn-primary rounded-circle" style="height:40px;margin: -70 70;" ;type="button"
                 id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -82,6 +89,7 @@ if (isset($_GET["department_id"])) {
         </div>
     </div>
     <div class="content">
+    <?php echo '<h3>Total Number of Records = '.$total_count.'</h3>' ?>
         <div id="myModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <!-- Modal content-->
@@ -95,7 +103,8 @@ if (isset($_GET["department_id"])) {
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                         </div>
-                    </div>
+                    </div>        
+
                     <div class="modal-body">
                         <div id="myForm">
                             <form name="contact" method="post" action="import.php" id="mycontact"
@@ -175,7 +184,7 @@ if (isset($_GET["department_id"])) {
                                         value="<?php echo date('Y-m-d H:i:s') ?>" />
                                     <input type="hidden" name="mod_date" value='<?php echo date('Y-m-d H:i:s') ?>' />
                                     <button type="button" onclick="savecontact()" id="Add"
-                                        class="btn btn-primary form-control">Add</button>
+                                        class="btn btn-primary form-control">Save</button>
                                     <button id="update_button" class="btn btn-primary form-control"
                                         type="button">Update</button>
                                 </div>
@@ -189,7 +198,7 @@ if (isset($_GET["department_id"])) {
             </div>
         </div>
         <div>
-            <table id="mytable" border="2" class="table-bordered" style="width:100%">
+            <table id="mytable" border="2" class="table-bordered" style="width:100%">  
                 <thead>
                     <tr>
                         <th>Sl.no.</th>

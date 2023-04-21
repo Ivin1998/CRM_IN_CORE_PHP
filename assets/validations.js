@@ -408,7 +408,7 @@ $(document).ready(function () {
         $('#name').val('');
 
 
-    })
+    });
 
     $('#add_state').click(function () {
 
@@ -462,7 +462,38 @@ function update_region(type) {
 
 }
 
+function new_user(){
+    $.ajax({
+        url:"new_user.php",
+        type: "POST",
+        data: $('#new_user').serialize(),
+        success: function (data) {
+            swal.fire({
+                text: "User details saved successfully!",
+                icon: "success",
+            });
+             location.reload(); 
+        }
+    });
+};
 
+$(document).ready(function () {
+    $("#confirmPassword").on('keyup', function(){
+     var password = $("#password").val();
+     var confirmPassword = $("#confirmPassword").val();
+     if (password != confirmPassword){
+        $("#CheckPasswordMatch").html("Password does not match!").css("color","red");
+
+     }
+     else{
+        $("#CheckPasswordMatch").html("Password matched!").css("color","green");
+        setTimeout(function(){
+           $("#CheckPasswordMatch").html("");
+        },5000)
+     }
+       
+    });
+ });
 
 
 

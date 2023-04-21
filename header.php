@@ -20,7 +20,7 @@
     <script type="text/javascript" src="../assets/datatable5.js"></script> <!-- Displaying the datatables buttons -->
     <script type="text/javascript" src="../assets/datatable6.js"></script><!-- Print in database table -->
     <script type="text/javascript" src="../assets/datatable7.js"></script>
-    <script type="text/javascript" src="../assets/validations.js"></script><!-- PDF download in database table -->
+    <script type="text/javascript" src="http://localhost:85/users/assets/validations.js"></script><!-- PDF download in database table -->
 
     </head>
 

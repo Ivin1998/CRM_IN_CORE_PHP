@@ -3,6 +3,7 @@ include '../database/connections.php';
 include '../header.php';
 include '../static_bar.php';
 $user_id = $_SESSION['user_id'];
+$is_admin=$_SESSION['is_admin'];
 ?>
 <html>
 <title>Department List</title>
@@ -47,8 +48,14 @@ $user_id = $_SESSION['user_id'];
             </tr>
         </thead>
         <?php
-        $sql = "SELECT  a.department_id,department_name, count(*) as cnt FROM contacts.contacts a right join contacts.department b on a.department_id=b.department_id where
-                           user_id='$user_id' AND is_deleted=0 group by user_id,department_name,a.department_id";
+        if($is_admin==1){
+            $sql = "SELECT  a.department_id,department_name, count(*) as cnt FROM contacts.contacts a right join contacts.department b on a.department_id=b.department_id where
+            is_deleted=0 group by department_name,a.department_id";
+        }
+        else{
+            $sql = "SELECT  a.department_id,department_name, count(*) as cnt FROM contacts.contacts a right join contacts.department b on a.department_id=b.department_id where
+                        user_id='$user_id' AND is_deleted=0 group by department_name,a.department_id";
+        }
         $result_dept = mysqli_query($con, $sql);
         while ($rows = mysqli_fetch_assoc($result_dept)) {
             ?>

@@ -3,6 +3,7 @@ include '../database/connections.php';
 include '../header.php';
 include '../static_bar.php';
 $user_id = $_SESSION['user_id'];
+$is_admin = $_SESSION['is_admin'];
 ?>
 <html>
 <head>
@@ -70,7 +71,13 @@ $user_id = $_SESSION['user_id'];
                 </tr>
             </thead>
             <?php
-            $file = "SELECT * FROM files WHERE user_id='$user_id'";
+            if($is_admin==1){
+                $file = "SELECT * FROM files";
+            }
+            else{
+                $file = "SELECT * FROM files WHERE user_id='$user_id'";
+            }
+          
 
             $result = mysqli_query($con, $file);
             $no = 1;

@@ -5,10 +5,19 @@ include '../mvc/controller.php';
 include '../header.php';
 $username = $_SESSION['username'];
 $user_id = $_SESSION['user_id'];
+$is_admin = $_SESSION['is_admin'];
+
 $todays_date = date('Y-m-d');
-$count_query = "SELECT COUNT(*) AS new_count, DATE_FORMAT(created_date, 'Y-m-d') AS formatted_date 
+if($is_admin==1){
+    $count_query = "SELECT COUNT(*) AS new_count, DATE_FORMAT(created_date, 'Y-m-d') AS formatted_date 
+FROM contacts WHERE DATE(created_date) = '$todays_date' AND is_deleted = 0
+GROUP BY DATE_FORMAT(created_date, 'Y-m-d');";
+}
+else{
+    $count_query = "SELECT COUNT(*) AS new_count, DATE_FORMAT(created_date, 'Y-m-d') AS formatted_date 
 FROM contacts WHERE DATE(created_date) = '$todays_date' AND is_deleted = 0 AND user_id = '$user_id'
 GROUP BY DATE_FORMAT(created_date, 'Y-m-d');";
+}
 
 $result = mysqli_query($con, $count_query);
 $row = mysqli_fetch_assoc($result);
@@ -22,8 +31,12 @@ if (isset($_GET["department_id"])) {
 } else {
     $department_id = '';
 }
-
-$query="SELECT COUNT(*) AS records_count FROM contacts WHERE is_deleted=0 AND user_id='$user_id'";
+if($is_admin==1){
+    $query="SELECT COUNT(*) AS records_count FROM contacts WHERE is_deleted=0";
+}
+else{
+    $query="SELECT COUNT(*) AS records_count FROM contacts WHERE is_deleted=0 AND user_id='$user_id'";
+}
 $result=mysqli_query($con,$query);
 $contacts_count = mysqli_fetch_assoc($result);
 $total_count=$contacts_count['records_count'];

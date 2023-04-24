@@ -8,8 +8,8 @@ form {
     justify-content: center;
     flex-direction: column;
     padding: 20px;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
-    border-radius: 5px;
+/*     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
+ */    border-radius: 5px;
   
   }
   
@@ -113,6 +113,7 @@ form {
     width: 60%;
     display: block;
     background-color: white;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
   }
   
   #forgot {
@@ -256,3 +257,11 @@ form {
       margin: 250 50 30 0;
       
     }
+.disapprove{
+  padding:12px;
+  background-color:rgb(255, 0, 0);
+
+ color: #f1f1f1;
+ font-weight: 800;
+}
+ 

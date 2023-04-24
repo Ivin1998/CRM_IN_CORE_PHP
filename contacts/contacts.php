@@ -48,7 +48,7 @@ $total_count=$contacts_count['records_count'];
     <title>Users_list</title>
 </head>
 
-<body>
+<body >
     <div class="header" id="myHeader">
         <h2>User Application</h2>
     </div>
@@ -62,6 +62,13 @@ $total_count=$contacts_count['records_count'];
         <a href="../region/country_crud.php">Countries</a>
         <a href="../region/state_crud.php">States</a>
         <a href="../region/city_crud.php">Cities</a>
+        <?php
+        if($is_admin)
+        {
+            echo'<a class=approvals href="../login_users/admin.php">User Approvals</a>';
+
+        }
+        ?>
         <a href="logout.php" style="position: fixed; bottom: 0; left: 0;"><i class="fa fa-power-off"
                 aria-hidden="true"></i></a>
     </div>
@@ -104,7 +111,7 @@ $total_count=$contacts_count['records_count'];
     <div class="content">
     <?php echo '<h3>Total Number of Records = '.$total_count.'</h3>' ?>
         <div id="myModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg" style="width:600">
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div style="padding: 15px 15px 0px 15px">
@@ -129,21 +136,30 @@ $total_count=$contacts_count['records_count'];
                                         class="btn btn-primary form-control">
                                 </div>
                                 <div id="Feed_input">
-                                    <md style="color:red;display:flex;gap:5px;"><span style="color:black">First
+                                    <md style="color:red;display:flex;gap:5px;"><span style="color:black;">First
                                             Name:</span>*
                                     </md><input type="text" name="firstName" id="firstName"
-                                        class="form-control" /><br><br>
+                                        class="form-control"/>
+                                        <span class="firstName" style="color:red;"></span><br>
                                     <md style="color:red;display:flex;gap:5px;" /><span style="color:black">Last
                                         Name:</span>*
                                     </md> <input type="text" name="lastName" id="lastName"
-                                        class="form-control" /><br><br>
+                                        class="form-control" />
+                                        <span class="lastName" style="color:red;"></span><br>
+
                                     <md style="color:red;display:flex;gap:5px;"> <span style="color:black">
                                             Mobile Number:</span>*</md> <input type="text" name="mobileNumber"
-                                        id="mobileNumber" class="form-control" /><br><br>
+                                        id="mobileNumber" class="form-control" />
+                                        <span class="mobileNumber" style="color:red;"></span><br>
                                     Office Number: <input type="text" name="officeNumber" id="officeNumber"
-                                        class="form-control" /><br><br>
+                                        class="form-control" />
+                                        <span class="officeNumber" style="color:red;"></span><br>
+                                     
                                     Email Address: <input type="text" name="Email" id="Email"
-                                        class="form-control" /><br><br>
+                                        class="form-control" />
+                                        <span class="Email" style="color:red;"></span><br>
+
+                                     
                                     Deptartment Name: <select name="department_name" class="form-control">
                                         <?php
                                         $sql = "SELECT * FROM department";
@@ -158,7 +174,7 @@ $total_count=$contacts_count['records_count'];
                                             <?php
                                         }
                                         ?>
-                                    </select><br></br>
+                                    </select><br>
                                     Country: <select name="country" id="country_dropdown" class="form-control">
                                         <option value="">Select Country</option>
 
@@ -173,24 +189,28 @@ $total_count=$contacts_count['records_count'];
                                             <?php
                                         }
                                         ?>
-                                    </select><br></br>
+                                    </select><br>
 
                                     State: <select name="state" id="state_dropdown" class="form-control">
                                         <option value="">Select State</option>
 
-                                    </select><br></br>
+                                    </select><br>
                                     City: <select name="city" id="city_dropdown" class="form-control">
                                         <option value="">Select City</option>
 
-                                    </select><br></br>
+                                    </select><br>
                                     Instagram Profile: <input type="text" name="Instagram" id="Instagram"
-                                        class="form-control" /><br><br>
+                                        class="form-control" />
+                                        <br>
                                     Twitter Handle: <input type="text" name="Twitter" id="Twitter"
-                                        class="form-control" /><br><br>
+                                        class="form-control" />
+                                        <span class="Twitter" style="color:red;"></span><br>
                                     Linkedin Id: <input type="text" name="Linkedin" id="Linkedin"
-                                        class="form-control" /><br><br>
+                                        class="form-control" />
+                                        <span class="Linkedin" style="color:red;"></span><br>
                                     Facebook Id: <input type="text" name="Facebook" id="Facebook"
-                                        class="form-control" /><br><br>
+                                        class="form-control" />
+                                        <span class="Facebook" style="color:red;"></span><br>
                                     <input type="hidden" name="id" id="id" />
                                     <input type="hidden" name="user_id" id="user_id" value="<?php echo $user_id ?>">
                                     <input type="hidden" name="created_date"
@@ -293,10 +313,11 @@ $total_count=$contacts_count['records_count'];
     $(document).ready(function () {
         $('.sidebar a').removeClass('active');
         $('.contact').addClass('active');
-    })
-
-
-
+    });
+         $(document).ready(function(){
+            <?php if ($is_admin) { ?>
+                $('#myHeader').css('background-color', '#36964f');
+            <?php } ?>
+        });
 </script>
-
 </html>

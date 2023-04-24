@@ -33,77 +33,55 @@ function savecontact() {
     var first_name = document.forms["contact"]["firstName"].value;
     const numeric = /^[0-9]/;
     const noalphabets = /^[A-Za-z]+$/;
+    
     if (first_name == "" || !noalphabets.test(first_name)) {
-        swal.fire({
-            text: "Please enter a valid first name!",
-            icon: "info"
-        });
+     $('.firstName').html("Enter a valid first name");
         return false;
-    }
+    };
     let last_name = document.forms["contact"]["lastName"].value;
     if (last_name == "" || !noalphabets.test(last_name)) {
-        swal.fire({
-            text: "Please enter a valid last name!",
-            icon: "info"
-        });
+        $('.lastName').html("Enter a valid last name");
         return false;
     }
     let mobile_number = document.forms["contact"]["mobileNumber"].value;
     if (mobile_number == "" || !numeric.test(mobile_number)) {
-        swal.fire({
-            text: "Please enter a valid contact number!",
-            icon: "info"
-        });
-
+      
+        $('.mobileNumber').html("Enter a valid contact number");
         return false;
     }
     let office_number = document.forms["contact"]["officeNumber"].value;
     if (office_number) {
         if (!numeric.test(office_number)) {
-            swal.fire({
-                text: "Please enter a valid office number!",
-                icon: "info"
-            });
+            $('.officeNumber').html("Enter a valid office number");
+
             return false;
         }
     }
     let email_id = document.forms["contact"]["Email"].value;
     if (email_id) {
         if (noalphabets.test(email_id)) {
-            swal.fire({
-                text: "Please enter a valid email id!",
-                icon: "info"
-            });
+            $('.Email').html("Enter a valid Email address");
             return false;
         }
     }
     let twitter_id = document.forms["contact"]["Twitter"].value;
     if (twitter_id) {
         if (noalphabets.test(twitter_id)) {
-            swal.fire({
-                text: "Please enter a valid Twitter handle!",
-                icon: "info"
-            });
+            $('.Twitter').html("Enter a valid twitter handle");
             return false;
         }
     }
     let linkedin_id = document.forms["contact"]["Linkedin"].value;
     if (linkedin_id) {
         if (!noalphabets.test(linkedin_id)) {
-            swal.fire({
-                text: "Please enter a valid Linkedin profile!",
-                icon: "info"
-            });
+            $('.Linkedin').html("Enter a valid linked profile");
             return false;
         }
     }
     let facebook_id = document.forms["contact"]["Facebook"].value;
     if (facebook_id) {
         if (!noalphabets.test(facebook_id)) {
-            swal.fire({
-                text: "Please enter a valid Facebook profile!",
-                icon: "info"
-            });
+            $('.Facebook').html("Enter a valid facebook profile");
             return false;
         }
     }
@@ -495,6 +473,21 @@ $(document).ready(function () {
     });
  });
 
+function approve(id,type){
+    $.ajax({
+        url:'approval.php',
+        type: "POST",
+        data: { id: id, type:type },
+        success: function (data) {
+            swal.fire({
+                text: "User activation status updated successfully!",
+                icon: "success",
+            });
+            location.reload();
+        }
+    });
+
+};
 
 
 

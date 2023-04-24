@@ -9,6 +9,7 @@ $is_admin = $_SESSION['is_admin'];
 <head>
     <title>Files</title>
 </head>
+
 <body>
     <div class="content"><br>
         <form style="width:30%" id="myInput_upload" method="post" style="text-decoration: none;"
@@ -67,17 +68,15 @@ $is_admin = $_SESSION['is_admin'];
                     <th style="text-align:center"> Sl.no.</th>
                     <th style="text-align:center"> File Name</th>
                     <th style="text-align:center"> Actions</th>
-
                 </tr>
             </thead>
             <?php
-            if($is_admin==1){
+            if ($is_admin == 1) {
                 $file = "SELECT * FROM files";
-            }
-            else{
+            } else {
                 $file = "SELECT * FROM files WHERE user_id='$user_id'";
             }
-          
+
 
             $result = mysqli_query($con, $file);
             $no = 1;
@@ -193,4 +192,5 @@ $is_admin = $_SESSION['is_admin'];
         })
     </script>
 </body>
+
 </html>

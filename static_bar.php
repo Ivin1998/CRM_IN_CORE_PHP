@@ -2,19 +2,27 @@
 session_start();
 $user_id = $_SESSION['user_id'];
 $username = $_SESSION['username'];
+$is_admin=$_SESSION['is_admin'];
+
 $todays_date = date('Y-m-d');
-$count_query = "SELECT COUNT(*) As new_count, DATE_FORMAT(created_date, 'Y-m-d') AS formatted_date 
+if($is_admin==1){
+    $count_query = "SELECT COUNT(*) AS new_count, DATE_FORMAT(created_date, 'Y-m-d') AS formatted_date 
+FROM contacts WHERE DATE(created_date) = '$todays_date' AND is_deleted = 0
+GROUP BY DATE_FORMAT(created_date, 'Y-m-d');";
+}
+else{
+    $count_query = "SELECT COUNT(*) AS new_count, DATE_FORMAT(created_date, 'Y-m-d') AS formatted_date 
 FROM contacts WHERE DATE(created_date) = '$todays_date' AND is_deleted = 0 AND user_id = '$user_id'
 GROUP BY DATE_FORMAT(created_date, 'Y-m-d');";
-$result = mysqli_query($con, $count_query);
-$row = mysqli_fetch_assoc($result);
-if($row){
-    $set = $row['new_count'];
-} else
-{
-    $set='';
 }
 
+$result = mysqli_query($con, $count_query);
+$row = mysqli_fetch_assoc($result);
+if ($row) {
+    $set = $row['new_count'];
+} else {
+    $set = '';
+}
 ?>
 <html>
 <body>
@@ -31,6 +39,13 @@ if($row){
         <a class="countries" href="../region/country_crud.php">Countries</a>
         <a class="states" href="../region/state_crud.php">States</a>
         <a class="cities" href="../region/city_crud.php">Cities</a>
+        <?php
+        if($is_admin)
+        {
+            echo'<a class=approvals href="../login_users/admin.php">User Approvals</a>';
+
+        }
+        ?>
         <a class="logout" href="../contacts/logout.php" style="position: fixed; bottom: 0; left: 0;"><i
                 class="fa fa-power-off" aria-hidden="true"></i></a>
     </div>
@@ -58,4 +73,13 @@ if($row){
         </div>
     </div>
     <body>
+
+    <script>
+         $(document).ready(function(){
+            <?php if($is_admin){ ?>
+                $('#myHeader').css('background-color','#36964f');
+                <?php }?>
+         });
+      
+        </script>
 </html>

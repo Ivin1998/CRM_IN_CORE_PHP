@@ -30,22 +30,23 @@ function checkDelete(id) {
     })
 }
 function savecontact() {
-    var first_name = document.forms["contact"]["firstName"].value;
     const numeric = /^[0-9]/;
     const noalphabets = /^[A-Za-z]+$/;
-    
-    if (first_name == "" || !noalphabets.test(first_name)) {
-     $('.firstName').html("Enter a valid first name");
+    const firstName = document.forms["contact"]["firstName"].value;
+    if (firstName == "" || !noalphabets.test(firstName)) {
+        $('.firstName').html("Enter a valid first name");
         return false;
-    };
+    }
+
     let last_name = document.forms["contact"]["lastName"].value;
     if (last_name == "" || !noalphabets.test(last_name)) {
         $('.lastName').html("Enter a valid last name");
         return false;
     }
+
     let mobile_number = document.forms["contact"]["mobileNumber"].value;
     if (mobile_number == "" || !numeric.test(mobile_number)) {
-      
+
         $('.mobileNumber').html("Enter a valid contact number");
         return false;
     }
@@ -97,8 +98,70 @@ function savecontact() {
             location.reload();
             $('.edit_data').hide();
         },
+
     });
 }
+
+
+$(document).on('keyup', '#firstName', function () {
+    var firstName = $('#firstName').val();
+    if (firstName != "") {
+        $('.firstName').html("");
+    }
+})
+$(document).on('keyup', '#lastName', function () {
+    var lastName = $('#lastName').val();
+    if (lastName != "") {
+        $('.lastName').html("");
+    }
+});
+$(document).on('keyup', '#lastName', function () {
+    var lastName = $('#lastName').val();
+    if (lastName != "") {
+        $('.lastName').html("");
+    }
+});
+$(document).on('keyup', '#mobileNumber', function () {
+    var mobileNumber = $('#mobileNumber').val();
+    if (mobileNumber != "") {
+        $('.mobileNumber').html("");
+    }
+});
+$(document).on('keyup', '#officeNumber', function () {
+    var officeNumber = $('#officeNumber').val();
+    if (officeNumber != "") {
+        $('.officeNumber').html("");
+    }
+});
+$(document).on('keyup', '#Email', function () {
+    var Email = $('#Email').val();
+    if (Email != "") {
+        $('.Email').html("");
+    }
+});
+
+$(document).on('keyup', '#Twitter', function () {
+    var Twitter = $('#Twitter').val();
+    if (Twitter != "") {
+        $('.Twitter').html("");
+    }
+});
+$(document).on('keyup', '#Linkedin', function () {
+    var Linkedin = $('#Linkedin').val();
+    if (Linkedin != "") {
+        $('.Linkedin').html("");
+    }
+});
+$(document).on('keyup', '#Facebook', function () {
+    var Facebook = $('#Facebook').val();
+    if (Facebook != "") {
+        $('.Facebook').html("");
+    }
+});
+
+
+
+
 /* Edit in popup modal*/
 $(document).on('click', '.edit_data', function () {
     var user_id = $(this).attr('id');
@@ -404,6 +467,9 @@ $(document).ready(function () {
 
 
     });
+    $('#reload').click(function () {
+        location.reload();
+    });
 });
 
 
@@ -440,9 +506,29 @@ function update_region(type) {
 
 }
 
-function new_user(){
+function new_user() {
+    const firstName = document.forms['create_account']['firstName'].value;
+    const noalphabets = /^[A-Za-z]+$/;
+    if (firstName == '' || !noalphabets.test('firstName')) {
+        $('.firstName').html("Enter valid first name");
+        return false;
+    };
+
+    const lastName = document.forms['create_account']['lastName'].value;
+    if (lastName == '' || !noalphabets.test('lastName')) {
+        $('.lastName').html("Enter valid last name");
+        return false;
+    };
+   
+    let email_id = document.forms["create_account"]["Email"].value;
+    if (email_id==''||noalphabets.test(email_id)) {
+     
+            $('.Email').html("Enter a valid Email address");
+            return false;
+       
+    }
     $.ajax({
-        url:"new_user.php",
+        url: "new_user.php",
         type: "POST",
         data: $('#new_user').serialize(),
         success: function (data) {
@@ -450,34 +536,35 @@ function new_user(){
                 text: "User details saved successfully!",
                 icon: "success",
             });
-             location.reload(); 
+            location.reload();
         }
     });
 };
 
+
 $(document).ready(function () {
-    $("#confirmPassword").on('keyup', function(){
-     var password = $("#password").val();
-     var confirmPassword = $("#confirmPassword").val();
-     if (password != confirmPassword){
-        $("#CheckPasswordMatch").html("Password does not match!").css("color","red");
+    $("#confirmPassword").on('keyup', function () {
+        var password = $("#password").val();
+        var confirmPassword = $("#confirmPassword").val();
+        if (password != confirmPassword) {
+            $("#CheckPasswordMatch").html("Password does not match!").css("color", "red");
 
-     }
-     else{
-        $("#CheckPasswordMatch").html("Password matched!").css("color","green");
-        setTimeout(function(){
-           $("#CheckPasswordMatch").html("");
-        },5000)
-     }
-       
+        }
+        else {
+            $("#CheckPasswordMatch").html("Password matched!").css("color", "green");
+            setTimeout(function () {
+                $("#CheckPasswordMatch").html("");
+            }, 5000)
+        }
+
     });
- });
+});
 
-function approve(id,type){
+function approve(id, type) {
     $.ajax({
-        url:'approval.php',
+        url: 'approval.php',
         type: "POST",
-        data: { id: id, type:type },
+        data: { id: id, type: type },
         success: function (data) {
             swal.fire({
                 text: "User activation status updated successfully!",

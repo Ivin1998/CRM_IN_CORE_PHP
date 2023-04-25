@@ -136,28 +136,48 @@ $total_count=$contacts_count['records_count'];
                                         class="btn btn-primary form-control">
                                 </div>
                                 <div id="Feed_input">
-                                    <md style="color:red;display:flex;gap:5px;"><span style="color:black;">First
+                                <div class="row">
+                                <div class="col col-sm-6">
+                                <md style="color:red;display:flex;gap:5px;"><span style="color:black;">First
                                             Name:</span>*
                                     </md><input type="text" name="firstName" id="firstName"
                                         class="form-control"/>
                                         <span class="firstName" style="color:red;"></span><br>
+                                        <md style="color:red;display:flex;gap:5px;"> <span style="color:black">
+                                            Mobile Number:</span>*</md> <input type="text" name="mobileNumber"
+                                        id="mobileNumber" class="form-control"style="width:100%" />
+                                        <span class="mobileNumber" style="color:red;"></span><br>
+                                        Email Address: <input type="text" name="Email" id="Email"
+                                        class="form-control" />
+                                        <span class="Email" style="color:red;"></span><br>
+                                        Instagram Profile: <input type="text" name="Instagram" id="Instagram"
+                                        class="form-control" />
+                                        <br>
+                                    Twitter Handle: <input type="text" name="Twitter" id="Twitter"
+                                        class="form-control" />
+                                        <span class="Twitter" style="color:red;"></span><br>
+                                    Linkedin Id: <input type="text" name="Linkedin" id="Linkedin"
+                                        class="form-control" />
+                                        <span class="Linkedin" style="color:red;"></span><br>
+                                    Facebook Id: <input type="text" name="Facebook" id="Facebook"
+                                        class="form-control" />
+                                        <span class="Facebook" style="color:red;"></span><br>
+                                </div>
+                                <div class="col col-sm-6">
+                              
+                                  
                                     <md style="color:red;display:flex;gap:5px;" /><span style="color:black">Last
                                         Name:</span>*
                                     </md> <input type="text" name="lastName" id="lastName"
                                         class="form-control" />
                                         <span class="lastName" style="color:red;"></span><br>
 
-                                    <md style="color:red;display:flex;gap:5px;"> <span style="color:black">
-                                            Mobile Number:</span>*</md> <input type="text" name="mobileNumber"
-                                        id="mobileNumber" class="form-control" />
-                                        <span class="mobileNumber" style="color:red;"></span><br>
+                                  
                                     Office Number: <input type="text" name="officeNumber" id="officeNumber"
                                         class="form-control" />
                                         <span class="officeNumber" style="color:red;"></span><br>
                                      
-                                    Email Address: <input type="text" name="Email" id="Email"
-                                        class="form-control" />
-                                        <span class="Email" style="color:red;"></span><br>
+                            
 
                                      
                                     Deptartment Name: <select name="department_name" class="form-control">
@@ -199,30 +219,23 @@ $total_count=$contacts_count['records_count'];
                                         <option value="">Select City</option>
 
                                     </select><br>
-                                    Instagram Profile: <input type="text" name="Instagram" id="Instagram"
-                                        class="form-control" />
-                                        <br>
-                                    Twitter Handle: <input type="text" name="Twitter" id="Twitter"
-                                        class="form-control" />
-                                        <span class="Twitter" style="color:red;"></span><br>
-                                    Linkedin Id: <input type="text" name="Linkedin" id="Linkedin"
-                                        class="form-control" />
-                                        <span class="Linkedin" style="color:red;"></span><br>
-                                    Facebook Id: <input type="text" name="Facebook" id="Facebook"
-                                        class="form-control" />
-                                        <span class="Facebook" style="color:red;"></span><br>
+                                    
                                     <input type="hidden" name="id" id="id" />
                                     <input type="hidden" name="user_id" id="user_id" value="<?php echo $user_id ?>">
                                     <input type="hidden" name="created_date"
                                         value="<?php echo date('Y-m-d H:i:s') ?>" />
+                                        
                                     <input type="hidden" name="mod_date" value='<?php echo date('Y-m-d H:i:s') ?>' />
+                                    </div>
+                        </div>
                                     <button type="button" onclick="savecontact()" id="Add"
-                                        class="btn btn-primary form-control">Save</button>
+                                        class="btn btn-primary form-control savecontact" style="width:50%;margin-left: 25%;">Save</button>
                                     <button id="update_button" class="btn btn-primary form-control"
                                         type="button">Update</button>
                                 </div>
                             </form>
-                        </div>
+                       
+                    </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" id="reload" data-dismiss="modal">Cancel</button>

@@ -2,7 +2,7 @@
 include '../database/connections.php';
 $first_name=$_POST['firstName'];
 $last_name=$_POST['lastName'];
-$email=$_POST['email'];
+$email=$_POST['Email'];
 $password=$_POST['confirmPassword'];
 
 $sql = "INSERT INTO users(first_name,last_name,email,password) VALUES ('$first_name','$last_name','$email',md5('$password'))";

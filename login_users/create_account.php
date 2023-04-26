@@ -28,12 +28,13 @@ include '../header.php';
         <span class="Email" style="color:red;"></span>
     <input type="password" placeholder="New Password" name="password" id="password" class="form-control"
         style="padding-top:15;margin:25 0;">
+        <span class="password" style="color:red;"></span>
     <input type="password" placeholder="Confirm your password" name="confirmPassword" id="confirmPassword"
         class="form-control" style="padding-top:15;margin: 25 0;">
     <span class="registrationFormAlert" style="color:green;" id="CheckPasswordMatch"></span>
 
     <div style="margin-left:6%">
-        <input type="checkbox" /> By clicking Sign Up, you agree to our
+        <input type="checkbox" id="checkbox" /> By clicking Sign Up, you agree to our
         <a href="https://www.facebook.com/legal/terms/update" target="_blank">Terms,</a>
         <a href="https://www.facebook.com/privacy/policy/?entry_point=data_policy_redirect&entry=0" target="_blank">
             Privacy Policy</a> and
@@ -41,7 +42,7 @@ include '../header.php';
             target="_blank">Cookies Policy.</a> You may receive SMS notifications from us and
         can opt out at any time.
     </div>
-
+<span class="checkbox"></span>
         <br>
 <button type="button" class="btn-lg btn-success" onclick="new_user()" style="margin:0 0 5% 40%;">Sign up</button><br>
 or<a href="../index.php"> sign in</a>

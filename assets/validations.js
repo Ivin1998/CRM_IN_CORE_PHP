@@ -158,7 +158,16 @@ $(document).on('keyup', '#Facebook', function () {
         $('.Facebook').html("");
     }
 });
+$(document).on('keyup', '#password', function () {
+    var password = $('#password').val();
+    if (password != "") {
+        $('.password').html("");
+    }
+});
 
+$(document).on('click', '#checkbox', function () {
+    $('.checkbox').html("");
+})
 
 
 
@@ -519,14 +528,26 @@ function new_user() {
         $('.lastName').html("Enter valid last name");
         return false;
     };
-   
+    const password = document.forms['create_account']['password'].value;
+    if (password == '') {
+        $('.password').html("Enter valid password");
+        return false;
+    };
+
     let email_id = document.forms["create_account"]["Email"].value;
-    if (email_id==''||noalphabets.test(email_id)) {
-     
-            $('.Email').html("Enter a valid Email address");
-            return false;
-       
+    if (email_id == '' || noalphabets.test(email_id)) {
+
+        $('.Email').html("Enter a valid Email address");
+        return false;
+
     }
+    const checkbox = document.getElementById("checkbox");
+    if (!checkbox.checked) {
+        $('.checkbox').html("Please confirm the terms & conditions before creating an account").css('color', 'red');
+        return false;
+
+    }
+
     $.ajax({
         url: "new_user.php",
         type: "POST",

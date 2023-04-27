@@ -72,15 +72,13 @@ $total_count=$contacts_count['records_count'];
         <a href="logout.php" style="position: fixed; bottom: 0; left: 0;"><i class="fa fa-power-off"
                 aria-hidden="true"></i></a>
     </div>
-
     <div class="row" style="padding-top: 15px;">
         <div class="col col-sm-6 ">
         </div>
         <div class="col col-sm-2"><button id="add_con" type="button" class="btn btn-primary btn-lg add_con_align "
                 data-toggle="modal" data-target="#myModal">Add a Contact</button></div>
         <div class="col col-sm-2"><button type="button" class="btn btn-primary btn-lg import add_con_align"
-                data-toggle="modal" data-target="#myModal">Import Contacts</button></div>
-             
+                data-toggle="modal" data-target="#myModal">Import Contacts</button></div>    
         <div class=" col col-sm-2">
             <button class="btn btn-primary rounded-circle" style="height:40px;margin: -70 70;" ;type="button"
                 id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -89,7 +87,6 @@ $total_count=$contacts_count['records_count'];
                 </i>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
                 <button class="dropdown-item" href="#">My profile</button>
                 <button class="dropdown-item" href="#">
                     <?php echo "<p class=intro> $username!</p>"; ?>
@@ -124,7 +121,6 @@ $total_count=$contacts_count['records_count'];
                             </div>
                         </div>
                     </div>        
-
                     <div class="modal-body">
                         <div id="myForm">
                             <form name="contact" method="post" action="import.php" id="mycontact"
@@ -164,22 +160,14 @@ $total_count=$contacts_count['records_count'];
                                         <span class="Facebook" style="color:red;"></span><br>
                                 </div>
                                 <div class="col col-sm-6">
-                              
-                                  
                                     <md style="color:red;display:flex;gap:5px;" /><span style="color:black">Last
                                         Name:</span>*
                                     </md> <input type="text" name="lastName" id="lastName"
                                         class="form-control" />
                                         <span class="lastName" style="color:red;"></span><br>
-
-                                  
                                     Office Number: <input type="text" name="officeNumber" id="officeNumber"
                                         class="form-control" />
                                         <span class="officeNumber" style="color:red;"></span><br>
-                                     
-                            
-
-                                     
                                     Deptartment Name: <select name="department_name" class="form-control">
                                         <?php
                                         $sql = "SELECT * FROM department";
@@ -210,16 +198,12 @@ $total_count=$contacts_count['records_count'];
                                         }
                                         ?>
                                     </select><br>
-
                                     State: <select name="state" id="state_dropdown" class="form-control">
                                         <option value="">Select State</option>
-
                                     </select><br>
                                     City: <select name="city" id="city_dropdown" class="form-control">
                                         <option value="">Select City</option>
-
                                     </select><br>
-                                    
                                     <input type="hidden" name="id" id="id" />
                                     <input type="hidden" name="user_id" id="user_id" value="<?php echo $user_id ?>">
                                     <input type="hidden" name="created_date"
@@ -227,12 +211,12 @@ $total_count=$contacts_count['records_count'];
                                         
                                     <input type="hidden" name="mod_date" value='<?php echo date('Y-m-d H:i:s') ?>' />
                                     </div>
-                        </div>
+                                    </div>
                                     <button type="button" onclick="savecontact()" id="Add"
                                         class="btn btn-primary form-control savecontact" style="width:50%;margin-left: 25%;">Save</button>
                                     <button id="update_button" class="btn btn-primary form-control"
                                         type="button">Update</button>
-                                </div>
+                                 </div>
                             </form>
                        
                     </div>

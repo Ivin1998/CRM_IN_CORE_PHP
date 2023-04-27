@@ -592,10 +592,14 @@ function approve(id, type) {
                 icon: "success",
             });
             location.reload();
+            
         }
     });
 
 };
+
+
+
 
 
 

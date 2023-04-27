@@ -11,7 +11,6 @@ $is_approved = $_SESSION['is_approved'];
     <table border="1" padding=15 class="table table-striped table-hover" style="width:80%">
         <thead>
             <h1 class="page-header">Users List</h1>
-
             <tr>
                 <td style="text-align:center"><B>First Name</B></td>
                 <td style="text-align:center"><B>Last Name</B></td>
